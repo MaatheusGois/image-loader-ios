@@ -14,7 +14,7 @@
 #import "ImageLoaderDownloaderRequestModifier.h"
 #import "ImageLoaderDownloaderResponseModifier.h"
 #import "ImageLoaderDownloaderDecryptor.h"
-#import "SDImageLoader.h"
+#import "LoadImageLoader.h"
 
 /// Downloader options
 typedef NS_OPTIONS(NSUInteger, ImageLoaderDownloaderOptions) {
@@ -104,8 +104,8 @@ FOUNDATION_EXPORT NSNotificationName _Nonnull const ImageLoaderDownloadStopNotif
 /// Posed when URLSessionTask finished with success  (`didCompleteWithError:` without error)
 FOUNDATION_EXPORT NSNotificationName _Nonnull const ImageLoaderDownloadFinishNotification;
 
-typedef SDImageLoaderProgressBlock ImageLoaderDownloaderProgressBlock;
-typedef SDImageLoaderCompletedBlock ImageLoaderDownloaderCompletedBlock;
+typedef LoadImageLoaderProgressBlock ImageLoaderDownloaderProgressBlock;
+typedef LoadImageLoaderCompletedBlock ImageLoaderDownloaderCompletedBlock;
 
 /**
  *  A token associated with each download. Can be used to cancel a download
@@ -309,10 +309,10 @@ typedef SDImageLoaderCompletedBlock ImageLoaderDownloaderCompletedBlock;
 
 
 /**
- ImageLoaderDownloader is the built-in image loader conform to `SDImageLoader`. Which provide the HTTP/HTTPS/FTP download, or local file URL using NSURLSession.
+ ImageLoaderDownloader is the built-in image loader conform to `LoadImageLoader`. Which provide the HTTP/HTTPS/FTP download, or local file URL using NSURLSession.
  However, this downloader class itself also support customization for advanced users. You can specify `operationClass` in download config to custom download operation, See `ImageLoaderDownloaderOperation`.
- If you want to provide some image loader which beyond network or local file, consider to create your own custom class conform to `SDImageLoader`.
+ If you want to provide some image loader which beyond network or local file, consider to create your own custom class conform to `LoadImageLoader`.
  */
-@interface ImageLoaderDownloader (SDImageLoader) <SDImageLoader>
+@interface ImageLoaderDownloader (LoadImageLoader) <LoadImageLoader>
 
 @end

@@ -17,7 +17,7 @@
  */
 FOUNDATION_EXPORT const int64_t ImageLoaderProgressUnitCountUnknown; /* 1LL */
 
-typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable imageData, SDImageCacheType cacheType, NSURL * _Nullable imageURL);
+typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable imageData, LoadImageCacheType cacheType, NSURL * _Nullable imageURL);
 
 /**
  Integrates ImageLoader async downloading and caching of remote images with UIView subclass.
@@ -64,7 +64,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  *   This block has no return value and takes the requested UIImage as first parameter and the NSData representation as second parameter.
  *   In case of error the image parameter is nil and the third parameter may contain an NSError.
  *
- *   The forth parameter is an `SDImageCacheType` enum indicating if the image was retrieved from the local cache
+ *   The forth parameter is an `LoadImageCacheType` enum indicating if the image was retrieved from the local cache
  *   or from the memory cache or from the network.
  *
  *   The fifth parameter normally is always YES. However, if you provide ImageLoaderAvoidAutoSetImage with ImageLoaderProgressiveLoad options to enable progressive downloading and set the image yourself. This block is thus called repeatedly with a partial image. When image is fully downloaded, the
@@ -78,7 +78,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
                                                        options:(ImageLoaderOptions)options
                                                        context:(nullable ImageLoaderContext *)context
                                                  setImageBlock:(nullable SDSetImageBlock)setImageBlock
-                                                      progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                                      progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                                      completed:(nullable SDInternalCompletionBlock)completedBlock;
 
 /**

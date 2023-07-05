@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ImageLoaderCompat.h"
-#import "SDImageCoder.h"
+#import "LoadImageCoder.h"
 
 /// Animated image playback mode
 typedef NS_ENUM(NSUInteger, SDAnimatedImagePlaybackMode) {
@@ -71,13 +71,13 @@ typedef NS_ENUM(NSUInteger, SDAnimatedImagePlaybackMode) {
 @property (nonatomic, copy, nonnull) NSRunLoopMode runLoopMode;
 
 /// Create a player with animated image provider. If the provider's `animatedImageFrameCount` is less than 1, returns nil.
-/// The provider can be any protocol implementation, like `SDAnimatedImage`, `SDImageGIFCoder`, etc.
+/// The provider can be any protocol implementation, like `SDAnimatedImage`, `LoadImageGIFCoder`, etc.
 /// @note This provider can represent mutable content, like progressive animated loading. But you need to update the frame count by yourself
 /// @param provider The animated provider
 - (nullable instancetype)initWithProvider:(nonnull id<SDAnimatedImageProvider>)provider;
 
 /// Create a player with animated image provider. If the provider's `animatedImageFrameCount` is less than 1, returns nil.
-/// The provider can be any protocol implementation, like `SDAnimatedImage` or `SDImageGIFCoder`, etc.
+/// The provider can be any protocol implementation, like `SDAnimatedImage` or `LoadImageGIFCoder`, etc.
 /// @note This provider can represent mutable content, like progressive animated loading. But you need to update the frame count by yourself
 /// @param provider The animated provider
 + (nullable instancetype)playerWithProvider:(nonnull id<SDAnimatedImageProvider>)provider;

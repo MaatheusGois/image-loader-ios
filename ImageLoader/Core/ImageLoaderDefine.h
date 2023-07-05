@@ -23,12 +23,12 @@ typedef NSMutableDictionary<ImageLoaderContextOption, id> ImageLoaderMutableCont
  @param key The image cache key
  @return The scale factor for image
  */
-FOUNDATION_EXPORT CGFloat SDImageScaleFactorForKey(NSString * _Nullable key);
+FOUNDATION_EXPORT CGFloat LoadImageScaleFactorForKey(NSString * _Nullable key);
 
 /**
  Scale the image with the scale factor for the specify key. If no need to scale, return the original image.
  This works for `UIImage`(UIKit) or `NSImage`(AppKit). And this function also preserve the associated value in `UIImage+Metadata.h`.
- @note This is actually a convenience function, which firstly call `SDImageScaleFactorForKey` and then call `SDScaledImageForScaleFactor`, kept for backward compatibility.
+ @note This is actually a convenience function, which firstly call `LoadImageScaleFactorForKey` and then call `SDScaledImageForScaleFactor`, kept for backward compatibility.
 
  @param key The image cache key
  @param image The image
@@ -126,7 +126,7 @@ typedef NS_OPTIONS(NSUInteger, ImageLoaderOptions) {
     /**
      * By default, images are decoded respecting their original size.
      * This flag will scale down the images to a size compatible with the constrained memory of devices.
-     * To control the limit memory bytes, check `SDImageCoderHelper.defaultScaleDownLimitBytes` (Defaults to 60MB on iOS)
+     * To control the limit memory bytes, check `LoadImageCoderHelper.defaultScaleDownLimitBytes` (Defaults to 60MB on iOS)
      * (from 5.16.0) This will actually translate to use context option `ImageLoaderContextImageScaleDownLimitBytes`, which check and calculate the thumbnail pixel size occupied small than limit bytes (including animated image)
      * (from 5.5.0) This flags effect the progressive and animated images as well
      * @note If you need detail controls, it's better to use context option `imageScaleDownBytes` instead.
@@ -171,7 +171,7 @@ typedef NS_OPTIONS(NSUInteger, ImageLoaderOptions) {
     /**
      * By default, we will decode the image in the background during cache query and download from the network. This can help to improve performance because when rendering image on the screen, it need to be firstly decoded. But this happen on the main queue by Core Animation.
      * However, this process may increase the memory usage as well. If you are experiencing an issue due to excessive memory consumption, This flag can prevent decode the image.
-     * @note 5.14.0 introduce `SDImageCoderDecodeUseLazyDecoding`, use that for better control from codec, instead of post-processing. Which acts the similar like this option but works for SDAnimatedImage as well (this one does not)
+     * @note 5.14.0 introduce `LoadImageCoderDecodeUseLazyDecoding`, use that for better control from codec, instead of post-processing. Which acts the similar like this option but works for SDAnimatedImage as well (this one does not)
      */
     ImageLoaderAvoidDecodeImage = 1 << 18,
     
@@ -232,26 +232,26 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextCust
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextCallbackQueue;
 
 /**
- A id<SDImageCache> instance which conforms to `SDImageCache` protocol. It's used to override the image manager's cache during the image loading pipeline.
- In other word, if you just want to specify a custom cache during image loading, you don't need to re-create a dummy ImageLoaderManager instance with the cache. If not provided, use the image manager's cache (id<SDImageCache>)
+ A id<LoadImageCache> instance which conforms to `LoadImageCache` protocol. It's used to override the image manager's cache during the image loading pipeline.
+ In other word, if you just want to specify a custom cache during image loading, you don't need to re-create a dummy ImageLoaderManager instance with the cache. If not provided, use the image manager's cache (id<LoadImageCache>)
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageCache;
 
 /**
- A id<SDImageLoader> instance which conforms to `SDImageLoader` protocol. It's used to override the image manager's loader during the image loading pipeline.
- In other word, if you just want to specify a custom loader during image loading, you don't need to re-create a dummy ImageLoaderManager instance with the loader. If not provided, use the image manager's cache (id<SDImageLoader>)
+ A id<LoadImageLoader> instance which conforms to `LoadImageLoader` protocol. It's used to override the image manager's loader during the image loading pipeline.
+ In other word, if you just want to specify a custom loader during image loading, you don't need to re-create a dummy ImageLoaderManager instance with the loader. If not provided, use the image manager's cache (id<LoadImageLoader>)
 */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageLoader;
 
 /**
- A id<SDImageCoder> instance which conforms to `SDImageCoder` protocol. It's used to override the default image coder for image decoding(including progressive) and encoding during the image loading process.
- If you use this context option, we will not always use `SDImageCodersManager.shared` to loop through all registered coders and find the suitable one. Instead, we will arbitrarily use the exact provided coder without extra checking (We may not call `canDecodeFromData:`).
- @note This is only useful for cases which you can ensure the loading url matches your coder, or you find it's too hard to write a common coder which can used for generic usage. This will bind the loading url with the coder logic, which is not always a good design, but possible. (id<SDImageCache>)
+ A id<LoadImageCoder> instance which conforms to `LoadImageCoder` protocol. It's used to override the default image coder for image decoding(including progressive) and encoding during the image loading process.
+ If you use this context option, we will not always use `LoadImageCodersManager.shared` to loop through all registered coders and find the suitable one. Instead, we will arbitrarily use the exact provided coder without extra checking (We may not call `canDecodeFromData:`).
+ @note This is only useful for cases which you can ensure the loading url matches your coder, or you find it's too hard to write a common coder which can used for generic usage. This will bind the loading url with the coder logic, which is not always a good design, but possible. (id<LoadImageCache>)
 */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageCoder;
 
 /**
- A id<SDImageTransformer> instance which conforms `SDImageTransformer` protocol. It's used for image transform after the image load finished and store the transformed image to cache. If you provide one, it will ignore the `transformer` in manager and use provided one instead. If you pass NSNull, the transformer feature will be disabled. (id<SDImageTransformer>)
+ A id<LoadImageTransformer> instance which conforms `LoadImageTransformer` protocol. It's used for image transform after the image load finished and store the transformed image to cache. If you provide one, it will ignore the `transformer` in manager and use provided one instead. If you pass NSNull, the transformer feature will be disabled. (id<LoadImageTransformer>)
  @note When this value is used, we will trigger image transform after downloaded, and the callback's data **will be nil** (because this time the data saved to disk does not match the image return to you. If you need full size data, query the cache with full size url key)
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageTransformer;
@@ -259,9 +259,9 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImag
 #pragma mark - Image Decoder Context Options
 
 /**
- A Dictionary (SDImageCoderOptions) value, which pass the extra decoding options to the SDImageCoder. Introduced in ImageLoader 5.14.0
+ A Dictionary (LoadImageCoderOptions) value, which pass the extra decoding options to the LoadImageCoder. Introduced in ImageLoader 5.14.0
  You can pass additional decoding related options to the decoder, extensible and control by you. And pay attention this dictionary may be retained by decoded image via `UIImage.sd_decodeOptions` 
- This context option replace the deprecated `SDImageCoderWebImageContext`, which may cause retain cycle (cache -> image -> options -> context -> cache)
+ This context option replace the deprecated `LoadImageCoderWebImageContext`, which may cause retain cycle (cache -> image -> options -> context -> cache)
  @note There are already individual options below like `.imageScaleFactor`, `.imagePreserveAspectRatio`, each of individual options will override the same filed for this dictionary.
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageDecodeOptions;
@@ -299,7 +299,7 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImag
  The decoder will do these logic based on limit bytes:
  1. Get the total frame count (static image means 1)
  2. Calculate the `framePixelSize` width/height to `sqrt(limitBytes / frameCount / bytesPerPixel)`, keeping aspect ratio (at least 1x1)
- 3. If the `framePixelSize < originalImagePixelSize`, then do thumbnail decoding (see `SDImageCoderDecodeThumbnailPixelSize`) use the `framePixelSize` and `preseveAspectRatio = YES`
+ 3. If the `framePixelSize < originalImagePixelSize`, then do thumbnail decoding (see `LoadImageCoderDecodeThumbnailPixelSize`) use the `framePixelSize` and `preseveAspectRatio = YES`
  4. Else, use the full pixel decoding (small than limit bytes)
  5. Whatever result, this does not effect the animated/static behavior of image. So even if you set `limitBytes = 1 && frameCount = 100`, we will stll create animated image with each frame `1x1` pixel size.
  @note This option has higher priority than `.imageThumbnailPixelSize`
@@ -310,41 +310,41 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImag
 #pragma mark - Cache Context Options
 
 /**
- A Dictionary (SDImageCoderOptions) value, which pass the extra encode options to the SDImageCoder. Introduced in ImageLoader 5.15.0
- You can pass encode options like `compressionQuality`, `maxFileSize`, `maxPixelSize` to control the encoding related thing, this is used inside `SDImageCache` during store logic.
- @note For developer who use custom cache protocol (not SDImageCache instance), they need to upgrade and use these options for encoding.
+ A Dictionary (LoadImageCoderOptions) value, which pass the extra encode options to the LoadImageCoder. Introduced in ImageLoader 5.15.0
+ You can pass encode options like `compressionQuality`, `maxFileSize`, `maxPixelSize` to control the encoding related thing, this is used inside `LoadImageCache` during store logic.
+ @note For developer who use custom cache protocol (not LoadImageCache instance), they need to upgrade and use these options for encoding.
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImageEncodeOptions;
 
 /**
- A SDImageCacheType raw value which specify the source of cache to query. Specify `SDImageCacheTypeDisk` to query from disk cache only; `SDImageCacheTypeMemory` to query from memory only. And `SDImageCacheTypeAll` to query from both memory cache and disk cache. Specify `SDImageCacheTypeNone` is invalid and totally ignore the cache query.
- If not provide or the value is invalid, we will use `SDImageCacheTypeAll`. (NSNumber)
+ A LoadImageCacheType raw value which specify the source of cache to query. Specify `LoadImageCacheTypeDisk` to query from disk cache only; `LoadImageCacheTypeMemory` to query from memory only. And `LoadImageCacheTypeAll` to query from both memory cache and disk cache. Specify `LoadImageCacheTypeNone` is invalid and totally ignore the cache query.
+ If not provide or the value is invalid, we will use `LoadImageCacheTypeAll`. (NSNumber)
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextQueryCacheType;
 
 /**
- A SDImageCacheType raw value which specify the store cache type when the image has just been downloaded and will be stored to the cache. Specify `SDImageCacheTypeNone` to disable cache storage; `SDImageCacheTypeDisk` to store in disk cache only; `SDImageCacheTypeMemory` to store in memory only. And `SDImageCacheTypeAll` to store in both memory cache and disk cache.
+ A LoadImageCacheType raw value which specify the store cache type when the image has just been downloaded and will be stored to the cache. Specify `LoadImageCacheTypeNone` to disable cache storage; `LoadImageCacheTypeDisk` to store in disk cache only; `LoadImageCacheTypeMemory` to store in memory only. And `LoadImageCacheTypeAll` to store in both memory cache and disk cache.
  If you use image transformer feature, this actually apply for the transformed image, but not the original image itself. Use `ImageLoaderContextOriginalStoreCacheType` if you want to control the original image's store cache type at the same time.
- If not provide or the value is invalid, we will use `SDImageCacheTypeAll`. (NSNumber)
+ If not provide or the value is invalid, we will use `LoadImageCacheTypeAll`. (NSNumber)
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextStoreCacheType;
 
 /**
  The same behavior like `ImageLoaderContextQueryCacheType`, but control the query cache type for the original image when you use image transformer feature. This allows the detail control of cache query for these two images. For example, if you want to query the transformed image from both memory/disk cache, query the original image from disk cache only, use `[.queryCacheType : .all, .originalQueryCacheType : .disk]`
- If not provide or the value is invalid, we will use `SDImageCacheTypeDisk`, which query the original full image data from disk cache after transformed image cache miss. This is suitable for most common cases to avoid re-downloading the full data for different transform variants. (NSNumber)
+ If not provide or the value is invalid, we will use `LoadImageCacheTypeDisk`, which query the original full image data from disk cache after transformed image cache miss. This is suitable for most common cases to avoid re-downloading the full data for different transform variants. (NSNumber)
  @note Which means, if you set this value to not be `.none`, we will query the original image from cache, then do transform with transformer, instead of actual downloading, which can save bandwidth usage.
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextOriginalQueryCacheType;
 
 /**
  The same behavior like `ImageLoaderContextStoreCacheType`, but control the store cache type for the original image when you use image transformer feature. This allows the detail control of cache storage for these two images. For example, if you want to store the transformed image into both memory/disk cache, store the original image into disk cache only, use `[.storeCacheType : .all, .originalStoreCacheType : .disk]`
- If not provide or the value is invalid, we will use `SDImageCacheTypeDisk`, which store the original full image data into disk cache after storing the transformed image. This is suitable for most common cases to avoid re-downloading the full data for different transform variants. (NSNumber)
+ If not provide or the value is invalid, we will use `LoadImageCacheTypeDisk`, which store the original full image data into disk cache after storing the transformed image. This is suitable for most common cases to avoid re-downloading the full data for different transform variants. (NSNumber)
  @note This only store the original image, if you want to use the original image without downloading in next query, specify `ImageLoaderContextOriginalQueryCacheType` as well.
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextOriginalStoreCacheType;
 
 /**
- A id<SDImageCache> instance which conforms to `SDImageCache` protocol. It's used to control the cache for original image when using the transformer. If you provide one, the original image (full size image) will query and write from that cache instance instead, the transformed image will query and write from the default `ImageLoaderContextImageCache` instead. (id<SDImageCache>)
+ A id<LoadImageCache> instance which conforms to `LoadImageCache` protocol. It's used to control the cache for original image when using the transformer. If you provide one, the original image (full size image) will query and write from that cache instance instead, the transformed image will query and write from the default `ImageLoaderContextImageCache` instead. (id<LoadImageCache>)
  */
 FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextOriginalImageCache;
 

@@ -31,7 +31,7 @@
 
 - (nullable id)addHandlersForProgress:(nullable ImageLoaderDownloaderProgressBlock)progressBlock
                             completed:(nullable ImageLoaderDownloaderCompletedBlock)completedBlock
-                        decodeOptions:(nullable SDImageCoderOptions *)decodeOptions;
+                        decodeOptions:(nullable LoadImageCoderOptions *)decodeOptions;
 
 - (BOOL)cancel:(nullable id)token;
 
@@ -177,7 +177,7 @@
  */
 - (nullable id)addHandlersForProgress:(nullable ImageLoaderDownloaderProgressBlock)progressBlock
                             completed:(nullable ImageLoaderDownloaderCompletedBlock)completedBlock
-                        decodeOptions:(nullable SDImageCoderOptions *)decodeOptions;
+                        decodeOptions:(nullable LoadImageCoderOptions *)decodeOptions;
 
 /**
  *  Cancels a set of callbacks. Once all callbacks are canceled, the operation is cancelled.

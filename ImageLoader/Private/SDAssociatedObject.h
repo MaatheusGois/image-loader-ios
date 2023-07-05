@@ -11,4 +11,4 @@
 /// Copy the associated object from source image to target image. The associated object including all the category read/write properties.
 /// @param source source
 /// @param target target
-FOUNDATION_EXPORT void SDImageCopyAssociatedObject(UIImage * _Nullable source, UIImage * _Nullable target);
+FOUNDATION_EXPORT void LoadImageCopyAssociatedObject(UIImage * _Nullable source, UIImage * _Nullable target);

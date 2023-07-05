@@ -9,7 +9,7 @@
 #import "ImageLoaderCompat.h"
 
 #if SD_UIKIT || SD_MAC
-#import "SDImageCache.h"
+#import "LoadImageCache.h"
 
 #if SD_UIKIT
 typedef UIViewAnimationOptions ImageLoaderAnimationOptions;
@@ -33,7 +33,7 @@ typedef NS_OPTIONS(NSUInteger, ImageLoaderAnimationOptions) {
 };
 #endif
 
-typedef void (^ImageLoaderTransitionPreparesBlock)(__kindof UIView * _Nonnull view, UIImage * _Nullable image, NSData * _Nullable imageData, SDImageCacheType cacheType, NSURL * _Nullable imageURL);
+typedef void (^ImageLoaderTransitionPreparesBlock)(__kindof UIView * _Nonnull view, UIImage * _Nullable image, NSData * _Nullable imageData, LoadImageCacheType cacheType, NSURL * _Nullable imageURL);
 typedef void (^ImageLoaderTransitionAnimationsBlock)(__kindof UIView * _Nonnull view, UIImage * _Nullable image);
 typedef void (^ImageLoaderTransitionCompletionBlock)(BOOL finished);
 

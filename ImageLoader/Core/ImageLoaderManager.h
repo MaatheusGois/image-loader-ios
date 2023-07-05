@@ -8,16 +8,16 @@
 
 #import "ImageLoaderCompat.h"
 #import "ImageLoaderOperation.h"
-#import "SDImageCacheDefine.h"
-#import "SDImageLoader.h"
-#import "SDImageTransformer.h"
+#import "LoadImageCacheDefine.h"
+#import "LoadImageLoader.h"
+#import "LoadImageTransformer.h"
 #import "ImageLoaderCacheKeyFilter.h"
 #import "ImageLoaderCacheSerializer.h"
 #import "ImageLoaderOptionsProcessor.h"
 
-typedef void(^SDExternalCompletionBlock)(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL);
+typedef void(^SDExternalCompletionBlock)(UIImage * _Nullable image, NSError * _Nullable error, LoadImageCacheType cacheType, NSURL * _Nullable imageURL);
 
-typedef void(^SDInternalCompletionBlock)(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL);
+typedef void(^SDInternalCompletionBlock)(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, LoadImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL);
 
 /**
  A combined operation representing the cache and loader operation. You can use it to cancel the load process.
@@ -78,7 +78,7 @@ typedef void(^SDInternalCompletionBlock)(UIImage * _Nullable image, NSData * _Nu
 
 /**
  * The ImageLoaderManager is the class behind the UIImageView+WebCache category and likes.
- * It ties the asynchronous downloader (ImageLoaderDownloader) with the image cache store (SDImageCache).
+ * It ties the asynchronous downloader (ImageLoaderDownloader) with the image cache store (LoadImageCache).
  * You can use this class directly to benefit from web image downloading with caching in another context than
  * a UIView.
  *
@@ -90,7 +90,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
 [manager loadImageWithURL:imageURL
                   options:0
                  progress:nil
-                completed:^(UIImage *image, NSData *data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                completed:^(UIImage *image, NSData *data, NSError *error, LoadImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                     if (image) {
                         // do something with image
                     }
@@ -108,19 +108,19 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
 /**
  * The image cache used by manager to query image cache.
  */
-@property (strong, nonatomic, readonly, nonnull) id<SDImageCache> imageCache;
+@property (strong, nonatomic, readonly, nonnull) id<LoadImageCache> imageCache;
 
 /**
  * The image loader used by manager to load image.
  */
-@property (strong, nonatomic, readonly, nonnull) id<SDImageLoader> imageLoader;
+@property (strong, nonatomic, readonly, nonnull) id<LoadImageLoader> imageLoader;
 
 /**
- The image transformer for manager. It's used for image transform after the image load finished and store the transformed image to cache, see `SDImageTransformer`.
+ The image transformer for manager. It's used for image transform after the image load finished and store the transformed image to cache, see `LoadImageTransformer`.
  Defaults to nil, which means no transform is applied.
  @note This will affect all the load requests for this manager if you provide. However, you can pass `ImageLoaderContextImageTransformer` in context arg to explicitly use that transformer instead.
  */
-@property (strong, nonatomic, nullable) id<SDImageTransformer> transformer;
+@property (strong, nonatomic, nullable) id<LoadImageTransformer> transformer;
 
 /**
  * The cache filter is used to convert an URL into a cache key each time ImageLoaderManager need cache key to use image cache.
@@ -138,15 +138,15 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
 @property (nonatomic, strong, nullable) id<ImageLoaderCacheKeyFilter> cacheKeyFilter;
 
 /**
- * The cache serializer is used to convert the decoded image, the source downloaded data, to the actual data used for storing to the disk cache. If you return nil, means to generate the data from the image instance, see `SDImageCache`.
+ * The cache serializer is used to convert the decoded image, the source downloaded data, to the actual data used for storing to the disk cache. If you return nil, means to generate the data from the image instance, see `LoadImageCache`.
  * For example, if you are using WebP images and facing the slow decoding time issue when later retrieving from disk cache again. You can try to encode the decoded image to JPEG/PNG format to disk cache instead of source downloaded data.
  * @note The `image` arg is nonnull, but when you also provide an image transformer and the image is transformed, the `data` arg may be nil, take attention to this case.
  * @note This method is called from a global queue in order to not to block the main thread.
  * @code
  ImageLoaderManager.sharedManager.cacheSerializer = [ImageLoaderCacheSerializer cacheSerializerWithBlock:^NSData * _Nullable(UIImage * _Nonnull image, NSData * _Nullable data, NSURL * _Nullable imageURL) {
-    SDImageFormat format = [NSData sd_imageFormatForImageData:data];
+    LoadImageFormat format = [NSData sd_imageFormatForImageData:data];
     switch (format) {
-        case SDImageFormatWebP:
+        case LoadImageFormatWebP:
             return image.images ? data : nil;
         default:
             return data;
@@ -190,15 +190,15 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
 
 /**
  The default image cache when the manager which is created with no arguments. Such as shared manager or init.
- Defaults to nil. Means using `SDImageCache.sharedImageCache`
+ Defaults to nil. Means using `LoadImageCache.sharedImageCache`
  */
-@property (nonatomic, class, nullable) id<SDImageCache> defaultImageCache;
+@property (nonatomic, class, nullable) id<LoadImageCache> defaultImageCache;
 
 /**
  The default image loader for manager which is created with no arguments. Such as shared manager or init.
  Defaults to nil. Means using `ImageLoaderDownloader.sharedDownloader`
  */
-@property (nonatomic, class, nullable) id<SDImageLoader> defaultImageLoader;
+@property (nonatomic, class, nullable) id<LoadImageLoader> defaultImageLoader;
 
 /**
  * Returns global shared manager instance.
@@ -209,7 +209,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
  * Allows to specify instance of cache and image loader used with image manager.
  * @return new instance of `ImageLoaderManager` with specified cache and loader.
  */
-- (nonnull instancetype)initWithCache:(nonnull id<SDImageCache>)cache loader:(nonnull id<SDImageLoader>)loader NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCache:(nonnull id<LoadImageCache>)cache loader:(nonnull id<LoadImageLoader>)loader NS_DESIGNATED_INITIALIZER;
 
 /**
  * Downloads the image at the given URL if not present in cache or return the cached version otherwise.
@@ -225,7 +225,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
  *   This block has no return value and takes the requested UIImage as first parameter and the NSData representation as second parameter.
  *   In case of error the image parameter is nil and the third parameter may contain an NSError.
  *
- *   The forth parameter is an `SDImageCacheType` enum indicating if the image was retrieved from the local cache
+ *   The forth parameter is an `LoadImageCacheType` enum indicating if the image was retrieved from the local cache
  *   or from the memory cache or from the network.
  *
  *   The fifth parameter is set to NO when the ImageLoaderProgressiveLoad option is used and the image is
@@ -238,7 +238,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
  */
 - (nullable ImageLoaderCombinedOperation *)loadImageWithURL:(nullable NSURL *)url
                                                    options:(ImageLoaderOptions)options
-                                                  progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                                  progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                                  completed:(nonnull SDInternalCompletionBlock)completedBlock;
 
 /**
@@ -256,7 +256,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
 - (nullable ImageLoaderCombinedOperation *)loadImageWithURL:(nullable NSURL *)url
                                                    options:(ImageLoaderOptions)options
                                                    context:(nullable ImageLoaderContext *)context
-                                                  progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                                  progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                                  completed:(nonnull SDInternalCompletionBlock)completedBlock;
 
 /**

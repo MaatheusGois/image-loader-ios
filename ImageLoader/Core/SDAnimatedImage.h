@@ -7,7 +7,7 @@
  */
 
 #import "ImageLoaderCompat.h"
-#import "SDImageCoder.h"
+#import "LoadImageCoder.h"
 
 
 /**
@@ -25,7 +25,7 @@
  @param options A dictionary containing any animation decoding options.
  @return An initialized object
  */
-- (nullable instancetype)initWithData:(nonnull NSData *)data scale:(CGFloat)scale options:(nullable SDImageCoderOptions *)options;
+- (nullable instancetype)initWithData:(nonnull NSData *)data scale:(CGFloat)scale options:(nullable LoadImageCoderOptions *)options;
 
 /**
  Initializes the image with an animated coder. You can use the coder to decode the image frame later.
@@ -89,7 +89,7 @@
 /**
  Current animated image format.
  */
-@property (nonatomic, assign, readonly) SDImageFormat animatedImageFormat;
+@property (nonatomic, assign, readonly) LoadImageFormat animatedImageFormat;
 
 /**
  Current animated image data, you can use this to grab the compressed format data and create another animated image instance.

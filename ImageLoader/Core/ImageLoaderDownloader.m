@@ -11,7 +11,7 @@
 #import "ImageLoaderDownloaderOperation.h"
 #import "ImageLoaderError.h"
 #import "ImageLoaderCacheKeyFilter.h"
-#import "SDImageCacheDefine.h"
+#import "LoadImageCacheDefine.h"
 #import "SDInternalMacros.h"
 #import "objc/runtime.h"
 
@@ -232,7 +232,7 @@ void ImageLoaderDownloaderOperationSetCompleted(id<ImageLoaderDownloaderOperatio
     } else {
         cacheKey = url.absoluteString;
     }
-    SDImageCoderOptions *decodeOptions = SDGetDecodeOptionsFromContext(context, [self.class imageOptionsFromDownloaderOptions:options], cacheKey);
+    LoadImageCoderOptions *decodeOptions = SDGetDecodeOptionsFromContext(context, [self.class imageOptionsFromDownloaderOptions:options], cacheKey);
     SD_LOCK(_operationsLock);
     NSOperation<ImageLoaderDownloaderOperation> *operation = [self.URLOperations objectForKey:url];
     // There is a case that the operation may be marked as finished or cancelled, but not been removed from `self.URLOperations`.
@@ -307,7 +307,7 @@ void ImageLoaderDownloaderOperationSetCompleted(id<ImageLoaderDownloaderOperatio
         timeoutInterval = 15.0;
     }
     
-    // In order to prevent from potential duplicate caching (NSURLCache + SDImageCache) we disable the cache for image requests if told otherwise
+    // In order to prevent from potential duplicate caching (NSURLCache + LoadImageCache) we disable the cache for image requests if told otherwise
     NSURLRequestCachePolicy cachePolicy = options & ImageLoaderDownloaderUseNSURLCache ? NSURLRequestUseProtocolCachePolicy : NSURLRequestReloadIgnoringLocalCacheData;
     NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:cachePolicy timeoutInterval:timeoutInterval];
     mutableRequest.HTTPShouldHandleCookies = SD_OPTIONS_CONTAINS(options, ImageLoaderDownloaderHandleCookies);
@@ -611,7 +611,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 @end
 
-@implementation ImageLoaderDownloader (SDImageLoader)
+@implementation ImageLoaderDownloader (LoadImageLoader)
 
 - (BOOL)canRequestImageForURL:(NSURL *)url {
     return [self canRequestImageForURL:url options:0 context:nil];
@@ -625,7 +625,7 @@ didReceiveResponse:(NSURLResponse *)response
     return YES;
 }
 
-- (id<ImageLoaderOperation>)requestImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options context:(ImageLoaderContext *)context progress:(SDImageLoaderProgressBlock)progressBlock completed:(SDImageLoaderCompletedBlock)completedBlock {
+- (id<ImageLoaderOperation>)requestImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options context:(ImageLoaderContext *)context progress:(LoadImageLoaderProgressBlock)progressBlock completed:(LoadImageLoaderCompletedBlock)completedBlock {
     UIImage *cachedImage = context[ImageLoaderContextLoaderCachedImage];
     
     ImageLoaderDownloaderOptions downloaderOptions = 0;

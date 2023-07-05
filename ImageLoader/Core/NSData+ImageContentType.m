@@ -13,15 +13,15 @@
 #else
 #import <MobileCoreServices/MobileCoreServices.h>
 #endif
-#import "SDImageIOAnimatedCoderInternal.h"
+#import "LoadImageIOAnimatedCoderInternal.h"
 
 #define kSVGTagEnd @"</svg>"
 
 @implementation NSData (ImageContentType)
 
-+ (SDImageFormat)sd_imageFormatForImageData:(nullable NSData *)data {
++ (LoadImageFormat)sd_imageFormatForImageData:(nullable NSData *)data {
     if (!data) {
-        return SDImageFormatUndefined;
+        return LoadImageFormatUndefined;
     }
     
     // File signatures table: http://www.garykessler.net/library/file_sigs.html
@@ -29,22 +29,22 @@
     [data getBytes:&c length:1];
     switch (c) {
         case 0xFF:
-            return SDImageFormatJPEG;
+            return LoadImageFormatJPEG;
         case 0x89:
-            return SDImageFormatPNG;
+            return LoadImageFormatPNG;
         case 0x47:
-            return SDImageFormatGIF;
+            return LoadImageFormatGIF;
         case 0x49:
         case 0x4D:
-            return SDImageFormatTIFF;
+            return LoadImageFormatTIFF;
         case 0x42:
-            return SDImageFormatBMP;
+            return LoadImageFormatBMP;
         case 0x52: {
             if (data.length >= 12) {
                 //RIFF....WEBP
                 NSString *testString = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(0, 12)] encoding:NSASCIIStringEncoding];
                 if ([testString hasPrefix:@"RIFF"] && [testString hasSuffix:@"WEBP"]) {
-                    return SDImageFormatWebP;
+                    return LoadImageFormatWebP;
                 }
             }
             break;
@@ -57,11 +57,11 @@
                     || [testString isEqualToString:@"ftypheix"]
                     || [testString isEqualToString:@"ftyphevc"]
                     || [testString isEqualToString:@"ftyphevx"]) {
-                    return SDImageFormatHEIC;
+                    return LoadImageFormatHEIC;
                 }
                 //....ftypmif1 ....ftypmsf1
                 if ([testString isEqualToString:@"ftypmif1"] || [testString isEqualToString:@"ftypmsf1"]) {
-                    return SDImageFormatHEIF;
+                    return LoadImageFormatHEIF;
                 }
             }
             break;
@@ -71,54 +71,54 @@
                 //%PDF
                 NSString *testString = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(1, 3)] encoding:NSASCIIStringEncoding];
                 if ([testString isEqualToString:@"PDF"]) {
-                    return SDImageFormatPDF;
+                    return LoadImageFormatPDF;
                 }
             }
         }
         case 0x3C: {
             // Check end with SVG tag
             if ([data rangeOfData:[kSVGTagEnd dataUsingEncoding:NSUTF8StringEncoding] options:NSDataSearchBackwards range: NSMakeRange(data.length - MIN(100, data.length), MIN(100, data.length))].location != NSNotFound) {
-                return SDImageFormatSVG;
+                return LoadImageFormatSVG;
             }
         }
     }
-    return SDImageFormatUndefined;
+    return LoadImageFormatUndefined;
 }
 
-+ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(SDImageFormat)format {
++ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(LoadImageFormat)format {
     CFStringRef UTType;
     switch (format) {
-        case SDImageFormatJPEG:
+        case LoadImageFormatJPEG:
             UTType = kSDUTTypeJPEG;
             break;
-        case SDImageFormatPNG:
+        case LoadImageFormatPNG:
             UTType = kSDUTTypePNG;
             break;
-        case SDImageFormatGIF:
+        case LoadImageFormatGIF:
             UTType = kSDUTTypeGIF;
             break;
-        case SDImageFormatTIFF:
+        case LoadImageFormatTIFF:
             UTType = kSDUTTypeTIFF;
             break;
-        case SDImageFormatWebP:
+        case LoadImageFormatWebP:
             UTType = kSDUTTypeWebP;
             break;
-        case SDImageFormatHEIC:
+        case LoadImageFormatHEIC:
             UTType = kSDUTTypeHEIC;
             break;
-        case SDImageFormatHEIF:
+        case LoadImageFormatHEIF:
             UTType = kSDUTTypeHEIF;
             break;
-        case SDImageFormatPDF:
+        case LoadImageFormatPDF:
             UTType = kSDUTTypePDF;
             break;
-        case SDImageFormatSVG:
+        case LoadImageFormatSVG:
             UTType = kSDUTTypeSVG;
             break;
-        case SDImageFormatBMP:
+        case LoadImageFormatBMP:
             UTType = kSDUTTypeBMP;
             break;
-        case SDImageFormatRAW:
+        case LoadImageFormatRAW:
             UTType = kSDUTTypeRAW;
             break;
         default:
@@ -129,35 +129,35 @@
     return UTType;
 }
 
-+ (SDImageFormat)sd_imageFormatFromUTType:(CFStringRef)uttype {
++ (LoadImageFormat)sd_imageFormatFromUTType:(CFStringRef)uttype {
     if (!uttype) {
-        return SDImageFormatUndefined;
+        return LoadImageFormatUndefined;
     }
-    SDImageFormat imageFormat;
+    LoadImageFormat imageFormat;
     if (CFStringCompare(uttype, kSDUTTypeJPEG, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatJPEG;
+        imageFormat = LoadImageFormatJPEG;
     } else if (CFStringCompare(uttype, kSDUTTypePNG, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatPNG;
+        imageFormat = LoadImageFormatPNG;
     } else if (CFStringCompare(uttype, kSDUTTypeGIF, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatGIF;
+        imageFormat = LoadImageFormatGIF;
     } else if (CFStringCompare(uttype, kSDUTTypeTIFF, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatTIFF;
+        imageFormat = LoadImageFormatTIFF;
     } else if (CFStringCompare(uttype, kSDUTTypeWebP, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatWebP;
+        imageFormat = LoadImageFormatWebP;
     } else if (CFStringCompare(uttype, kSDUTTypeHEIC, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatHEIC;
+        imageFormat = LoadImageFormatHEIC;
     } else if (CFStringCompare(uttype, kSDUTTypeHEIF, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatHEIF;
+        imageFormat = LoadImageFormatHEIF;
     } else if (CFStringCompare(uttype, kSDUTTypePDF, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatPDF;
+        imageFormat = LoadImageFormatPDF;
     } else if (CFStringCompare(uttype, kSDUTTypeSVG, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatSVG;
+        imageFormat = LoadImageFormatSVG;
     } else if (CFStringCompare(uttype, kSDUTTypeBMP, 0) == kCFCompareEqualTo) {
-        imageFormat = SDImageFormatBMP;
+        imageFormat = LoadImageFormatBMP;
     } else if (UTTypeConformsTo(uttype, kSDUTTypeRAW)) {
-        imageFormat = SDImageFormatRAW;
+        imageFormat = LoadImageFormatRAW;
     } else {
-        imageFormat = SDImageFormatUndefined;
+        imageFormat = LoadImageFormatUndefined;
     }
     return imageFormat;
 }

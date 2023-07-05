@@ -147,7 +147,7 @@
             if (!self || asyncOperation.isCancelled) {
                 return;
             }
-            id<ImageLoaderOperation> operation = [self.manager loadImageWithURL:url options:token.options context:token.context progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+            id<ImageLoaderOperation> operation = [self.manager loadImageWithURL:url options:token.options context:token.context progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, LoadImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
                 @strongify(self);
                 if (!self) {
                     return;

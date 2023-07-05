@@ -7,7 +7,7 @@
  */
 
 #import "ImageLoaderManager.h"
-#import "SDImageCache.h"
+#import "LoadImageCache.h"
 #import "ImageLoaderDownloader.h"
 #import "UIImage+Metadata.h"
 #import "SDAssociatedObject.h"
@@ -15,8 +15,8 @@
 #import "SDInternalMacros.h"
 #import "SDCallbackQueue.h"
 
-static id<SDImageCache> _defaultImageCache;
-static id<SDImageLoader> _defaultImageLoader;
+static id<LoadImageCache> _defaultImageCache;
+static id<LoadImageLoader> _defaultImageLoader;
 
 @interface ImageLoaderCombinedOperation ()
 
@@ -32,8 +32,8 @@ static id<SDImageLoader> _defaultImageLoader;
     SD_LOCK_DECLARE(_runningOperationsLock); // a lock to keep the access to `runningOperations` thread-safe
 }
 
-@property (strong, nonatomic, readwrite, nonnull) SDImageCache *imageCache;
-@property (strong, nonatomic, readwrite, nonnull) id<SDImageLoader> imageLoader;
+@property (strong, nonatomic, readwrite, nonnull) LoadImageCache *imageCache;
+@property (strong, nonatomic, readwrite, nonnull) id<LoadImageLoader> imageLoader;
 @property (strong, nonatomic, nonnull) NSMutableSet<NSURL *> *failedURLs;
 @property (strong, nonatomic, nonnull) NSMutableSet<ImageLoaderCombinedOperation *> *runningOperations;
 
@@ -41,23 +41,23 @@ static id<SDImageLoader> _defaultImageLoader;
 
 @implementation ImageLoaderManager
 
-+ (id<SDImageCache>)defaultImageCache {
++ (id<LoadImageCache>)defaultImageCache {
     return _defaultImageCache;
 }
 
-+ (void)setDefaultImageCache:(id<SDImageCache>)defaultImageCache {
-    if (defaultImageCache && ![defaultImageCache conformsToProtocol:@protocol(SDImageCache)]) {
++ (void)setDefaultImageCache:(id<LoadImageCache>)defaultImageCache {
+    if (defaultImageCache && ![defaultImageCache conformsToProtocol:@protocol(LoadImageCache)]) {
         return;
     }
     _defaultImageCache = defaultImageCache;
 }
 
-+ (id<SDImageLoader>)defaultImageLoader {
++ (id<LoadImageLoader>)defaultImageLoader {
     return _defaultImageLoader;
 }
 
-+ (void)setDefaultImageLoader:(id<SDImageLoader>)defaultImageLoader {
-    if (defaultImageLoader && ![defaultImageLoader conformsToProtocol:@protocol(SDImageLoader)]) {
++ (void)setDefaultImageLoader:(id<LoadImageLoader>)defaultImageLoader {
+    if (defaultImageLoader && ![defaultImageLoader conformsToProtocol:@protocol(LoadImageLoader)]) {
         return;
     }
     _defaultImageLoader = defaultImageLoader;
@@ -73,18 +73,18 @@ static id<SDImageLoader> _defaultImageLoader;
 }
 
 - (nonnull instancetype)init {
-    id<SDImageCache> cache = [[self class] defaultImageCache];
+    id<LoadImageCache> cache = [[self class] defaultImageCache];
     if (!cache) {
-        cache = [SDImageCache sharedImageCache];
+        cache = [LoadImageCache sharedImageCache];
     }
-    id<SDImageLoader> loader = [[self class] defaultImageLoader];
+    id<LoadImageLoader> loader = [[self class] defaultImageLoader];
     if (!loader) {
         loader = [ImageLoaderDownloader sharedDownloader];
     }
     return [self initWithCache:cache loader:loader];
 }
 
-- (nonnull instancetype)initWithCache:(nonnull id<SDImageCache>)cache loader:(nonnull id<SDImageLoader>)loader {
+- (nonnull instancetype)initWithCache:(nonnull id<LoadImageCache>)cache loader:(nonnull id<LoadImageLoader>)loader {
     if ((self = [super init])) {
         _imageCache = cache;
         _imageLoader = loader;
@@ -168,7 +168,7 @@ static id<SDImageLoader> _defaultImageLoader;
     }
     
     // Transformer Key Appending
-    id<SDImageTransformer> transformer = self.transformer;
+    id<LoadImageTransformer> transformer = self.transformer;
     if (context[ImageLoaderContextImageTransformer]) {
         transformer = context[ImageLoaderContextImageTransformer];
         if ([transformer isEqual:NSNull.null]) {
@@ -182,14 +182,14 @@ static id<SDImageLoader> _defaultImageLoader;
     return key;
 }
 
-- (ImageLoaderCombinedOperation *)loadImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options progress:(SDImageLoaderProgressBlock)progressBlock completed:(SDInternalCompletionBlock)completedBlock {
+- (ImageLoaderCombinedOperation *)loadImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options progress:(LoadImageLoaderProgressBlock)progressBlock completed:(SDInternalCompletionBlock)completedBlock {
     return [self loadImageWithURL:url options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
 - (ImageLoaderCombinedOperation *)loadImageWithURL:(nullable NSURL *)url
                                           options:(ImageLoaderOptions)options
                                           context:(nullable ImageLoaderContext *)context
-                                         progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                         progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                         completed:(nonnull SDInternalCompletionBlock)completedBlock {
     // Invoking this method without a completedBlock is pointless
     NSAssert(completedBlock != nil, @"If you mean to prefetch the image, use -[ImageLoaderPrefetcher prefetchURLs] instead");
@@ -284,15 +284,15 @@ static id<SDImageLoader> _defaultImageLoader;
                                  url:(nonnull NSURL *)url
                              options:(ImageLoaderOptions)options
                              context:(nullable ImageLoaderContext *)context
-                            progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                            progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                            completed:(nullable SDInternalCompletionBlock)completedBlock {
     // Grab the image cache to use
-    id<SDImageCache> imageCache = context[ImageLoaderContextImageCache];
+    id<LoadImageCache> imageCache = context[ImageLoaderContextImageCache];
     if (!imageCache) {
         imageCache = self.imageCache;
     }
     // Get the query cache type
-    SDImageCacheType queryCacheType = SDImageCacheTypeAll;
+    LoadImageCacheType queryCacheType = LoadImageCacheTypeAll;
     if (context[ImageLoaderContextQueryCacheType]) {
         queryCacheType = [context[ImageLoaderContextQueryCacheType] integerValue];
     }
@@ -303,7 +303,7 @@ static id<SDImageLoader> _defaultImageLoader;
         // transformed cache key
         NSString *key = [self cacheKeyForURL:url context:context];
         @weakify(operation);
-        operation.cacheOperation = [imageCache queryImageForKey:key options:options context:context cacheType:queryCacheType completion:^(UIImage * _Nullable cachedImage, NSData * _Nullable cachedData, SDImageCacheType cacheType) {
+        operation.cacheOperation = [imageCache queryImageForKey:key options:options context:context cacheType:queryCacheType completion:^(UIImage * _Nullable cachedImage, NSData * _Nullable cachedData, LoadImageCacheType cacheType) {
             @strongify(operation);
             if (!operation || operation.isCancelled) {
                 // Image combined operation cancelled by user
@@ -314,7 +314,7 @@ static id<SDImageLoader> _defaultImageLoader;
                 NSString *originKey = [self originalCacheKeyForURL:url context:context];
                 BOOL mayInOriginalCache = ![key isEqualToString:originKey];
                 // Have a chance to query original cache instead of downloading, then applying transform
-                // Thumbnail decoding is done inside SDImageCache's decoding part, which does not need post processing for transform
+                // Thumbnail decoding is done inside LoadImageCache's decoding part, which does not need post processing for transform
                 if (mayInOriginalCache) {
                     [self callOriginalCacheProcessForOperation:operation url:url options:options context:context progress:progressBlock completed:completedBlock];
                     return;
@@ -325,7 +325,7 @@ static id<SDImageLoader> _defaultImageLoader;
         }];
     } else {
         // Continue download process
-        [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:SDImageCacheTypeNone progress:progressBlock completed:completedBlock];
+        [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:LoadImageCacheTypeNone progress:progressBlock completed:completedBlock];
     }
 }
 
@@ -334,10 +334,10 @@ static id<SDImageLoader> _defaultImageLoader;
                                          url:(nonnull NSURL *)url
                                      options:(ImageLoaderOptions)options
                                      context:(nullable ImageLoaderContext *)context
-                                    progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                    progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                    completed:(nullable SDInternalCompletionBlock)completedBlock {
     // Grab the image cache to use, choose standalone original cache firstly
-    id<SDImageCache> imageCache = context[ImageLoaderContextOriginalImageCache];
+    id<LoadImageCache> imageCache = context[ImageLoaderContextOriginalImageCache];
     if (!imageCache) {
         // if no standalone cache available, use default cache
         imageCache = context[ImageLoaderContextImageCache];
@@ -346,18 +346,18 @@ static id<SDImageLoader> _defaultImageLoader;
         }
     }
     // Get the original query cache type
-    SDImageCacheType originalQueryCacheType = SDImageCacheTypeDisk;
+    LoadImageCacheType originalQueryCacheType = LoadImageCacheTypeDisk;
     if (context[ImageLoaderContextOriginalQueryCacheType]) {
         originalQueryCacheType = [context[ImageLoaderContextOriginalQueryCacheType] integerValue];
     }
     
     // Check whether we should query original cache
-    BOOL shouldQueryOriginalCache = (originalQueryCacheType != SDImageCacheTypeNone);
+    BOOL shouldQueryOriginalCache = (originalQueryCacheType != LoadImageCacheTypeNone);
     if (shouldQueryOriginalCache) {
         // Get original cache key generation without transformer
         NSString *key = [self originalCacheKeyForURL:url context:context];
         @weakify(operation);
-        operation.cacheOperation = [imageCache queryImageForKey:key options:options context:context cacheType:originalQueryCacheType completion:^(UIImage * _Nullable cachedImage, NSData * _Nullable cachedData, SDImageCacheType cacheType) {
+        operation.cacheOperation = [imageCache queryImageForKey:key options:options context:context cacheType:originalQueryCacheType completion:^(UIImage * _Nullable cachedImage, NSData * _Nullable cachedData, LoadImageCacheType cacheType) {
             @strongify(operation);
             if (!operation || operation.isCancelled) {
                 // Image combined operation cancelled by user
@@ -366,7 +366,7 @@ static id<SDImageLoader> _defaultImageLoader;
                 return;
             } else if (!cachedImage) {
                 // Original image cache miss. Continue download process
-                [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:SDImageCacheTypeNone progress:progressBlock completed:completedBlock];
+                [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:LoadImageCacheTypeNone progress:progressBlock completed:completedBlock];
                 return;
             }
                         
@@ -377,7 +377,7 @@ static id<SDImageLoader> _defaultImageLoader;
         }];
     } else {
         // Continue download process
-        [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:SDImageCacheTypeNone progress:progressBlock completed:completedBlock];
+        [self callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:nil cachedData:nil cacheType:LoadImageCacheTypeNone progress:progressBlock completed:completedBlock];
     }
 }
 
@@ -388,8 +388,8 @@ static id<SDImageLoader> _defaultImageLoader;
                                 context:(ImageLoaderContext *)context
                             cachedImage:(nullable UIImage *)cachedImage
                              cachedData:(nullable NSData *)cachedData
-                              cacheType:(SDImageCacheType)cacheType
-                               progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                              cacheType:(LoadImageCacheType)cacheType
+                               progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                               completed:(nullable SDInternalCompletionBlock)completedBlock {
     // Mark the cache operation end
     @synchronized (operation) {
@@ -397,7 +397,7 @@ static id<SDImageLoader> _defaultImageLoader;
     }
     
     // Grab the image loader to use
-    id<SDImageLoader> imageLoader = context[ImageLoaderContextImageLoader];
+    id<LoadImageLoader> imageLoader = context[ImageLoaderContextImageLoader];
     if (!imageLoader) {
         imageLoader = self.imageLoader;
     }
@@ -454,7 +454,7 @@ static id<SDImageLoader> _defaultImageLoader;
                     SD_UNLOCK(self->_failedURLsLock);
                 }
                 // Continue transform process
-                [self callTransformProcessForOperation:operation url:url options:options context:context originalImage:downloadedImage originalData:downloadedData cacheType:SDImageCacheTypeNone finished:finished completed:completedBlock];
+                [self callTransformProcessForOperation:operation url:url options:options context:context originalImage:downloadedImage originalData:downloadedData cacheType:LoadImageCacheTypeNone finished:finished completed:completedBlock];
             }
             
             if (finished) {
@@ -466,7 +466,7 @@ static id<SDImageLoader> _defaultImageLoader;
         [self safelyRemoveOperationFromRunning:operation];
     } else {
         // Image not in cache and download disallowed by delegate
-        [self callCompletionBlockForOperation:operation completion:completedBlock image:nil data:nil error:nil cacheType:SDImageCacheTypeNone finished:YES queue:context[ImageLoaderContextCallbackQueue] url:url];
+        [self callCompletionBlockForOperation:operation completion:completedBlock image:nil data:nil error:nil cacheType:LoadImageCacheTypeNone finished:YES queue:context[ImageLoaderContextCallbackQueue] url:url];
         [self safelyRemoveOperationFromRunning:operation];
     }
 }
@@ -478,10 +478,10 @@ static id<SDImageLoader> _defaultImageLoader;
                                  context:(ImageLoaderContext *)context
                            originalImage:(nullable UIImage *)originalImage
                             originalData:(nullable NSData *)originalData
-                               cacheType:(SDImageCacheType)cacheType
+                               cacheType:(LoadImageCacheType)cacheType
                                 finished:(BOOL)finished
                                completed:(nullable SDInternalCompletionBlock)completedBlock {
-    id<SDImageTransformer> transformer = context[ImageLoaderContextImageTransformer];
+    id<LoadImageTransformer> transformer = context[ImageLoaderContextImageTransformer];
     if ([transformer isEqual:NSNull.null]) {
         transformer = nil;
     }
@@ -525,11 +525,11 @@ static id<SDImageLoader> _defaultImageLoader;
                                      cacheImage:(nullable UIImage *)cacheImage
                                    originalData:(nullable NSData *)originalData
                                       cacheData:(nullable NSData *)cacheData
-                                      cacheType:(SDImageCacheType)cacheType
+                                      cacheType:(LoadImageCacheType)cacheType
                                        finished:(BOOL)finished
                                       completed:(nullable SDInternalCompletionBlock)completedBlock {
     // Grab the image cache to use, choose standalone original cache firstly
-    id<SDImageCache> imageCache = context[ImageLoaderContextOriginalImageCache];
+    id<LoadImageCache> imageCache = context[ImageLoaderContextOriginalImageCache];
     if (!imageCache) {
         // if no standalone cache available, use default cache
         imageCache = context[ImageLoaderContextImageCache];
@@ -538,7 +538,7 @@ static id<SDImageLoader> _defaultImageLoader;
         }
     }
     // the original store image cache type
-    SDImageCacheType originalStoreCacheType = SDImageCacheTypeDisk;
+    LoadImageCacheType originalStoreCacheType = LoadImageCacheTypeDisk;
     if (context[ImageLoaderContextOriginalStoreCacheType]) {
         originalStoreCacheType = [context[ImageLoaderContextOriginalStoreCacheType] integerValue];
     }
@@ -546,14 +546,14 @@ static id<SDImageLoader> _defaultImageLoader;
     
     // If the original cacheType is disk, since we don't need to store the original data again
     // Strip the disk from the originalStoreCacheType
-    if (cacheType == SDImageCacheTypeDisk) {
-        if (originalStoreCacheType == SDImageCacheTypeDisk) originalStoreCacheType = SDImageCacheTypeNone;
-        if (originalStoreCacheType == SDImageCacheTypeAll) originalStoreCacheType = SDImageCacheTypeMemory;
+    if (cacheType == LoadImageCacheTypeDisk) {
+        if (originalStoreCacheType == LoadImageCacheTypeDisk) originalStoreCacheType = LoadImageCacheTypeNone;
+        if (originalStoreCacheType == LoadImageCacheTypeAll) originalStoreCacheType = LoadImageCacheTypeMemory;
     }
     
     // Get original cache key generation without transformer
     NSString *key = [self originalCacheKeyForURL:url context:context];
-    if (finished && cacheSerializer && (originalStoreCacheType == SDImageCacheTypeDisk || originalStoreCacheType == SDImageCacheTypeAll)) {
+    if (finished && cacheSerializer && (originalStoreCacheType == LoadImageCacheTypeDisk || originalStoreCacheType == LoadImageCacheTypeAll)) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSData *newOriginalData = [cacheSerializer cacheDataWithImage:originalImage originalData:originalData imageURL:url];
             // Store original image and data
@@ -578,16 +578,16 @@ static id<SDImageLoader> _defaultImageLoader;
                                   context:(ImageLoaderContext *)context
                                     image:(nullable UIImage *)image
                                      data:(nullable NSData *)data
-                                cacheType:(SDImageCacheType)cacheType
+                                cacheType:(LoadImageCacheType)cacheType
                                  finished:(BOOL)finished
                                 completed:(nullable SDInternalCompletionBlock)completedBlock {
     // Grab the image cache to use
-    id<SDImageCache> imageCache = context[ImageLoaderContextImageCache];
+    id<LoadImageCache> imageCache = context[ImageLoaderContextImageCache];
     if (!imageCache) {
         imageCache = self.imageCache;
     }
     // the target image store cache type
-    SDImageCacheType storeCacheType = SDImageCacheTypeAll;
+    LoadImageCacheType storeCacheType = LoadImageCacheTypeAll;
     if (context[ImageLoaderContextStoreCacheType]) {
         storeCacheType = [context[ImageLoaderContextStoreCacheType] integerValue];
     }
@@ -595,7 +595,7 @@ static id<SDImageLoader> _defaultImageLoader;
     
     // transformed cache key
     NSString *key = [self cacheKeyForURL:url context:context];
-    if (finished && cacheSerializer && (storeCacheType == SDImageCacheTypeDisk || storeCacheType == SDImageCacheTypeAll)) {
+    if (finished && cacheSerializer && (storeCacheType == LoadImageCacheTypeDisk || storeCacheType == LoadImageCacheTypeAll)) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSData *newData = [cacheSerializer cacheDataWithImage:image originalData:data imageURL:url];
             // Store image and data
@@ -627,8 +627,8 @@ static id<SDImageLoader> _defaultImageLoader;
             forKey:(nullable NSString *)key
            options:(ImageLoaderOptions)options
            context:(nullable ImageLoaderContext *)context
-        imageCache:(nonnull id<SDImageCache>)imageCache
-         cacheType:(SDImageCacheType)cacheType
+        imageCache:(nonnull id<LoadImageCache>)imageCache
+         cacheType:(LoadImageCacheType)cacheType
           finished:(BOOL)finished
         completion:(nullable ImageLoaderNoParamsBlock)completion {
     BOOL waitStoreCache = SD_OPTIONS_CONTAINS(options, ImageLoaderWaitStoreCache);
@@ -669,7 +669,7 @@ static id<SDImageLoader> _defaultImageLoader;
                                   error:(nullable NSError *)error
                                   queue:(nullable SDCallbackQueue *)queue
                                     url:(nullable NSURL *)url {
-    [self callCompletionBlockForOperation:operation completion:completionBlock image:nil data:nil error:error cacheType:SDImageCacheTypeNone finished:YES queue:queue url:url];
+    [self callCompletionBlockForOperation:operation completion:completionBlock image:nil data:nil error:error cacheType:LoadImageCacheTypeNone finished:YES queue:queue url:url];
 }
 
 - (void)callCompletionBlockForOperation:(nullable ImageLoaderCombinedOperation*)operation
@@ -677,7 +677,7 @@ static id<SDImageLoader> _defaultImageLoader;
                                   image:(nullable UIImage *)image
                                    data:(nullable NSData *)data
                                   error:(nullable NSError *)error
-                              cacheType:(SDImageCacheType)cacheType
+                              cacheType:(LoadImageCacheType)cacheType
                                finished:(BOOL)finished
                                   queue:(nullable SDCallbackQueue *)queue
                                     url:(nullable NSURL *)url {
@@ -692,7 +692,7 @@ static id<SDImageLoader> _defaultImageLoader;
                               error:(nonnull NSError *)error
                             options:(ImageLoaderOptions)options
                             context:(nullable ImageLoaderContext *)context {
-    id<SDImageLoader> imageLoader = context[ImageLoaderContextImageLoader];
+    id<LoadImageLoader> imageLoader = context[ImageLoaderContextImageLoader];
     if (!imageLoader) {
         imageLoader = self.imageLoader;
     }
@@ -717,7 +717,7 @@ static id<SDImageLoader> _defaultImageLoader;
     
     // Image Transformer from manager
     if (!context[ImageLoaderContextImageTransformer]) {
-        id<SDImageTransformer> transformer = self.transformer;
+        id<LoadImageTransformer> transformer = self.transformer;
         [mutableContext setValue:transformer forKey:ImageLoaderContextImageTransformer];
     }
     // Cache key filter from manager

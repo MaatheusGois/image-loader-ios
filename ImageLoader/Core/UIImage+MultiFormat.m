@@ -7,7 +7,7 @@
  */
 
 #import "UIImage+MultiFormat.h"
-#import "SDImageCodersManager.h"
+#import "LoadImageCodersManager.h"
 
 @implementation UIImage (MultiFormat)
 
@@ -23,25 +23,25 @@
     if (!data) {
         return nil;
     }
-    SDImageCoderOptions *options = @{SDImageCoderDecodeScaleFactor : @(MAX(scale, 1)), SDImageCoderDecodeFirstFrameOnly : @(firstFrameOnly)};
-    return [[SDImageCodersManager sharedManager] decodedImageWithData:data options:options];
+    LoadImageCoderOptions *options = @{LoadImageCoderDecodeScaleFactor : @(MAX(scale, 1)), LoadImageCoderDecodeFirstFrameOnly : @(firstFrameOnly)};
+    return [[LoadImageCodersManager sharedManager] decodedImageWithData:data options:options];
 }
 
 - (nullable NSData *)sd_imageData {
-    return [self sd_imageDataAsFormat:SDImageFormatUndefined];
+    return [self sd_imageDataAsFormat:LoadImageFormatUndefined];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(SDImageFormat)imageFormat {
+- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat {
     return [self sd_imageDataAsFormat:imageFormat compressionQuality:1];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(SDImageFormat)imageFormat compressionQuality:(double)compressionQuality {
+- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality {
     return [self sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:NO];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(SDImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
-    SDImageCoderOptions *options = @{SDImageCoderEncodeCompressionQuality : @(compressionQuality), SDImageCoderEncodeFirstFrameOnly : @(firstFrameOnly)};
-    return [[SDImageCodersManager sharedManager] encodedDataWithImage:self format:imageFormat options:options];
+- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
+    LoadImageCoderOptions *options = @{LoadImageCoderEncodeCompressionQuality : @(compressionQuality), LoadImageCoderEncodeFirstFrameOnly : @(firstFrameOnly)};
+    return [[LoadImageCodersManager sharedManager] encodedDataWithImage:self format:imageFormat options:options];
 }
 
 @end

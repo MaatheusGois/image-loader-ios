@@ -143,7 +143,7 @@
 - (void)sd_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
-                  progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                  progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -167,7 +167,7 @@
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context
-                  progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                  progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 #pragma mark - Alternate Image
@@ -296,7 +296,7 @@
 - (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
-                           progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                           progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                           completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -320,7 +320,7 @@
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                             context:(nullable ImageLoaderContext *)context
-                           progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                           progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                           completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 #pragma mark - Cancel

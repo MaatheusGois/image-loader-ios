@@ -7,7 +7,7 @@
 */
 
 #import "SDGraphicsImageRenderer.h"
-#import "SDImageGraphics.h"
+#import "LoadImageGraphics.h"
 
 @interface SDGraphicsImageRendererFormat ()
 #if SD_UIKIT

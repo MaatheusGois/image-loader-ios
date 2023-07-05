@@ -8,7 +8,7 @@
 
 #import "UIImage+Transform.h"
 #import "NSImage+Compatibility.h"
-#import "SDImageGraphics.h"
+#import "LoadImageGraphics.h"
 #import "SDGraphicsImageRenderer.h"
 #import "NSBezierPath+SDRoundedCorners.h"
 #import <Accelerate/Accelerate.h>
@@ -16,21 +16,21 @@
 #import <CoreImage/CoreImage.h>
 #endif
 
-static inline CGRect SDCGRectFitWithScaleMode(CGRect rect, CGSize size, SDImageScaleMode scaleMode) {
+static inline CGRect SDCGRectFitWithScaleMode(CGRect rect, CGSize size, LoadImageScaleMode scaleMode) {
     rect = CGRectStandardize(rect);
     size.width = size.width < 0 ? -size.width : size.width;
     size.height = size.height < 0 ? -size.height : size.height;
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
     switch (scaleMode) {
-        case SDImageScaleModeAspectFit:
-        case SDImageScaleModeAspectFill: {
+        case LoadImageScaleModeAspectFit:
+        case LoadImageScaleModeAspectFill: {
             if (rect.size.width < 0.01 || rect.size.height < 0.01 ||
                 size.width < 0.01 || size.height < 0.01) {
                 rect.origin = center;
                 rect.size = CGSizeZero;
             } else {
                 CGFloat scale;
-                if (scaleMode == SDImageScaleModeAspectFit) {
+                if (scaleMode == LoadImageScaleModeAspectFit) {
                     if (size.width / size.height < rect.size.width / rect.size.height) {
                         scale = rect.size.height / size.height;
                     } else {
@@ -49,7 +49,7 @@ static inline CGRect SDCGRectFitWithScaleMode(CGRect rect, CGSize size, SDImageS
                 rect.origin = CGPointMake(center.x - size.width * 0.5, center.y - size.height * 0.5);
             }
         } break;
-        case SDImageScaleModeFill:
+        case LoadImageScaleModeFill:
         default: {
             rect = rect;
         }
@@ -265,7 +265,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 
 @implementation UIImage (Transform)
 
-- (void)sd_drawInRect:(CGRect)rect context:(CGContextRef)context scaleMode:(SDImageScaleMode)scaleMode clipsToBounds:(BOOL)clips {
+- (void)sd_drawInRect:(CGRect)rect context:(CGContextRef)context scaleMode:(LoadImageScaleMode)scaleMode clipsToBounds:(BOOL)clips {
     CGRect drawRect = SDCGRectFitWithScaleMode(rect, self.size, scaleMode);
     if (drawRect.size.width == 0 || drawRect.size.height == 0) return;
     if (clips) {
@@ -281,7 +281,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     }
 }
 
-- (nullable UIImage *)sd_resizedImageWithSize:(CGSize)size scaleMode:(SDImageScaleMode)scaleMode {
+- (nullable UIImage *)sd_resizedImageWithSize:(CGSize)size scaleMode:(LoadImageScaleMode)scaleMode {
     if (size.width <= 0 || size.height <= 0) return nil;
     SDGraphicsImageRendererFormat *format = [[SDGraphicsImageRendererFormat alloc] init];
     format.scale = self.scale;

@@ -8,9 +8,9 @@
 
 #import "ImageLoaderCompat.h"
 
-@class SDImageCacheConfig;
+@class LoadImageCacheConfig;
 /**
- A protocol to allow custom disk cache used in SDImageCache.
+ A protocol to allow custom disk cache used in LoadImageCache.
  */
 @protocol SDDiskCache <NSObject>
 
@@ -25,7 +25,7 @@
  
  @return A new cache object, or nil if an error occurs.
  */
-- (nullable instancetype)initWithCachePath:(nonnull NSString *)cachePath config:(nonnull SDImageCacheConfig *)config;
+- (nullable instancetype)initWithCachePath:(nonnull NSString *)cachePath config:(nonnull LoadImageCacheConfig *)config;
 
 /**
  Returns a boolean value that indicates whether a given key is in cache.
@@ -126,7 +126,7 @@
 /**
  Cache Config object - storing all kind of settings.
  */
-@property (nonatomic, strong, readonly, nonnull) SDImageCacheConfig *config;
+@property (nonatomic, strong, readonly, nonnull) LoadImageCacheConfig *config;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 

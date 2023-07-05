@@ -7,7 +7,7 @@
  */
 
 #import "SDDiskCache.h"
-#import "SDImageCacheConfig.h"
+#import "LoadImageCacheConfig.h"
 #import "SDFileAttributeHelper.h"
 #import <CommonCrypto/CommonDigest.h>
 
@@ -28,7 +28,7 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
 }
 
 #pragma mark - SDcachePathForKeyDiskCache Protocol
-- (instancetype)initWithCachePath:(NSString *)cachePath config:(nonnull SDImageCacheConfig *)config {
+- (instancetype)initWithCachePath:(NSString *)cachePath config:(nonnull LoadImageCacheConfig *)config {
     if (self = [super init]) {
         _diskCachePath = cachePath;
         _config = config;
@@ -146,16 +146,16 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
     // Compute content date key to be used for tests
     NSURLResourceKey cacheContentDateKey = NSURLContentModificationDateKey;
     switch (self.config.diskCacheExpireType) {
-        case SDImageCacheConfigExpireTypeAccessDate:
+        case LoadImageCacheConfigExpireTypeAccessDate:
             cacheContentDateKey = NSURLContentAccessDateKey;
             break;
-        case SDImageCacheConfigExpireTypeModificationDate:
+        case LoadImageCacheConfigExpireTypeModificationDate:
             cacheContentDateKey = NSURLContentModificationDateKey;
             break;
-        case SDImageCacheConfigExpireTypeCreationDate:
+        case LoadImageCacheConfigExpireTypeCreationDate:
             cacheContentDateKey = NSURLCreationDateKey;
             break;
-        case SDImageCacheConfigExpireTypeChangeDate:
+        case LoadImageCacheConfigExpireTypeChangeDate:
             cacheContentDateKey = NSURLAttributeModificationDateKey;
             break;
         default:

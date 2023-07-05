@@ -99,7 +99,7 @@
  */
 - (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
-                             progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                             progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                             completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -121,7 +121,7 @@
 - (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                               context:(nullable ImageLoaderContext *)context
-                             progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                             progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                             completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 @end

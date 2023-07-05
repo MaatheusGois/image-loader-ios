@@ -8,7 +8,7 @@
 
 #import "ImageLoaderCompat.h"
 #import "NSData+ImageContentType.h"
-#import "SDImageCoder.h"
+#import "LoadImageCoder.h"
 
 /**
  UIImage category for image metadata, including animation, loop count, format, incremental, etc.
@@ -30,7 +30,7 @@
 /**
  * UIKit:
  * Returns the `images`'s count by unapply the patch for the different frame durations. Which matches the real visible frame count when displaying on UIImageView.
- * See more in `SDImageCoderHelper.animatedImageWithFrames`.
+ * See more in `LoadImageCoderHelper.animatedImageWithFrames`.
  * Returns 1 for static image.
  * AppKit:
  * Returns the underlaying `NSBitmapImageRep` or `SDAnimatedImageRep` frame count.
@@ -56,10 +56,10 @@
 
 /**
  * The image format represent the original compressed image data format.
- * If you don't manually specify a format, this information is retrieve from CGImage using `CGImageGetUTType`, which may return nil for non-CG based image. At this time it will return `SDImageFormatUndefined` as default value.
+ * If you don't manually specify a format, this information is retrieve from CGImage using `CGImageGetUTType`, which may return nil for non-CG based image. At this time it will return `LoadImageFormatUndefined` as default value.
  * @note Note that because of the limitations of categories this property can get out of sync if you create another instance with CGImage or other methods.
  */
-@property (nonatomic, assign) SDImageFormat sd_imageFormat;
+@property (nonatomic, assign) LoadImageFormat sd_imageFormat;
 
 /**
  A bool value indicating whether the image is during incremental decoding and may not contains full pixels.
@@ -78,12 +78,12 @@
 @property (nonatomic, assign, readonly) BOOL sd_isThumbnail;
 
 /**
- A dictionary value contains the decode options when decoded from ImageLoader loading system (say, `SDImageCacheDecodeImageData/SDImageLoaderDecode[Progressive]ImageData`)
+ A dictionary value contains the decode options when decoded from ImageLoader loading system (say, `LoadImageCacheDecodeImageData/LoadImageLoaderDecode[Progressive]ImageData`)
  It may not always available and only image decoding related options will be saved. (including [.decodeScaleFactor, .decodeThumbnailPixelSize, .decodePreserveAspectRatio, .decodeFirstFrameOnly])
  @note This is used to identify and check the image is from thumbnail decoding, and the callback's data **will be nil** (because this time the data saved to disk does not match the image return to you. If you need full size data, query the cache with full size url key)
  @warning You should not store object inside which keep strong reference to image itself, which will cause retain cycle.
  @warning This API exist only because of current ImageLoaderDownloader bad design which does not callback the context we call it. There will be refactor in future (API break), use with caution.
  */
-@property (nonatomic, copy) SDImageCoderOptions *sd_decodeOptions;
+@property (nonatomic, copy) LoadImageCoderOptions *sd_decodeOptions;
 
 @end

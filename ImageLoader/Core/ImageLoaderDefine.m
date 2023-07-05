@@ -14,11 +14,11 @@
 
 #pragma mark - Image scale
 
-static inline NSArray<NSNumber *> * _Nonnull SDImageScaleFactors(void) {
+static inline NSArray<NSNumber *> * _Nonnull LoadImageScaleFactors(void) {
     return @[@2, @3];
 }
 
-inline CGFloat SDImageScaleFactorForKey(NSString * _Nullable key) {
+inline CGFloat LoadImageScaleFactorForKey(NSString * _Nullable key) {
     CGFloat scale = 1;
     if (!key) {
         return scale;
@@ -42,7 +42,7 @@ inline CGFloat SDImageScaleFactorForKey(NSString * _Nullable key) {
         if (key.length >= 8) {
             // Fast check
             BOOL isURL = [key hasPrefix:@"http://"] || [key hasPrefix:@"https://"];
-            for (NSNumber *scaleFactor in SDImageScaleFactors()) {
+            for (NSNumber *scaleFactor in LoadImageScaleFactors()) {
                 // @2x. for file name and normal url
                 NSString *fileScale = [NSString stringWithFormat:@"@%@x.", scaleFactor];
                 if ([key containsString:fileScale]) {
@@ -67,7 +67,7 @@ inline UIImage * _Nullable SDScaledImageForKey(NSString * _Nullable key, UIImage
     if (!image) {
         return nil;
     }
-    CGFloat scale = SDImageScaleFactorForKey(key);
+    CGFloat scale = LoadImageScaleFactorForKey(key);
     return SDScaledImageForScaleFactor(scale, image);
 }
 
@@ -137,7 +137,7 @@ inline UIImage * _Nullable SDScaledImageForScaleFactor(CGFloat scale, UIImage * 
         scaledImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:scale orientation:kCGImagePropertyOrientationUp];
 #endif
     }
-    SDImageCopyAssociatedObject(image, scaledImage);
+    LoadImageCopyAssociatedObject(image, scaledImage);
     
     return scaledImage;
 }

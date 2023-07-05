@@ -158,8 +158,8 @@
 
 #endif
 
-- (SDImageFormat)sd_imageFormat {
-    SDImageFormat imageFormat = SDImageFormatUndefined;
+- (LoadImageFormat)sd_imageFormat {
+    LoadImageFormat imageFormat = LoadImageFormatUndefined;
     NSNumber *value = objc_getAssociatedObject(self, @selector(sd_imageFormat));
     if ([value isKindOfClass:[NSNumber class]]) {
         imageFormat = value.integerValue;
@@ -171,7 +171,7 @@
     return imageFormat;
 }
 
-- (void)setSd_imageFormat:(SDImageFormat)sd_imageFormat {
+- (void)setSd_imageFormat:(LoadImageFormat)sd_imageFormat {
     objc_setAssociatedObject(self, @selector(sd_imageFormat), @(sd_imageFormat), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -193,13 +193,13 @@
     return value.boolValue;
 }
 
-- (void)setSd_decodeOptions:(SDImageCoderOptions *)sd_decodeOptions {
+- (void)setSd_decodeOptions:(LoadImageCoderOptions *)sd_decodeOptions {
     objc_setAssociatedObject(self, @selector(sd_decodeOptions), sd_decodeOptions, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 -(BOOL)sd_isThumbnail {
     CGSize thumbnailSize = CGSizeZero;
-    NSValue *thumbnailSizeValue = self.sd_decodeOptions[SDImageCoderDecodeThumbnailPixelSize];
+    NSValue *thumbnailSizeValue = self.sd_decodeOptions[LoadImageCoderDecodeThumbnailPixelSize];
     if (thumbnailSizeValue != nil) {
     #if SD_MAC
         thumbnailSize = thumbnailSizeValue.sizeValue;
@@ -210,8 +210,8 @@
     return thumbnailSize.width > 0 && thumbnailSize.height > 0;
 }
 
-- (SDImageCoderOptions *)sd_decodeOptions {
-    SDImageCoderOptions *value = objc_getAssociatedObject(self, @selector(sd_decodeOptions));
+- (LoadImageCoderOptions *)sd_decodeOptions {
+    LoadImageCoderOptions *value = objc_getAssociatedObject(self, @selector(sd_decodeOptions));
     if ([value isKindOfClass:NSDictionary.class]) {
         return value;
     }

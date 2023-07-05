@@ -11,7 +11,7 @@
 #import "SDInternalMacros.h"
 #import "ImageLoaderDownloaderResponseModifier.h"
 #import "ImageLoaderDownloaderDecryptor.h"
-#import "SDImageCacheDefine.h"
+#import "LoadImageCacheDefine.h"
 #import "SDCallbackQueue.h"
 
 BOOL ImageLoaderDownloaderOperationGetCompleted(id<ImageLoaderDownloaderOperation> operation); // Private currently, mark open if needed
@@ -21,7 +21,7 @@ BOOL ImageLoaderDownloaderOperationGetCompleted(id<ImageLoaderDownloaderOperatio
 
 @property (nonatomic, copy, nullable) ImageLoaderDownloaderCompletedBlock completedBlock;
 @property (nonatomic, copy, nullable) ImageLoaderDownloaderProgressBlock progressBlock;
-@property (nonatomic, copy, nullable) SDImageCoderOptions *decodeOptions;
+@property (nonatomic, copy, nullable) LoadImageCoderOptions *decodeOptions;
 
 @end
 
@@ -77,7 +77,7 @@ BOOL ImageLoaderDownloaderOperationGetCompleted(id<ImageLoaderDownloaderOperatio
 
 @property (strong, nonatomic, nonnull) NSOperationQueue *coderQueue; // the serial operation queue to do image decoding
 
-@property (strong, nonatomic, nonnull) NSMapTable<SDImageCoderOptions *, UIImage *> *imageMap; // each variant of image is weak-referenced to avoid too many re-decode during downloading
+@property (strong, nonatomic, nonnull) NSMapTable<LoadImageCoderOptions *, UIImage *> *imageMap; // each variant of image is weak-referenced to avoid too many re-decode during downloading
 #if SD_UIKIT
 @property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
 #endif
@@ -130,7 +130,7 @@ BOOL ImageLoaderDownloaderOperationGetCompleted(id<ImageLoaderDownloaderOperatio
 
 - (nullable id)addHandlersForProgress:(nullable ImageLoaderDownloaderProgressBlock)progressBlock
                             completed:(nullable ImageLoaderDownloaderCompletedBlock)completedBlock
-                        decodeOptions:(nullable SDImageCoderOptions *)decodeOptions {
+                        decodeOptions:(nullable LoadImageCoderOptions *)decodeOptions {
     if (!completedBlock && !progressBlock && !decodeOptions) return nil;
     ImageLoaderDownloaderOperationToken *token = [ImageLoaderDownloaderOperationToken new];
     token.completedBlock = completedBlock;
@@ -482,7 +482,7 @@ didReceiveResponse:(NSURLResponse *)response
                         return;
                     }
                 }
-                UIImage *image = SDImageLoaderDecodeProgressiveImageData(imageData, self.request.URL, NO, self, [[self class] imageOptionsFromDownloaderOptions:self.options], self.context);
+                UIImage *image = LoadImageLoaderDecodeProgressiveImageData(imageData, self.request.URL, NO, self, [[self class] imageOptionsFromDownloaderOptions:self.options], self.context);
                 if (image) {
                     // We do not keep the progressive decoding image even when `finished`=YES. Because they are for view rendering but not take full function from downloader options. And some coders implementation may not keep consistent between progressive decoding and normal decoding.
                     
@@ -579,7 +579,7 @@ didReceiveResponse:(NSURLResponse *)response
                             }
                             if (!image) {
                                 // check if we already use progressive decoding, use that to produce faster decoding
-                                id<SDProgressiveImageCoder> progressiveCoder = SDImageLoaderGetProgressiveCoder(self);
+                                id<SDProgressiveImageCoder> progressiveCoder = LoadImageLoaderGetProgressiveCoder(self);
                                 ImageLoaderOptions options = [[self class] imageOptionsFromDownloaderOptions:self.options];
                                 ImageLoaderContext *context;
                                 if (token.decodeOptions) {
@@ -590,9 +590,9 @@ didReceiveResponse:(NSURLResponse *)response
                                     context = self.context;
                                 }
                                 if (progressiveCoder) {
-                                    image = SDImageLoaderDecodeProgressiveImageData(imageData, self.request.URL, YES, self, options, context);
+                                    image = LoadImageLoaderDecodeProgressiveImageData(imageData, self.request.URL, YES, self, options, context);
                                 } else {
-                                    image = SDImageLoaderDecodeImageData(imageData, self.request.URL, options, context);
+                                    image = LoadImageLoaderDecodeImageData(imageData, self.request.URL, options, context);
                                 }
                                 if (image && token.decodeOptions) {
                                     [self.imageMap setObject:image forKey:token.decodeOptions];

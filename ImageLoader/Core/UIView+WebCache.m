@@ -12,7 +12,7 @@
 #import "ImageLoaderError.h"
 #import "SDInternalMacros.h"
 #import "ImageLoaderTransitionInternal.h"
-#import "SDImageCache.h"
+#import "LoadImageCache.h"
 
 const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 
@@ -52,7 +52,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
                                                        options:(ImageLoaderOptions)options
                                                        context:(nullable ImageLoaderContext *)context
                                                  setImageBlock:(nullable SDSetImageBlock)setImageBlock
-                                                      progress:(nullable SDImageLoaderProgressBlock)progressBlock
+                                                      progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                                                      completed:(nullable SDInternalCompletionBlock)completedBlock {
     if (context) {
         // copy to avoid mutable object
@@ -83,8 +83,8 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     }
     
     BOOL shouldUseWeakCache = NO;
-    if ([manager.imageCache isKindOfClass:SDImageCache.class]) {
-        shouldUseWeakCache = ((SDImageCache *)manager.imageCache).config.shouldUseWeakMemoryCache;
+    if ([manager.imageCache isKindOfClass:LoadImageCache.class]) {
+        shouldUseWeakCache = ((LoadImageCache *)manager.imageCache).config.shouldUseWeakMemoryCache;
     }
     if (!(options & ImageLoaderDelayPlaceholder)) {
         if (shouldUseWeakCache) {
@@ -92,10 +92,10 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             // call memory cache to trigger weak cache sync logic, ignore the return value and go on normal query
             // this unfortunately will cause twice memory cache query, but it's fast enough
             // in the future the weak cache feature may be re-design or removed
-            [((SDImageCache *)manager.imageCache) imageFromMemoryCacheForKey:key];
+            [((LoadImageCache *)manager.imageCache) imageFromMemoryCacheForKey:key];
         }
         dispatch_main_async_safe(^{
-            [self sd_setImage:placeholder imageData:nil basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:SDImageCacheTypeNone imageURL:url];
+            [self sd_setImage:placeholder imageData:nil basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:LoadImageCacheTypeNone imageURL:url];
         });
     }
     
@@ -115,7 +115,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
         id<ImageLoaderIndicator> imageIndicator = self.sd_imageIndicator;
 #endif
         
-        SDImageLoaderProgressBlock combinedProgressBlock = ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        LoadImageLoaderProgressBlock combinedProgressBlock = ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
             if (imageProgress) {
                 imageProgress.totalUnitCount = expectedSize;
                 imageProgress.completedUnitCount = receivedSize;
@@ -137,7 +137,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             }
         };
         @weakify(self);
-        operation = [manager loadImageWithURL:url options:options context:context progress:combinedProgressBlock completed:^(UIImage *image, NSData *data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        operation = [manager loadImageWithURL:url options:options context:context progress:combinedProgressBlock completed:^(UIImage *image, NSData *data, NSError *error, LoadImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             @strongify(self);
             if (!self) { return; }
             // if the progress not been updated, mark it to complete state
@@ -193,14 +193,14 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             if (options & ImageLoaderForceTransition) {
                 // Always
                 shouldUseTransition = YES;
-            } else if (cacheType == SDImageCacheTypeNone) {
+            } else if (cacheType == LoadImageCacheTypeNone) {
                 // From network
                 shouldUseTransition = YES;
             } else {
                 // From disk (and, user don't use sync query)
-                if (cacheType == SDImageCacheTypeMemory) {
+                if (cacheType == LoadImageCacheTypeMemory) {
                     shouldUseTransition = NO;
-                } else if (cacheType == SDImageCacheTypeDisk) {
+                } else if (cacheType == LoadImageCacheTypeDisk) {
                     if (options & ImageLoaderQueryMemoryDataSync || options & ImageLoaderQueryDiskDataSync) {
                         shouldUseTransition = NO;
                     } else {
@@ -232,7 +232,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
         if (completedBlock) {
             dispatch_main_async_safe(^{
                 NSError *error = [NSError errorWithDomain:ImageLoaderErrorDomain code:ImageLoaderErrorInvalidURL userInfo:@{NSLocalizedDescriptionKey : @"Image url is nil"}];
-                completedBlock(nil, nil, error, SDImageCacheTypeNone, YES, url);
+                completedBlock(nil, nil, error, LoadImageCacheTypeNone, YES, url);
             });
         }
     }
@@ -245,7 +245,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     self.sd_latestOperationKey = nil;
 }
 
-- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock cacheType:(SDImageCacheType)cacheType imageURL:(NSURL *)imageURL {
+- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
 #if SD_UIKIT || SD_MAC
     [self sd_setImage:image imageData:imageData basedOnClassOrViaCustomSetImageBlock:setImageBlock transition:nil cacheType:cacheType imageURL:imageURL];
 #else
@@ -260,21 +260,21 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 }
 
 #if SD_UIKIT || SD_MAC
-- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock transition:(ImageLoaderTransition *)transition cacheType:(SDImageCacheType)cacheType imageURL:(NSURL *)imageURL {
+- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock transition:(ImageLoaderTransition *)transition cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
     UIView *view = self;
     SDSetImageBlock finalSetImageBlock;
     if (setImageBlock) {
         finalSetImageBlock = setImageBlock;
     } else if ([view isKindOfClass:[UIImageView class]]) {
         UIImageView *imageView = (UIImageView *)view;
-        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, SDImageCacheType setCacheType, NSURL *setImageURL) {
+        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, LoadImageCacheType setCacheType, NSURL *setImageURL) {
             imageView.image = setImage;
         };
     }
 #if SD_UIKIT
     else if ([view isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)view;
-        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, SDImageCacheType setCacheType, NSURL *setImageURL) {
+        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, LoadImageCacheType setCacheType, NSURL *setImageURL) {
             [button setImage:setImage forState:UIControlStateNormal];
         };
     }
@@ -282,7 +282,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 #if SD_MAC
     else if ([view isKindOfClass:[NSButton class]]) {
         NSButton *button = (NSButton *)view;
-        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, SDImageCacheType setCacheType, NSURL *setImageURL) {
+        finalSetImageBlock = ^(UIImage *setImage, NSData *setImageData, LoadImageCacheType setCacheType, NSURL *setImageURL) {
             button.image = setImage;
         };
     }

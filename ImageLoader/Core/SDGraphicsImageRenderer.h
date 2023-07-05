@@ -14,7 +14,7 @@
  Which means, if you draw CGImage/CIImage which contains grayscale only, the underlaying bitmap context use grayscale, it's managed by system and not a fixed type. (actually, the `kCGContextTypeAutomatic`)
  For usage, See more in Apple's documentation: https://developer.apple.com/documentation/uikit/uigraphicsimagerenderer
  For UIKit on iOS/tvOS 10+, these method just use the same `UIGraphicsImageRenderer` API.
- For others (macOS/watchOS or iOS/tvOS 10-), these method use the `SDImageGraphics.h` to implements the same behavior (but without dynamic bitmap support)
+ For others (macOS/watchOS or iOS/tvOS 10-), these method use the `LoadImageGraphics.h` to implements the same behavior (but without dynamic bitmap support)
 */
 
 /// A closure for drawing an image.

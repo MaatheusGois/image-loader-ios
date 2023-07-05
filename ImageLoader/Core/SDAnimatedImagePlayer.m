@@ -10,14 +10,14 @@
 #import "NSImage+Compatibility.h"
 #import "SDDisplayLink.h"
 #import "SDDeviceHelper.h"
-#import "SDImageFramePool.h"
+#import "LoadImageFramePool.h"
 #import "SDInternalMacros.h"
 
 @interface SDAnimatedImagePlayer () {
     NSRunLoopMode _runLoopMode;
 }
 
-@property (nonatomic, strong) SDImageFramePool *framePool;
+@property (nonatomic, strong) LoadImageFramePool *framePool;
 
 @property (nonatomic, strong, readwrite) UIImage *currentFrame;
 @property (nonatomic, assign, readwrite) NSUInteger currentFrameIndex;
@@ -47,7 +47,7 @@
         self.totalLoopCount = provider.animatedImageLoopCount;
         self.animatedProvider = provider;
         self.playbackRate = 1.0;
-        self.framePool = [SDImageFramePool registerProvider:provider];
+        self.framePool = [LoadImageFramePool registerProvider:provider];
     }
     return self;
 }
@@ -59,7 +59,7 @@
 
 - (void)dealloc {
     // Dereference the frame pool, when zero the frame pool for provider will dealloc
-    [SDImageFramePool unregisterProvider:self.animatedProvider];
+    [LoadImageFramePool unregisterProvider:self.animatedProvider];
 }
 
 #pragma mark - Private

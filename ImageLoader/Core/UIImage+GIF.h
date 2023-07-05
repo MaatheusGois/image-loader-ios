@@ -10,7 +10,7 @@
 #import "ImageLoaderCompat.h"
 
 /**
- This category is just use as a convenience method. For more detail control, use methods in `UIImage+MultiFormat.h` or directly use `SDImageCoder`.
+ This category is just use as a convenience method. For more detail control, use methods in `UIImage+MultiFormat.h` or directly use `LoadImageCoder`.
  */
 @interface UIImage (GIF)
 

@@ -7,7 +7,7 @@
  */
 
 #import "SDMemoryCache.h"
-#import "SDImageCacheConfig.h"
+#import "LoadImageCacheConfig.h"
 #import "UIImage+MemoryCacheCost.h"
 #import "SDInternalMacros.h"
 
@@ -19,7 +19,7 @@ static void * SDMemoryCacheContext = &SDMemoryCacheContext;
 #endif
 }
 
-@property (nonatomic, strong, nullable) SDImageCacheConfig *config;
+@property (nonatomic, strong, nullable) LoadImageCacheConfig *config;
 #if SD_UIKIT
 @property (nonatomic, strong, nonnull) NSMapTable<KeyType, ObjectType> *weakCache; // strong-weak cache
 #endif
@@ -39,13 +39,13 @@ static void * SDMemoryCacheContext = &SDMemoryCacheContext;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _config = [[SDImageCacheConfig alloc] init];
+        _config = [[LoadImageCacheConfig alloc] init];
         [self commonInit];
     }
     return self;
 }
 
-- (instancetype)initWithConfig:(SDImageCacheConfig *)config {
+- (instancetype)initWithConfig:(LoadImageCacheConfig *)config {
     self = [super init];
     if (self) {
         _config = config;
@@ -55,7 +55,7 @@ static void * SDMemoryCacheContext = &SDMemoryCacheContext;
 }
 
 - (void)commonInit {
-    SDImageCacheConfig *config = self.config;
+    LoadImageCacheConfig *config = self.config;
     self.totalCostLimit = config.maxMemoryCost;
     self.countLimit = config.maxMemoryCount;
 

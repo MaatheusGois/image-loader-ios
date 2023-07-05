@@ -8,9 +8,9 @@
 
 #import "ImageLoaderCompat.h"
 
-@class SDImageCacheConfig;
+@class LoadImageCacheConfig;
 /**
- A protocol to allow custom memory cache used in SDImageCache.
+ A protocol to allow custom memory cache used in LoadImageCache.
  */
 @protocol SDMemoryCache <NSObject>
 
@@ -22,7 +22,7 @@
  @param config The cache config to be used to create the cache.
  @return The new memory cache instance.
  */
-- (nonnull instancetype)initWithConfig:(nonnull SDImageCacheConfig *)config;
+- (nonnull instancetype)initWithConfig:(nonnull LoadImageCacheConfig *)config;
 
 /**
  Returns the value associated with a given key.
@@ -73,6 +73,6 @@
  */
 @interface SDMemoryCache <KeyType, ObjectType> : NSCache <KeyType, ObjectType> <SDMemoryCache>
 
-@property (nonatomic, strong, nonnull, readonly) SDImageCacheConfig *config;
+@property (nonatomic, strong, nonnull, readonly) LoadImageCacheConfig *config;
 
 @end

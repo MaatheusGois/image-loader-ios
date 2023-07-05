@@ -12,21 +12,21 @@
 
 /**
  You can use switch case like normal enum. It's also recommended to add a default case. You should not assume anything about the raw value.
- For custom coder plugin, it can also extern the enum for supported format. See `SDImageCoder` for more detailed information.
+ For custom coder plugin, it can also extern the enum for supported format. See `LoadImageCoder` for more detailed information.
  */
-typedef NSInteger SDImageFormat NS_TYPED_EXTENSIBLE_ENUM;
-static const SDImageFormat SDImageFormatUndefined = -1;
-static const SDImageFormat SDImageFormatJPEG      = 0;
-static const SDImageFormat SDImageFormatPNG       = 1;
-static const SDImageFormat SDImageFormatGIF       = 2;
-static const SDImageFormat SDImageFormatTIFF      = 3;
-static const SDImageFormat SDImageFormatWebP      = 4;
-static const SDImageFormat SDImageFormatHEIC      = 5;
-static const SDImageFormat SDImageFormatHEIF      = 6;
-static const SDImageFormat SDImageFormatPDF       = 7;
-static const SDImageFormat SDImageFormatSVG       = 8;
-static const SDImageFormat SDImageFormatBMP       = 9;
-static const SDImageFormat SDImageFormatRAW       = 10;
+typedef NSInteger LoadImageFormat NS_TYPED_EXTENSIBLE_ENUM;
+static const LoadImageFormat LoadImageFormatUndefined = -1;
+static const LoadImageFormat LoadImageFormatJPEG      = 0;
+static const LoadImageFormat LoadImageFormatPNG       = 1;
+static const LoadImageFormat LoadImageFormatGIF       = 2;
+static const LoadImageFormat LoadImageFormatTIFF      = 3;
+static const LoadImageFormat LoadImageFormatWebP      = 4;
+static const LoadImageFormat LoadImageFormatHEIC      = 5;
+static const LoadImageFormat LoadImageFormatHEIF      = 6;
+static const LoadImageFormat LoadImageFormatPDF       = 7;
+static const LoadImageFormat LoadImageFormatSVG       = 8;
+static const LoadImageFormat LoadImageFormatBMP       = 9;
+static const LoadImageFormat LoadImageFormatRAW       = 10;
 
 /**
  NSData category about the image content type and UTI.
@@ -38,26 +38,26 @@ static const SDImageFormat SDImageFormatRAW       = 10;
  *
  *  @param data the input image data
  *
- *  @return the image format as `SDImageFormat` (enum)
+ *  @return the image format as `LoadImageFormat` (enum)
  */
-+ (SDImageFormat)sd_imageFormatForImageData:(nullable NSData *)data;
++ (LoadImageFormat)sd_imageFormatForImageData:(nullable NSData *)data;
 
 /**
- *  Convert SDImageFormat to UTType
+ *  Convert LoadImageFormat to UTType
  *
- *  @param format Format as SDImageFormat
+ *  @param format Format as LoadImageFormat
  *  @return The UTType as CFStringRef
  *  @note For unknown format, `kSDUTTypeImage` abstract type will return
  */
-+ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(SDImageFormat)format CF_RETURNS_NOT_RETAINED NS_SWIFT_NAME(sd_UTType(from:));
++ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(LoadImageFormat)format CF_RETURNS_NOT_RETAINED NS_SWIFT_NAME(sd_UTType(from:));
 
 /**
- *  Convert UTType to SDImageFormat
+ *  Convert UTType to LoadImageFormat
  *
  *  @param uttype The UTType as CFStringRef
- *  @return The Format as SDImageFormat
- *  @note For unknown type, `SDImageFormatUndefined` will return
+ *  @return The Format as LoadImageFormat
+ *  @note For unknown type, `LoadImageFormatUndefined` will return
  */
-+ (SDImageFormat)sd_imageFormatFromUTType:(nonnull CFStringRef)uttype;
++ (LoadImageFormat)sd_imageFormatFromUTType:(nonnull CFStringRef)uttype;
 
 @end
