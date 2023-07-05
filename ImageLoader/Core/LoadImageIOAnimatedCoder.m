@@ -160,7 +160,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
         NSArray *imageUTTypes = (__bridge_transfer NSArray *)CGImageSourceCopyTypeIdentifiers();
         imageUTTypeSet = [NSSet setWithArray:imageUTTypes];
     });
-    CFStringRef imageUTType = [NSData sd_UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData btg_UTTypeFromImageFormat:format];
     if ([imageUTTypeSet containsObject:(__bridge NSString *)(imageUTType)]) {
         // Can decode from target format
         return YES;
@@ -175,7 +175,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
         NSArray *imageUTTypes = (__bridge_transfer NSArray *)CGImageDestinationCopyTypeIdentifiers();
         imageUTTypeSet = [NSSet setWithArray:imageUTTypes];
     });
-    CFStringRef imageUTType = [NSData sd_UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData btg_UTTypeFromImageFormat:format];
     if ([imageUTTypeSet containsObject:(__bridge NSString *)(imageUTType)]) {
         // Can encode to target format
         return YES;
@@ -342,14 +342,14 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
     UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:exifOrientation];
 #endif
     CGImageRelease(imageRef);
-    image.sd_isDecoded = isDecoded;
+    image.btg_isDecoded = isDecoded;
     
     return image;
 }
 
 #pragma mark - Decode
 - (BOOL)canDecodeFromData:(nullable NSData *)data {
-    return ([NSData sd_imageFormatForImageData:data] == self.class.imageFormat);
+    return ([NSData btg_imageFormatForImageData:data] == self.class.imageFormat);
 }
 
 - (UIImage *)decodedImageWithData:(NSData *)data options:(nullable LoadImageCoderOptions *)options {
@@ -394,7 +394,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
             imageRep.size = size;
             NSImage *animatedImage = [[NSImage alloc] initWithSize:size];
             [animatedImage addRepresentation:imageRep];
-            animatedImage.sd_imageFormat = self.class.imageFormat;
+            animatedImage.btg_imageFormat = self.class.imageFormat;
             return animatedImage;
         }
     }
@@ -472,9 +472,9 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
         NSUInteger loopCount = [self.class imageLoopCountWithSource:source];
         
         animatedImage = [LoadImageCoderHelper animatedImageWithFrames:frames];
-        animatedImage.sd_imageLoopCount = loopCount;
+        animatedImage.btg_imageLoopCount = loopCount;
     }
-    animatedImage.sd_imageFormat = self.class.imageFormat;
+    animatedImage.btg_imageFormat = self.class.imageFormat;
     CFRelease(source);
     
     return animatedImage;
@@ -483,7 +483,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
 #pragma mark - Progressive Decode
 
 - (BOOL)canIncrementalDecodeFromData:(NSData *)data {
-    return ([NSData sd_imageFormatForImageData:data] == self.class.imageFormat);
+    return ([NSData btg_imageFormatForImageData:data] == self.class.imageFormat);
 }
 
 - (instancetype)initIncrementalWithOptions:(nullable LoadImageCoderOptions *)options {
@@ -588,7 +588,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
         }
         image = [self.class createFrameAtIndex:0 source:_imageSource scale:scale preserveAspectRatio:_preserveAspectRatio thumbnailSize:_thumbnailSize lazyDecode:_lazyDecode animatedImage:NO];
         if (image) {
-            image.sd_imageFormat = self.class.imageFormat;
+            image.btg_imageFormat = self.class.imageFormat;
         }
     }
     
@@ -613,7 +613,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
         LoadImageFrame *frame = [LoadImageFrame frameWithImage:image duration:0];
         frames = @[frame];
     }
-    return [self encodedDataWithFrames:frames loopCount:image.sd_imageLoopCount format:format options:options];
+    return [self encodedDataWithFrames:frames loopCount:image.btg_imageLoopCount format:format options:options];
 }
 
 - (NSData *)encodedDataWithFrames:(NSArray<LoadImageFrame *> *)frames loopCount:(NSUInteger)loopCount format:(LoadImageFormat)format options:(LoadImageCoderOptions *)options {
@@ -628,7 +628,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
     }
     
     NSMutableData *imageData = [NSMutableData data];
-    CFStringRef imageUTType = [NSData sd_UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData btg_UTTypeFromImageFormat:format];
     
     // Create an image destination. Animated Image does not support EXIF image orientation TODO
     // The `CGImageDestinationCreateWithData` will log a warning when count is 0, use 1 instead.
@@ -878,7 +878,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
     if (!image) {
         return nil;
     }
-    image.sd_imageFormat = self.class.imageFormat;
+    image.btg_imageFormat = self.class.imageFormat;
     return image;
 }
 

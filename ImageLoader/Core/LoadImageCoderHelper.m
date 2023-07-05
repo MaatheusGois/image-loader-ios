@@ -31,7 +31,7 @@ static inline UIImage *LoadImageDecodeUIKit(UIImage *image) {
         UIImage *decodedImage = [image imageByPreparingForDisplay];
         if (decodedImage) {
             LoadImageCopyAssociatedObject(image, decodedImage);
-            decodedImage.sd_isDecoded = YES;
+            decodedImage.btg_isDecoded = YES;
             return decodedImage;
         }
     }
@@ -48,7 +48,7 @@ static inline UIImage *LoadImageDecodeAndScaleDownUIKit(UIImage *image, CGSize d
         UIImage *decodedImage = [image imageByPreparingThumbnailOfSize:thumbnailSize];
         if (decodedImage) {
             LoadImageCopyAssociatedObject(image, decodedImage);
-            decodedImage.sd_isDecoded = YES;
+            decodedImage.btg_isDecoded = YES;
             return decodedImage;
         }
     }
@@ -139,7 +139,7 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
 #else
     
     NSMutableData *imageData = [NSMutableData data];
-    CFStringRef imageUTType = [NSData sd_UTTypeFromImageFormat:LoadImageFormatGIF];
+    CFStringRef imageUTType = [NSData btg_UTTypeFromImageFormat:LoadImageFormatGIF];
     // Create an image destination. GIF does not support EXIF image orientation
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, frameCount, NULL);
     if (!imageDestination) {
@@ -438,7 +438,7 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
 #if SD_UIKIT
     if (decodeSolution == LoadImageCoderDecodeSolutionAutomatic) {
         // See #3365, CMPhoto iOS 15 only supports JPEG/HEIF format, or it will print an error log :(
-        LoadImageFormat format = image.sd_imageFormat;
+        LoadImageFormat format = image.btg_imageFormat;
         if ((format == LoadImageFormatHEIC || format == LoadImageFormatHEIF) && LoadImageSupportsHardwareHEVCDecoder()) {
             decodedImage = LoadImageDecodeUIKit(image);
         } else if (format == LoadImageFormatJPEG) {
@@ -481,7 +481,7 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
         }];
     }
     LoadImageCopyAssociatedObject(image, decodedImage);
-    decodedImage.sd_isDecoded = YES;
+    decodedImage.btg_isDecoded = YES;
     return decodedImage;
 }
 
@@ -526,7 +526,7 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
     LoadImageCoderDecodeSolution decodeSolution = self.defaultDecodeSolution;
     if (decodeSolution == LoadImageCoderDecodeSolutionAutomatic) {
         // See #3365, CMPhoto iOS 15 only supports JPEG/HEIF format, or it will print an error log :(
-        LoadImageFormat format = image.sd_imageFormat;
+        LoadImageFormat format = image.btg_imageFormat;
         if ((format == LoadImageFormatHEIC || format == LoadImageFormatHEIF) && LoadImageSupportsHardwareHEVCDecoder()) {
             decodedImage = LoadImageDecodeAndScaleDownUIKit(image, destResolution);
         } else if (format == LoadImageFormatJPEG) {
@@ -638,7 +638,7 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
 #endif
         CGImageRelease(destImageRef);
         LoadImageCopyAssociatedObject(image, decodedImage);
-        decodedImage.sd_isDecoded = YES;
+        decodedImage.btg_isDecoded = YES;
         return decodedImage;
     }
 }
@@ -739,15 +739,15 @@ static const CGFloat kDestSeemOverlap = 2.0f;   // the numbers of pixels to over
         return NO;
     }
     // Avoid extra decode
-    if (image.sd_isDecoded) {
+    if (image.btg_isDecoded) {
         return NO;
     }
     // do not decode animated images
-    if (image.sd_isAnimated) {
+    if (image.btg_isAnimated) {
         return NO;
     }
     // do not decode vector images
-    if (image.sd_isVector) {
+    if (image.btg_isVector) {
         return NO;
     }
     

@@ -265,7 +265,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 
 @implementation UIImage (Transform)
 
-- (void)sd_drawInRect:(CGRect)rect context:(CGContextRef)context scaleMode:(LoadImageScaleMode)scaleMode clipsToBounds:(BOOL)clips {
+- (void)btg_drawInRect:(CGRect)rect context:(CGContextRef)context scaleMode:(LoadImageScaleMode)scaleMode clipsToBounds:(BOOL)clips {
     CGRect drawRect = SDCGRectFitWithScaleMode(rect, self.size, scaleMode);
     if (drawRect.size.width == 0 || drawRect.size.height == 0) return;
     if (clips) {
@@ -281,18 +281,18 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     }
 }
 
-- (nullable UIImage *)sd_resizedImageWithSize:(CGSize)size scaleMode:(LoadImageScaleMode)scaleMode {
+- (nullable UIImage *)btg_resizedImageWithSize:(CGSize)size scaleMode:(LoadImageScaleMode)scaleMode {
     if (size.width <= 0 || size.height <= 0) return nil;
     SDGraphicsImageRendererFormat *format = [[SDGraphicsImageRendererFormat alloc] init];
     format.scale = self.scale;
     SDGraphicsImageRenderer *renderer = [[SDGraphicsImageRenderer alloc] initWithSize:size format:format];
     UIImage *image = [renderer imageWithActions:^(CGContextRef  _Nonnull context) {
-        [self sd_drawInRect:CGRectMake(0, 0, size.width, size.height) context:context scaleMode:scaleMode clipsToBounds:NO];
+        [self btg_drawInRect:CGRectMake(0, 0, size.width, size.height) context:context scaleMode:scaleMode clipsToBounds:NO];
     }];
     return image;
 }
 
-- (nullable UIImage *)sd_croppedImageWithRect:(CGRect)rect {
+- (nullable UIImage *)btg_croppedImageWithRect:(CGRect)rect {
     rect.origin.x *= self.scale;
     rect.origin.y *= self.scale;
     rect.size.width *= self.scale;
@@ -331,7 +331,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     return image;
 }
 
-- (nullable UIImage *)sd_roundedCornerImageWithRadius:(CGFloat)cornerRadius corners:(SDRectCorner)corners borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor {
+- (nullable UIImage *)btg_roundedCornerImageWithRadius:(CGFloat)cornerRadius corners:(SDRectCorner)corners borderWidth:(CGFloat)borderWidth borderColor:(nullable UIColor *)borderColor {
     SDGraphicsImageRendererFormat *format = [[SDGraphicsImageRendererFormat alloc] init];
     format.scale = self.scale;
     SDGraphicsImageRenderer *renderer = [[SDGraphicsImageRenderer alloc] initWithSize:self.size format:format];
@@ -343,7 +343,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 #if SD_UIKIT || SD_WATCH
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(rect, borderWidth, borderWidth) byRoundingCorners:corners cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
 #else
-            NSBezierPath *path = [NSBezierPath sd_bezierPathWithRoundedRect:CGRectInset(rect, borderWidth, borderWidth) byRoundingCorners:corners cornerRadius:cornerRadius];
+            NSBezierPath *path = [NSBezierPath btg_bezierPathWithRoundedRect:CGRectInset(rect, borderWidth, borderWidth) byRoundingCorners:corners cornerRadius:cornerRadius];
 #endif
             [path closePath];
             
@@ -360,7 +360,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 #if SD_UIKIT || SD_WATCH
             UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:strokeRect byRoundingCorners:corners cornerRadii:CGSizeMake(strokeRadius, strokeRadius)];
 #else
-            NSBezierPath *path = [NSBezierPath sd_bezierPathWithRoundedRect:strokeRect byRoundingCorners:corners cornerRadius:strokeRadius];
+            NSBezierPath *path = [NSBezierPath btg_bezierPathWithRoundedRect:strokeRect byRoundingCorners:corners cornerRadius:strokeRadius];
 #endif
             [path closePath];
             
@@ -372,7 +372,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     return image;
 }
 
-- (nullable UIImage *)sd_rotatedImageWithAngle:(CGFloat)angle fitSize:(BOOL)fitSize {
+- (nullable UIImage *)btg_rotatedImageWithAngle:(CGFloat)angle fitSize:(BOOL)fitSize {
     size_t width = self.size.width;
     size_t height = self.size.height;
     CGRect newRect = CGRectApplyAffineTransform(CGRectMake(0, 0, width, height),
@@ -420,7 +420,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     return image;
 }
 
-- (nullable UIImage *)sd_flippedImageWithHorizontal:(BOOL)horizontal vertical:(BOOL)vertical {
+- (nullable UIImage *)btg_flippedImageWithHorizontal:(BOOL)horizontal vertical:(BOOL)vertical {
     size_t width = self.size.width;
     size_t height = self.size.height;
 
@@ -467,7 +467,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 
 #pragma mark - Image Blending
 
-- (nullable UIImage *)sd_tintedImageWithColor:(nonnull UIColor *)tintColor {
+- (nullable UIImage *)btg_tintedImageWithColor:(nonnull UIColor *)tintColor {
     BOOL hasTint = CGColorGetAlpha(tintColor.CGColor) > __FLT_EPSILON__;
     if (!hasTint) {
         return self;
@@ -511,7 +511,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     return image;
 }
 
-- (nullable UIColor *)sd_colorAtPoint:(CGPoint)point {
+- (nullable UIColor *)btg_colorAtPoint:(CGPoint)point {
     CGImageRef imageRef = NULL;
     // CIImage compatible
 #if SD_UIKIT || SD_MAC
@@ -582,7 +582,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
     }
 }
 
-- (nullable NSArray<UIColor *> *)sd_colorsWithRect:(CGRect)rect {
+- (nullable NSArray<UIColor *> *)btg_colorsWithRect:(CGRect)rect {
     CGImageRef imageRef = NULL;
     // CIImage compatible
 #if SD_UIKIT || SD_MAC
@@ -673,7 +673,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 #pragma mark - Image Effect
 
 // We use vImage to do box convolve for performance and support for watchOS. However, you can just use `CIFilter.CIGaussianBlur`. For other blur effect, use any filter in `CICategoryBlur`
-- (nullable UIImage *)sd_blurredImageWithRadius:(CGFloat)blurRadius {
+- (nullable UIImage *)btg_blurredImageWithRadius:(CGFloat)blurRadius {
     if (self.size.width < 1 || self.size.height < 1) {
         return nil;
     }
@@ -780,7 +780,7 @@ static inline CGImageRef _Nullable SDCreateCGImageFromCIImage(CIImage * _Nonnull
 }
 
 #if SD_UIKIT || SD_MAC
-- (nullable UIImage *)sd_filteredImageWithFilter:(nonnull CIFilter *)filter {
+- (nullable UIImage *)btg_filteredImageWithFilter:(nonnull CIFilter *)filter {
     CIImage *inputImage;
     if (self.CIImage) {
         inputImage = self.CIImage;

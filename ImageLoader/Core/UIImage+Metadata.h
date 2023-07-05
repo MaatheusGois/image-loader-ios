@@ -25,7 +25,7 @@
  * The getter of this property will get the loop count from animated imageRep
  * The setter of this property will set the loop count from animated imageRep
  */
-@property (nonatomic, assign) NSUInteger sd_imageLoopCount;
+@property (nonatomic, assign) NSUInteger btg_imageLoopCount;
 
 /**
  * UIKit:
@@ -36,7 +36,7 @@
  * Returns the underlaying `NSBitmapImageRep` or `SDAnimatedImageRep` frame count.
  * Returns 1 for static image.
  */
-@property (nonatomic, assign, readonly) NSUInteger sd_imageFrameCount;
+@property (nonatomic, assign, readonly) NSUInteger btg_imageFrameCount;
 
 /**
  * UIKit:
@@ -44,7 +44,7 @@
  * AppKit:
  * NSImage currently only support animated via GIF imageRep unlike UIImage. It will check the imageRep's frame count.
  */
-@property (nonatomic, assign, readonly) BOOL sd_isAnimated;
+@property (nonatomic, assign, readonly) BOOL btg_isAnimated;
 
 /**
  * UIKit:
@@ -52,30 +52,30 @@
  * AppKit:
  * NSImage supports PDF && SVG && EPS imageRep, check the imageRep class.
  */
-@property (nonatomic, assign, readonly) BOOL sd_isVector;
+@property (nonatomic, assign, readonly) BOOL btg_isVector;
 
 /**
  * The image format represent the original compressed image data format.
  * If you don't manually specify a format, this information is retrieve from CGImage using `CGImageGetUTType`, which may return nil for non-CG based image. At this time it will return `LoadImageFormatUndefined` as default value.
  * @note Note that because of the limitations of categories this property can get out of sync if you create another instance with CGImage or other methods.
  */
-@property (nonatomic, assign) LoadImageFormat sd_imageFormat;
+@property (nonatomic, assign) LoadImageFormat btg_imageFormat;
 
 /**
  A bool value indicating whether the image is during incremental decoding and may not contains full pixels.
  */
-@property (nonatomic, assign) BOOL sd_isIncremental;
+@property (nonatomic, assign) BOOL btg_isIncremental;
 
 /**
  A bool value indicating that the image is transformed from original image, so the image data may not always match original download one.
  */
-@property (nonatomic, assign) BOOL sd_isTransformed;
+@property (nonatomic, assign) BOOL btg_isTransformed;
 
 /**
  A bool value indicating that the image is using thumbnail decode with smaller size, so the image data may not always match original download one.
- @note This just check `sd_decodeOptions[.decodeThumbnailPixelSize] > CGSize.zero`
+ @note This just check `btg_decodeOptions[.decodeThumbnailPixelSize] > CGSize.zero`
  */
-@property (nonatomic, assign, readonly) BOOL sd_isThumbnail;
+@property (nonatomic, assign, readonly) BOOL btg_isThumbnail;
 
 /**
  A dictionary value contains the decode options when decoded from ImageLoader loading system (say, `LoadImageCacheDecodeImageData/LoadImageLoaderDecode[Progressive]ImageData`)
@@ -84,6 +84,6 @@
  @warning You should not store object inside which keep strong reference to image itself, which will cause retain cycle.
  @warning This API exist only because of current ImageLoaderDownloader bad design which does not callback the context we call it. There will be refactor in future (API break), use with caution.
  */
-@property (nonatomic, copy) LoadImageCoderOptions *sd_decodeOptions;
+@property (nonatomic, copy) LoadImageCoderOptions *btg_decodeOptions;
 
 @end

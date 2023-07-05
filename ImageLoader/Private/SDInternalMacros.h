@@ -80,43 +80,43 @@ else OSSpinLockUnlock(&lock##_deprecated);
 
 #ifndef weakify
 #define weakify(...) \
-sd_keywordify \
-metamacro_foreach_cxt(sd_weakify_,, __weak, __VA_ARGS__)
+btg_keywordify \
+metamacro_foreach_cxt(btg_weakify_,, __weak, __VA_ARGS__)
 #endif
 
 #ifndef strongify
 #define strongify(...) \
-sd_keywordify \
+btg_keywordify \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wshadow\"") \
-metamacro_foreach(sd_strongify_,, __VA_ARGS__) \
+metamacro_foreach(btg_strongify_,, __VA_ARGS__) \
 _Pragma("clang diagnostic pop")
 #endif
 
-#define sd_weakify_(INDEX, CONTEXT, VAR) \
+#define btg_weakify_(INDEX, CONTEXT, VAR) \
 CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
 
-#define sd_strongify_(INDEX, VAR) \
+#define btg_strongify_(INDEX, VAR) \
 __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
 
 #if DEBUG
-#define sd_keywordify autoreleasepool {}
+#define btg_keywordify autoreleasepool {}
 #else
-#define sd_keywordify try {} @catch (...) {}
+#define btg_keywordify try {} @catch (...) {}
 #endif
 
 #ifndef onExit
 #define onExit \
-sd_keywordify \
-__strong sd_cleanupBlock_t metamacro_concat(sd_exitBlock_, __LINE__) __attribute__((cleanup(sd_executeCleanupBlock), unused)) = ^
+btg_keywordify \
+__strong btg_cleanupBlock_t metamacro_concat(btg_exitBlock_, __LINE__) __attribute__((cleanup(btg_executeCleanupBlock), unused)) = ^
 #endif
 
-typedef void (^sd_cleanupBlock_t)(void);
+typedef void (^btg_cleanupBlock_t)(void);
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
-    void sd_executeCleanupBlock (__strong sd_cleanupBlock_t *block);
+    void btg_executeCleanupBlock (__strong btg_cleanupBlock_t *block);
 #if defined(__cplusplus)
 }
 #endif

@@ -84,7 +84,7 @@ UIImage * _Nullable LoadImageLoaderDecodeImageData(NSData * _Nonnull imageData, 
             image = [LoadImageCoderHelper decodedImageWithImage:image];
         }
         // assign the decode options, to let manager check whether to re-decode if needed
-        image.sd_decodeOptions = coderOptions;
+        image.btg_decodeOptions = coderOptions;
     }
     
     return image;
@@ -161,9 +161,9 @@ UIImage * _Nullable LoadImageLoaderDecodeProgressiveImageData(NSData * _Nonnull 
             image = [LoadImageCoderHelper decodedImageWithImage:image];
         }
         // assign the decode options, to let manager check whether to re-decode if needed
-        image.sd_decodeOptions = coderOptions;
+        image.btg_decodeOptions = coderOptions;
         // mark the image as progressive (completed one are not mark as progressive)
-        image.sd_isIncremental = !finished;
+        image.btg_isIncremental = !finished;
     }
     
     return image;

@@ -133,7 +133,7 @@ UIImage * _Nullable LoadImageCacheDecodeImageData(NSData * _Nonnull imageData, N
             image = [LoadImageCoderHelper decodedImageWithImage:image];
         }
         // assign the decode options, to let manager check whether to re-decode if needed
-        image.sd_decodeOptions = coderOptions;
+        image.btg_decodeOptions = coderOptions;
     }
     
     return image;

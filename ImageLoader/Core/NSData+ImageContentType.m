@@ -19,7 +19,7 @@
 
 @implementation NSData (ImageContentType)
 
-+ (LoadImageFormat)sd_imageFormatForImageData:(nullable NSData *)data {
++ (LoadImageFormat)btg_imageFormatForImageData:(nullable NSData *)data {
     if (!data) {
         return LoadImageFormatUndefined;
     }
@@ -85,7 +85,7 @@
     return LoadImageFormatUndefined;
 }
 
-+ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(LoadImageFormat)format {
++ (nonnull CFStringRef)btg_UTTypeFromImageFormat:(LoadImageFormat)format {
     CFStringRef UTType;
     switch (format) {
         case LoadImageFormatJPEG:
@@ -129,7 +129,7 @@
     return UTType;
 }
 
-+ (LoadImageFormat)sd_imageFormatFromUTType:(CFStringRef)uttype {
++ (LoadImageFormat)btg_imageFormatFromUTType:(CFStringRef)uttype {
     if (!uttype) {
         return LoadImageFormatUndefined;
     }

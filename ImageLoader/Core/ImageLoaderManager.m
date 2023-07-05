@@ -487,10 +487,10 @@ static id<LoadImageLoader> _defaultImageLoader;
     }
     // transformer check
     BOOL shouldTransformImage = originalImage && transformer;
-    shouldTransformImage = shouldTransformImage && (!originalImage.sd_isAnimated || (options & ImageLoaderTransformAnimatedImage));
-    shouldTransformImage = shouldTransformImage && (!originalImage.sd_isVector || (options & ImageLoaderTransformVectorImage));
+    shouldTransformImage = shouldTransformImage && (!originalImage.btg_isAnimated || (options & ImageLoaderTransformAnimatedImage));
+    shouldTransformImage = shouldTransformImage && (!originalImage.btg_isVector || (options & ImageLoaderTransformVectorImage));
     // thumbnail check
-    BOOL isThumbnail = originalImage.sd_isThumbnail;
+    BOOL isThumbnail = originalImage.btg_isThumbnail;
     NSData *cacheData = originalData;
     UIImage *cacheImage = originalImage;
     if (isThumbnail) {
@@ -505,7 +505,7 @@ static id<LoadImageLoader> _defaultImageLoader;
             // Case that transformer on thumbnail, which this time need full pixel image
             UIImage *transformedImage = [transformer transformedImageWithImage:cacheImage forKey:key];
             if (transformedImage) {
-                transformedImage.sd_isTransformed = YES;
+                transformedImage.btg_isTransformed = YES;
                 [self callStoreOriginCacheProcessForOperation:operation url:url options:options context:context originalImage:originalImage cacheImage:transformedImage originalData:originalData cacheData:nil cacheType:cacheType finished:finished completed:completedBlock];
             } else {
                 [self callStoreOriginCacheProcessForOperation:operation url:url options:options context:context originalImage:originalImage cacheImage:cacheImage originalData:originalData cacheData:cacheData cacheType:cacheType finished:finished completed:completedBlock];

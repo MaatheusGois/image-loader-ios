@@ -17,7 +17,7 @@
 /**
  Convenience way to create a bezier path with the specify rounding corners on macOS. Same as the one on `UIBezierPath`.
  */
-+ (nonnull instancetype)sd_bezierPathWithRoundedRect:(NSRect)rect byRoundingCorners:(SDRectCorner)corners cornerRadius:(CGFloat)cornerRadius;
++ (nonnull instancetype)btg_bezierPathWithRoundedRect:(NSRect)rect byRoundingCorners:(SDRectCorner)corners cornerRadius:(CGFloat)cornerRadius;
 
 @end
 

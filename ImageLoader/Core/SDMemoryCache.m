@@ -108,7 +108,7 @@ static void * SDMemoryCacheContext = &SDMemoryCacheContext;
             // Sync cache
             NSUInteger cost = 0;
             if ([obj isKindOfClass:[UIImage class]]) {
-                cost = [(UIImage *)obj sd_memoryCost];
+                cost = [(UIImage *)obj btg_memoryCost];
             }
             [super setObject:obj forKey:key cost:cost];
         }

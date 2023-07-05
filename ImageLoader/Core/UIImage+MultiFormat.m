@@ -11,15 +11,15 @@
 
 @implementation UIImage (MultiFormat)
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data {
-    return [self sd_imageWithData:data scale:1];
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data {
+    return [self btg_imageWithData:data scale:1];
 }
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale {
-    return [self sd_imageWithData:data scale:scale firstFrameOnly:NO];
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data scale:(CGFloat)scale {
+    return [self btg_imageWithData:data scale:scale firstFrameOnly:NO];
 }
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly {
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly {
     if (!data) {
         return nil;
     }
@@ -27,19 +27,19 @@
     return [[LoadImageCodersManager sharedManager] decodedImageWithData:data options:options];
 }
 
-- (nullable NSData *)sd_imageData {
-    return [self sd_imageDataAsFormat:LoadImageFormatUndefined];
+- (nullable NSData *)btg_imageData {
+    return [self btg_imageDataAsFormat:LoadImageFormatUndefined];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat {
-    return [self sd_imageDataAsFormat:imageFormat compressionQuality:1];
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat {
+    return [self btg_imageDataAsFormat:imageFormat compressionQuality:1];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality {
-    return [self sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:NO];
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality {
+    return [self btg_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:NO];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
     LoadImageCoderOptions *options = @{LoadImageCoderEncodeCompressionQuality : @(compressionQuality), LoadImageCoderEncodeFirstFrameOnly : @(firstFrameOnly)};
     return [[LoadImageCodersManager sharedManager] encodedDataWithImage:self format:imageFormat options:options];
 }

@@ -20,7 +20,7 @@
  @param data The image data
  @return The created image
  */
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data;
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data;
 
 /**
  Create and decode a image with the specify image data and scale
@@ -29,7 +29,7 @@
  @param scale The image scale factor. Should be greater than or equal to 1.0.
  @return The created image
  */
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale;
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data scale:(CGFloat)scale;
 
 /**
  Create and decode a image with the specify image data and scale, allow specify animate/static control
@@ -39,7 +39,7 @@
  @param firstFrameOnly Even if the image data is animated image format, decode the first frame only as static image.
  @return The created image
  */
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly;
++ (nullable UIImage *)btg_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly;
 
 #pragma mark - Encode
 /**
@@ -48,7 +48,7 @@
  @note If the receiver is `SDAnimatedImage`, this will return the animated image data if available. No more extra encoding process.
  @return The encoded data. If can't encode, return nil
  */
-- (nullable NSData *)sd_imageData;
+- (nullable NSData *)btg_imageData;
 
 /**
  Encode the current image to data with the specify image format
@@ -56,7 +56,7 @@
  @param imageFormat The specify image format
  @return The encoded data. If can't encode, return nil
  */
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat NS_SWIFT_NAME(sd_imageData(as:));
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat NS_SWIFT_NAME(btg_imageData(as:));
 
 /**
  Encode the current image to data with the specify image format and compression quality
@@ -65,7 +65,7 @@
  @param compressionQuality The quality of the resulting image data. Value between 0.0-1.0. Some coders may not support compression quality.
  @return The encoded data. If can't encode, return nil
  */
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality NS_SWIFT_NAME(sd_imageData(as:compressionQuality:));
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality NS_SWIFT_NAME(btg_imageData(as:compressionQuality:));
 
 /**
  Encode the current image to data with the specify image format and compression quality, allow specify animate/static control
@@ -75,6 +75,6 @@
  @param firstFrameOnly Even if the image is animated image, encode the first frame only as static image.
  @return The encoded data. If can't encode, return nil
  */
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly NS_SWIFT_NAME(sd_imageData(as:compressionQuality:firstFrameOnly:));
+- (nullable NSData *)btg_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly NS_SWIFT_NAME(btg_imageData(as:compressionQuality:firstFrameOnly:));
 
 @end

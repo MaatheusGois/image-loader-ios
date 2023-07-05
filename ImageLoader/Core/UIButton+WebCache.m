@@ -39,53 +39,53 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
 
 #pragma mark - Image
 
-- (nullable NSURL *)sd_currentImageURL {
-    NSURL *url = self.sd_imageURLStorage[imageURLKeyForState(self.state)];
+- (nullable NSURL *)btg_currentImageURL {
+    NSURL *url = self.btg_imageURLStorage[imageURLKeyForState(self.state)];
 
     if (!url) {
-        url = self.sd_imageURLStorage[imageURLKeyForState(UIControlStateNormal)];
+        url = self.btg_imageURLStorage[imageURLKeyForState(UIControlStateNormal)];
     }
 
     return url;
 }
 
-- (nullable NSURL *)sd_imageURLForState:(UIControlState)state {
-    return self.sd_imageURLStorage[imageURLKeyForState(state)];
+- (nullable NSURL *)btg_imageURLForState:(UIControlState)state {
+    return self.btg_imageURLStorage[imageURLKeyForState(state)];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state {
-    [self sd_setImageWithURL:url forState:state placeholderImage:nil options:0 completed:nil];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state {
+    [self btg_setImageWithURL:url forState:state placeholderImage:nil options:0 completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:nil];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:nil];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:options context:context progress:nil completed:nil];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:options context:context progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url forState:state placeholderImage:nil options:0 completed:completedBlock];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setImageWithURL:url forState:state placeholderImage:nil options:0 completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:completedBlock];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:completedBlock];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url forState:state placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)btg_setImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setImageWithURL:url forState:state placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
@@ -93,9 +93,9 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
                   progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                  completed:(nullable SDExternalCompletionBlock)completedBlock {
     if (!url) {
-        [self.sd_imageURLStorage removeObjectForKey:imageURLKeyForState(state)];
+        [self.btg_imageURLStorage removeObjectForKey:imageURLKeyForState(state)];
     } else {
-        self.sd_imageURLStorage[imageURLKeyForState(state)] = url;
+        self.btg_imageURLStorage[imageURLKeyForState(state)] = url;
     }
     
     ImageLoaderMutableContext *mutableContext;
@@ -106,7 +106,7 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
     }
     mutableContext[ImageLoaderContextSetImageOperationKey] = imageOperationKeyForState(state);
     @weakify(self);
-    [self sd_internalSetImageWithURL:url
+    [self btg_internalSetImageWithURL:url
                     placeholderImage:placeholder
                              options:options
                              context:mutableContext
@@ -124,53 +124,53 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
 
 #pragma mark - Background Image
 
-- (nullable NSURL *)sd_currentBackgroundImageURL {
-    NSURL *url = self.sd_imageURLStorage[backgroundImageURLKeyForState(self.state)];
+- (nullable NSURL *)btg_currentBackgroundImageURL {
+    NSURL *url = self.btg_imageURLStorage[backgroundImageURLKeyForState(self.state)];
     
     if (!url) {
-        url = self.sd_imageURLStorage[backgroundImageURLKeyForState(UIControlStateNormal)];
+        url = self.btg_imageURLStorage[backgroundImageURLKeyForState(UIControlStateNormal)];
     }
     
     return url;
 }
 
-- (nullable NSURL *)sd_backgroundImageURLForState:(UIControlState)state {
-    return self.sd_imageURLStorage[backgroundImageURLKeyForState(state)];
+- (nullable NSURL *)btg_backgroundImageURLForState:(UIControlState)state {
+    return self.btg_imageURLStorage[backgroundImageURLKeyForState(state)];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:nil options:0 completed:nil];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:nil options:0 completed:nil];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:nil];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:nil];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:nil];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:nil];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options context:context progress:nil completed:nil];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options context:context progress:nil completed:nil];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:nil options:0 completed:completedBlock];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:nil options:0 completed:completedBlock];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:completedBlock];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:0 completed:completedBlock];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:completedBlock];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url forState:(UIControlState)state placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setBackgroundImageWithURL:url forState:state placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options
@@ -178,9 +178,9 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
                             progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                            completed:(nullable SDExternalCompletionBlock)completedBlock {
     if (!url) {
-        [self.sd_imageURLStorage removeObjectForKey:backgroundImageURLKeyForState(state)];
+        [self.btg_imageURLStorage removeObjectForKey:backgroundImageURLKeyForState(state)];
     } else {
-        self.sd_imageURLStorage[backgroundImageURLKeyForState(state)] = url;
+        self.btg_imageURLStorage[backgroundImageURLKeyForState(state)] = url;
     }
     
     ImageLoaderMutableContext *mutableContext;
@@ -191,7 +191,7 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
     }
     mutableContext[ImageLoaderContextSetImageOperationKey] = backgroundImageOperationKeyForState(state);
     @weakify(self);
-    [self sd_internalSetImageWithURL:url
+    [self btg_internalSetImageWithURL:url
                     placeholderImage:placeholder
                              options:options
                              context:mutableContext
@@ -209,17 +209,17 @@ static inline NSString * backgroundImageOperationKeyForState(UIControlState stat
 
 #pragma mark - Cancel
 
-- (void)sd_cancelImageLoadForState:(UIControlState)state {
-    [self sd_cancelImageLoadOperationWithKey:imageOperationKeyForState(state)];
+- (void)btg_cancelImageLoadForState:(UIControlState)state {
+    [self btg_cancelImageLoadOperationWithKey:imageOperationKeyForState(state)];
 }
 
-- (void)sd_cancelBackgroundImageLoadForState:(UIControlState)state {
-    [self sd_cancelImageLoadOperationWithKey:backgroundImageOperationKeyForState(state)];
+- (void)btg_cancelBackgroundImageLoadForState:(UIControlState)state {
+    [self btg_cancelImageLoadOperationWithKey:backgroundImageOperationKeyForState(state)];
 }
 
 #pragma mark - Private
 
-- (SDStateImageURLDictionary *)sd_imageURLStorage {
+- (SDStateImageURLDictionary *)btg_imageURLStorage {
     SDStateImageURLDictionary *storage = objc_getAssociatedObject(self, &imageURLStorageKey);
     if (!storage) {
         storage = [NSMutableDictionary dictionary];

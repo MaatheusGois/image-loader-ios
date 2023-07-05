@@ -17,13 +17,13 @@ void LoadImageCopyAssociatedObject(UIImage * _Nullable source, UIImage * _Nullab
         return;
     }
     // Image Metadata
-    target.sd_isIncremental = source.sd_isIncremental;
-    target.sd_isTransformed = source.sd_isTransformed;
-    target.sd_decodeOptions = source.sd_decodeOptions;
-    target.sd_imageLoopCount = source.sd_imageLoopCount;
-    target.sd_imageFormat = source.sd_imageFormat;
+    target.btg_isIncremental = source.btg_isIncremental;
+    target.btg_isTransformed = source.btg_isTransformed;
+    target.btg_decodeOptions = source.btg_decodeOptions;
+    target.btg_imageLoopCount = source.btg_imageLoopCount;
+    target.btg_imageFormat = source.btg_imageFormat;
     // Force Decode
-    target.sd_isDecoded = source.sd_isDecoded;
+    target.btg_isDecoded = source.btg_isDecoded;
     // Extended Cache Data
-    target.sd_extendedObject = source.sd_extendedObject;
+    target.btg_extendedObject = source.btg_extendedObject;
 }

@@ -18,36 +18,36 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 
 @implementation UIView (WebCache)
 
-- (nullable NSURL *)sd_imageURL {
-    return objc_getAssociatedObject(self, @selector(sd_imageURL));
+- (nullable NSURL *)btg_imageURL {
+    return objc_getAssociatedObject(self, @selector(btg_imageURL));
 }
 
-- (void)setSd_imageURL:(NSURL * _Nullable)sd_imageURL {
-    objc_setAssociatedObject(self, @selector(sd_imageURL), sd_imageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setBtg_imageURL:(NSURL * _Nullable)btg_imageURL {
+    objc_setAssociatedObject(self, @selector(btg_imageURL), btg_imageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (nullable NSString *)sd_latestOperationKey {
-    return objc_getAssociatedObject(self, @selector(sd_latestOperationKey));
+- (nullable NSString *)btg_latestOperationKey {
+    return objc_getAssociatedObject(self, @selector(btg_latestOperationKey));
 }
 
-- (void)setSd_latestOperationKey:(NSString * _Nullable)sd_latestOperationKey {
-    objc_setAssociatedObject(self, @selector(sd_latestOperationKey), sd_latestOperationKey, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setBtg_latestOperationKey:(NSString * _Nullable)btg_latestOperationKey {
+    objc_setAssociatedObject(self, @selector(btg_latestOperationKey), btg_latestOperationKey, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (NSProgress *)sd_imageProgress {
-    NSProgress *progress = objc_getAssociatedObject(self, @selector(sd_imageProgress));
+- (NSProgress *)btg_imageProgress {
+    NSProgress *progress = objc_getAssociatedObject(self, @selector(btg_imageProgress));
     if (!progress) {
         progress = [[NSProgress alloc] initWithParent:nil userInfo:nil];
-        self.sd_imageProgress = progress;
+        self.btg_imageProgress = progress;
     }
     return progress;
 }
 
-- (void)setSd_imageProgress:(NSProgress *)sd_imageProgress {
-    objc_setAssociatedObject(self, @selector(sd_imageProgress), sd_imageProgress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setBtg_imageProgress:(NSProgress *)btg_imageProgress {
+    objc_setAssociatedObject(self, @selector(btg_imageProgress), btg_imageProgress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (nullable id<ImageLoaderOperation>)sd_internalSetImageWithURL:(nullable NSURL *)url
+- (nullable id<ImageLoaderOperation>)btg_internalSetImageWithURL:(nullable NSURL *)url
                                               placeholderImage:(nullable UIImage *)placeholder
                                                        options:(ImageLoaderOptions)options
                                                        context:(nullable ImageLoaderContext *)context
@@ -68,9 +68,9 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
         mutableContext[ImageLoaderContextSetImageOperationKey] = validOperationKey;
         context = [mutableContext copy];
     }
-    self.sd_latestOperationKey = validOperationKey;
-    [self sd_cancelImageLoadOperationWithKey:validOperationKey];
-    self.sd_imageURL = url;
+    self.btg_latestOperationKey = validOperationKey;
+    [self btg_cancelImageLoadOperationWithKey:validOperationKey];
+    self.btg_imageURL = url;
     
     ImageLoaderManager *manager = context[ImageLoaderContextCustomManager];
     if (!manager) {
@@ -95,7 +95,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             [((LoadImageCache *)manager.imageCache) imageFromMemoryCacheForKey:key];
         }
         dispatch_main_async_safe(^{
-            [self sd_setImage:placeholder imageData:nil basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:LoadImageCacheTypeNone imageURL:url];
+            [self btg_setImage:placeholder imageData:nil basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:LoadImageCacheTypeNone imageURL:url];
         });
     }
     
@@ -103,7 +103,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     
     if (url) {
         // reset the progress
-        NSProgress *imageProgress = objc_getAssociatedObject(self, @selector(sd_imageProgress));
+        NSProgress *imageProgress = objc_getAssociatedObject(self, @selector(btg_imageProgress));
         if (imageProgress) {
             imageProgress.totalUnitCount = 0;
             imageProgress.completedUnitCount = 0;
@@ -111,8 +111,8 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
         
 #if SD_UIKIT || SD_MAC
         // check and start image indicator
-        [self sd_startImageIndicator];
-        id<ImageLoaderIndicator> imageIndicator = self.sd_imageIndicator;
+        [self btg_startImageIndicator];
+        id<ImageLoaderIndicator> imageIndicator = self.btg_imageIndicator;
 #endif
         
         LoadImageLoaderProgressBlock combinedProgressBlock = ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
@@ -149,7 +149,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 #if SD_UIKIT || SD_MAC
             // check and stop image indicator
             if (finished) {
-                [self sd_stopImageIndicator];
+                [self btg_stopImageIndicator];
             }
 #endif
             
@@ -159,7 +159,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             ImageLoaderNoParamsBlock callCompletedBlockClosure = ^{
                 if (!self) { return; }
                 if (!shouldNotSetImage) {
-                    [self sd_setNeedsLayout];
+                    [self btg_setNeedsLayout];
                 }
                 if (completedBlock && shouldCallCompletedBlock) {
                     completedBlock(image, data, error, cacheType, finished, url);
@@ -212,22 +212,22 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
                 }
             }
             if (finished && shouldUseTransition) {
-                transition = self.sd_imageTransition;
+                transition = self.btg_imageTransition;
             }
 #endif
             dispatch_main_async_safe(^{
 #if SD_UIKIT || SD_MAC
-                [self sd_setImage:targetImage imageData:targetData basedOnClassOrViaCustomSetImageBlock:setImageBlock transition:transition cacheType:cacheType imageURL:imageURL];
+                [self btg_setImage:targetImage imageData:targetData basedOnClassOrViaCustomSetImageBlock:setImageBlock transition:transition cacheType:cacheType imageURL:imageURL];
 #else
-                [self sd_setImage:targetImage imageData:targetData basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:cacheType imageURL:imageURL];
+                [self btg_setImage:targetImage imageData:targetData basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:cacheType imageURL:imageURL];
 #endif
                 callCompletedBlockClosure();
             });
         }];
-        [self sd_setImageLoadOperation:operation forKey:validOperationKey];
+        [self btg_setImageLoadOperation:operation forKey:validOperationKey];
     } else {
 #if SD_UIKIT || SD_MAC
-        [self sd_stopImageIndicator];
+        [self btg_stopImageIndicator];
 #endif
         if (completedBlock) {
             dispatch_main_async_safe(^{
@@ -240,14 +240,14 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     return operation;
 }
 
-- (void)sd_cancelCurrentImageLoad {
-    [self sd_cancelImageLoadOperationWithKey:self.sd_latestOperationKey];
-    self.sd_latestOperationKey = nil;
+- (void)btg_cancelCurrentImageLoad {
+    [self btg_cancelImageLoadOperationWithKey:self.btg_latestOperationKey];
+    self.btg_latestOperationKey = nil;
 }
 
-- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
+- (void)btg_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
 #if SD_UIKIT || SD_MAC
-    [self sd_setImage:image imageData:imageData basedOnClassOrViaCustomSetImageBlock:setImageBlock transition:nil cacheType:cacheType imageURL:imageURL];
+    [self btg_setImage:image imageData:imageData basedOnClassOrViaCustomSetImageBlock:setImageBlock transition:nil cacheType:cacheType imageURL:imageURL];
 #else
     // watchOS does not support view transition. Simplify the logic
     if (setImageBlock) {
@@ -260,7 +260,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 }
 
 #if SD_UIKIT || SD_MAC
-- (void)sd_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock transition:(ImageLoaderTransition *)transition cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
+- (void)btg_setImage:(UIImage *)image imageData:(NSData *)imageData basedOnClassOrViaCustomSetImageBlock:(SDSetImageBlock)setImageBlock transition:(ImageLoaderTransition *)transition cacheType:(LoadImageCacheType)cacheType imageURL:(NSURL *)imageURL {
     UIView *view = self;
     SDSetImageBlock finalSetImageBlock;
     if (setImageBlock) {
@@ -289,11 +289,11 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 #endif
     
     if (transition) {
-        NSString *originalOperationKey = view.sd_latestOperationKey;
+        NSString *originalOperationKey = view.btg_latestOperationKey;
 
 #if SD_UIKIT
         [UIView transitionWithView:view duration:0 options:0 animations:^{
-            if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+            if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                 return;
             }
             // 0 duration to let UIKit render placeholder and prepares block
@@ -302,7 +302,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             }
         } completion:^(BOOL tempFinished) {
             [UIView transitionWithView:view duration:transition.duration options:transition.animationOptions animations:^{
-                if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+                if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                     return;
                 }
                 if (finalSetImageBlock && !transition.avoidAutoSetImage) {
@@ -312,7 +312,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
                     transition.animations(view, image);
                 }
             } completion:^(BOOL finished) {
-                if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+                if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                     return;
                 }
                 if (transition.completion) {
@@ -322,7 +322,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
         }];
 #elif SD_MAC
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull prepareContext) {
-            if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+            if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                 return;
             }
             // 0 duration to let AppKit render placeholder and prepares block
@@ -332,7 +332,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
             }
         } completionHandler:^{
             [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-                if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+                if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                     return;
                 }
                 context.duration = transition.duration;
@@ -356,7 +356,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
                     transition.animations(view, image);
                 }
             } completionHandler:^{
-                if (!view.sd_latestOperationKey || ![originalOperationKey isEqualToString:view.sd_latestOperationKey]) {
+                if (!view.btg_latestOperationKey || ![originalOperationKey isEqualToString:view.btg_latestOperationKey]) {
                     return;
                 }
                 if (transition.completion) {
@@ -373,7 +373,7 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 }
 #endif
 
-- (void)sd_setNeedsLayout {
+- (void)btg_setNeedsLayout {
 #if SD_UIKIT
     [self setNeedsLayout];
 #elif SD_MAC
@@ -386,28 +386,28 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
 #if SD_UIKIT || SD_MAC
 
 #pragma mark - Image Transition
-- (ImageLoaderTransition *)sd_imageTransition {
-    return objc_getAssociatedObject(self, @selector(sd_imageTransition));
+- (ImageLoaderTransition *)btg_imageTransition {
+    return objc_getAssociatedObject(self, @selector(btg_imageTransition));
 }
 
-- (void)setSd_imageTransition:(ImageLoaderTransition *)sd_imageTransition {
-    objc_setAssociatedObject(self, @selector(sd_imageTransition), sd_imageTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setBtg_imageTransition:(ImageLoaderTransition *)btg_imageTransition {
+    objc_setAssociatedObject(self, @selector(btg_imageTransition), btg_imageTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Indicator
-- (id<ImageLoaderIndicator>)sd_imageIndicator {
-    return objc_getAssociatedObject(self, @selector(sd_imageIndicator));
+- (id<ImageLoaderIndicator>)btg_imageIndicator {
+    return objc_getAssociatedObject(self, @selector(btg_imageIndicator));
 }
 
-- (void)setSd_imageIndicator:(id<ImageLoaderIndicator>)sd_imageIndicator {
+- (void)setBtg_imageIndicator:(id<ImageLoaderIndicator>)btg_imageIndicator {
     // Remove the old indicator view
-    id<ImageLoaderIndicator> previousIndicator = self.sd_imageIndicator;
+    id<ImageLoaderIndicator> previousIndicator = self.btg_imageIndicator;
     [previousIndicator.indicatorView removeFromSuperview];
     
-    objc_setAssociatedObject(self, @selector(sd_imageIndicator), sd_imageIndicator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(btg_imageIndicator), btg_imageIndicator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     // Add the new indicator view
-    UIView *view = sd_imageIndicator.indicatorView;
+    UIView *view = btg_imageIndicator.indicatorView;
     if (CGRectEqualToRect(view.frame, CGRectZero)) {
         view.frame = self.bounds;
     }
@@ -421,8 +421,8 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     [self addSubview:view];
 }
 
-- (void)sd_startImageIndicator {
-    id<ImageLoaderIndicator> imageIndicator = self.sd_imageIndicator;
+- (void)btg_startImageIndicator {
+    id<ImageLoaderIndicator> imageIndicator = self.btg_imageIndicator;
     if (!imageIndicator) {
         return;
     }
@@ -431,8 +431,8 @@ const int64_t ImageLoaderProgressUnitCountUnknown = 1LL;
     });
 }
 
-- (void)sd_stopImageIndicator {
-    id<ImageLoaderIndicator> imageIndicator = self.sd_imageIndicator;
+- (void)btg_stopImageIndicator {
+    id<ImageLoaderIndicator> imageIndicator = self.btg_imageIndicator;
     if (!imageIndicator) {
         return;
     }

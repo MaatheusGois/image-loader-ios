@@ -38,7 +38,7 @@ typedef void (^ImageLoaderTransitionAnimationsBlock)(__kindof UIView * _Nonnull 
 typedef void (^ImageLoaderTransitionCompletionBlock)(BOOL finished);
 
 /**
- This class is used to provide a transition animation after the view category load image finished. Use this on `sd_imageTransition` in UIView+WebCache.h
+ This class is used to provide a transition animation after the view category load image finished. Use this on `btg_imageTransition` in UIView+WebCache.h
  for UIKit(iOS & tvOS), we use `+[UIView transitionWithView:duration:options:animations:completion]` for transition animation.
  for AppKit(macOS), we use `+[NSAnimationContext runAnimationGroup:completionHandler:]` for transition animation. You can call `+[NSAnimationContext currentContext]` to grab the context during animations block.
  @note These transition are provided for basic usage. If you need complicated animation, consider to directly use Core Animation or use `ImageLoaderAvoidAutoSetImage` and implement your own after image load finished.

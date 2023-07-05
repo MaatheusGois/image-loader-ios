@@ -225,7 +225,7 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextCust
 /**
  A `SDCallbackQueue` instance which controls the `Cache`/`Manager`/`Loader`'s callback queue for their completionBlock.
  This is useful for user who call these 3 components in non-main queue and want to avoid callback in main queue.
- @note For UI callback (`sd_setImageWithURL`), we will still use main queue to dispatch, means if you specify a global queue, it will enqueue from the global queue to main queue.
+ @note For UI callback (`btg_setImageWithURL`), we will still use main queue to dispatch, means if you specify a global queue, it will enqueue from the global queue to main queue.
  @note This does not effect the components' working queue (for example, `Cache` still query disk on internal ioQueue, `Loader` still do network on URLSessionConfiguration.delegateQueue), change those config if you need.
  Defaults to nil. Which means main queue.
  */
@@ -260,7 +260,7 @@ FOUNDATION_EXPORT ImageLoaderContextOption _Nonnull const ImageLoaderContextImag
 
 /**
  A Dictionary (LoadImageCoderOptions) value, which pass the extra decoding options to the LoadImageCoder. Introduced in ImageLoader 5.14.0
- You can pass additional decoding related options to the decoder, extensible and control by you. And pay attention this dictionary may be retained by decoded image via `UIImage.sd_decodeOptions` 
+ You can pass additional decoding related options to the decoder, extensible and control by you. And pay attention this dictionary may be retained by decoded image via `UIImage.btg_decodeOptions` 
  This context option replace the deprecated `LoadImageCoderWebImageContext`, which may cause retain cycle (cache -> image -> options -> context -> cache)
  @note There are already individual options below like `.imageScaleFactor`, `.imagePreserveAspectRatio`, each of individual options will override the same filed for this dictionary.
  */

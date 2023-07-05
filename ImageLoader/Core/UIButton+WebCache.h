@@ -22,14 +22,14 @@
 /**
  * Get the current image URL.
  */
-@property (nonatomic, strong, readonly, nullable) NSURL *sd_currentImageURL;
+@property (nonatomic, strong, readonly, nullable) NSURL *btg_currentImageURL;
 
 /**
  * Get the image URL for a control state.
  * 
  * @param state Which state you want to know the URL for. The values are described in UIControlState.
  */
-- (nullable NSURL *)sd_imageURLForState:(UIControlState)state;
+- (nullable NSURL *)btg_imageURLForState:(UIControlState)state;
 
 /**
  * Set the button `image` with an `url`.
@@ -39,7 +39,7 @@
  * @param url   The url for the image.
  * @param state The state that uses the specified title. The values are described in UIControlState.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state NS_REFINED_FOR_SWIFT;
 
 /**
@@ -50,9 +50,9 @@
  * @param url         The url for the image.
  * @param state       The state that uses the specified title. The values are described in UIControlState.
  * @param placeholder The image to be set initially, until the image request finishes.
- * @see sd_setImageWithURL:placeholderImage:options:
+ * @see btg_setImageWithURL:placeholderImage:options:
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
 
@@ -66,7 +66,7 @@
  * @param placeholder The image to be set initially, until the image request finishes.
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
@@ -82,7 +82,7 @@
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
@@ -101,7 +101,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
 
@@ -119,7 +119,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                  completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
@@ -139,7 +139,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
@@ -162,7 +162,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
@@ -187,7 +187,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                   forState:(UIControlState)state
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
@@ -200,14 +200,14 @@
 /**
  * Get the current background image URL.
  */
-@property (nonatomic, strong, readonly, nullable) NSURL *sd_currentBackgroundImageURL;
+@property (nonatomic, strong, readonly, nullable) NSURL *btg_currentBackgroundImageURL;
 
 /**
  * Get the background image URL for a control state.
  * 
  * @param state Which state you want to know the URL for. The values are described in UIControlState.
  */
-- (nullable NSURL *)sd_backgroundImageURLForState:(UIControlState)state;
+- (nullable NSURL *)btg_backgroundImageURLForState:(UIControlState)state;
 
 /**
  * Set the button `backgroundImage` with an `url`.
@@ -217,7 +217,7 @@
  * @param url   The url for the image.
  * @param state The state that uses the specified title. The values are described in UIControlState.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state NS_REFINED_FOR_SWIFT;
 
 /**
@@ -228,9 +228,9 @@
  * @param url         The url for the image.
  * @param state       The state that uses the specified title. The values are described in UIControlState.
  * @param placeholder The image to be set initially, until the image request finishes.
- * @see sd_setImageWithURL:placeholderImage:options:
+ * @see btg_setImageWithURL:placeholderImage:options:
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
 
@@ -244,7 +244,7 @@
  * @param placeholder The image to be set initially, until the image request finishes.
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
@@ -260,7 +260,7 @@
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options
@@ -279,7 +279,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                            completed:(nullable SDExternalCompletionBlock)completedBlock;
 
@@ -297,7 +297,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                            completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
@@ -316,7 +316,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options
@@ -338,7 +338,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options
@@ -362,7 +362,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setBackgroundImageWithURL:(nullable NSURL *)url
+- (void)btg_setBackgroundImageWithURL:(nullable NSURL *)url
                             forState:(UIControlState)state
                     placeholderImage:(nullable UIImage *)placeholder
                              options:(ImageLoaderOptions)options
@@ -375,12 +375,12 @@
 /**
  * Cancel the current image download
  */
-- (void)sd_cancelImageLoadForState:(UIControlState)state;
+- (void)btg_cancelImageLoadForState:(UIControlState)state;
 
 /**
  * Cancel the current backgroundImage download
  */
-- (void)sd_cancelBackgroundImageLoadForState:(UIControlState)state;
+- (void)btg_cancelBackgroundImageLoadForState:(UIControlState)state;
 
 @end
 

@@ -18,31 +18,31 @@ static NSString * const SDHighlightedImageOperationKey = @"UIImageViewImageOpera
 
 @implementation UIImageView (HighlightedWebCache)
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url {
-    [self sd_setHighlightedImageWithURL:url options:0 progress:nil completed:nil];
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url {
+    [self btg_setHighlightedImageWithURL:url options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options {
-    [self sd_setHighlightedImageWithURL:url options:options progress:nil completed:nil];
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options {
+    [self btg_setHighlightedImageWithURL:url options:options progress:nil completed:nil];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
-    [self sd_setHighlightedImageWithURL:url options:options context:context progress:nil completed:nil];
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
+    [self btg_setHighlightedImageWithURL:url options:options context:context progress:nil completed:nil];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setHighlightedImageWithURL:url options:0 progress:nil completed:completedBlock];
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setHighlightedImageWithURL:url options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setHighlightedImageWithURL:url options:options progress:nil completed:completedBlock];
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setHighlightedImageWithURL:url options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setHighlightedImageWithURL:url options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)btg_setHighlightedImageWithURL:(NSURL *)url options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self btg_setHighlightedImageWithURL:url options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                               context:(nullable ImageLoaderContext *)context
                              progress:(nullable LoadImageLoaderProgressBlock)progressBlock
@@ -55,7 +55,7 @@ static NSString * const SDHighlightedImageOperationKey = @"UIImageViewImageOpera
         mutableContext = [NSMutableDictionary dictionary];
     }
     mutableContext[ImageLoaderContextSetImageOperationKey] = SDHighlightedImageOperationKey;
-    [self sd_internalSetImageWithURL:url
+    [self btg_internalSetImageWithURL:url
                     placeholderImage:nil
                              options:options
                              context:mutableContext

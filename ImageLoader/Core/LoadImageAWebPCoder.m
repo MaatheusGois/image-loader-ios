@@ -42,7 +42,7 @@ static NSString * kSDCGImagePropertyWebPUnclampedDelayTime = @"UnclampedDelayTim
 #pragma mark - LoadImageCoder
 
 - (BOOL)canDecodeFromData:(nullable NSData *)data {
-    switch ([NSData sd_imageFormatForImageData:data]) {
+    switch ([NSData btg_imageFormatForImageData:data]) {
         case LoadImageFormatWebP:
             // Check WebP decoding compatibility
             return [self.class canDecodeFromFormat:LoadImageFormatWebP];

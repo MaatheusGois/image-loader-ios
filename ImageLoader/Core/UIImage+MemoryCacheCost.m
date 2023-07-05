@@ -29,8 +29,8 @@ FOUNDATION_STATIC_INLINE NSUInteger SDMemoryCacheCostForImage(UIImage *image) {
 
 @implementation UIImage (MemoryCacheCost)
 
-- (NSUInteger)sd_memoryCost {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_memoryCost));
+- (NSUInteger)btg_memoryCost {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(btg_memoryCost));
     NSUInteger memoryCost;
     if (value != nil) {
         memoryCost = [value unsignedIntegerValue];
@@ -40,8 +40,8 @@ FOUNDATION_STATIC_INLINE NSUInteger SDMemoryCacheCostForImage(UIImage *image) {
     return memoryCost;
 }
 
-- (void)setSd_memoryCost:(NSUInteger)sd_memoryCost {
-    objc_setAssociatedObject(self, @selector(sd_memoryCost), @(sd_memoryCost), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setBtg_memoryCost:(NSUInteger)btg_memoryCost {
+    objc_setAssociatedObject(self, @selector(btg_memoryCost), @(btg_memoryCost), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

@@ -24,7 +24,7 @@
  *
  * @param url The url for the image.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
 
 /**
  * Set the imageView `highlightedImage` with an `url` and custom options.
@@ -34,7 +34,7 @@
  * @param url     The url for the image.
  * @param options The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
 
 /**
@@ -46,7 +46,7 @@
  * @param options The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                               context:(nullable ImageLoaderContext *)context;
 
@@ -62,7 +62,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                             completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
 
 /**
@@ -78,7 +78,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                             completed:(nullable SDExternalCompletionBlock)completedBlock;
 
@@ -97,7 +97,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                              progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                             completed:(nullable SDExternalCompletionBlock)completedBlock;
@@ -118,7 +118,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
+- (void)btg_setHighlightedImageWithURL:(nullable NSURL *)url
                               options:(ImageLoaderOptions)options
                               context:(nullable ImageLoaderContext *)context
                              progress:(nullable LoadImageLoaderProgressBlock)progressBlock

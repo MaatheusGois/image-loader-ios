@@ -39,7 +39,7 @@ static NSString * kSDCGImagePropertyHEICSUnclampedDelayTime = @"UnclampedDelayTi
 #pragma mark - LoadImageCoder
 
 - (BOOL)canDecodeFromData:(nullable NSData *)data {
-    switch ([NSData sd_imageFormatForImageData:data]) {
+    switch ([NSData btg_imageFormatForImageData:data]) {
         case LoadImageFormatHEIC:
             // Check HEIC decoding compatibility
             return [self.class canDecodeFromFormat:LoadImageFormatHEIC];

@@ -22,7 +22,7 @@
 /**
  * Get the current image URL.
  */
-@property (nonatomic, strong, readonly, nullable) NSURL *sd_currentImageURL;
+@property (nonatomic, strong, readonly, nullable) NSURL *btg_currentImageURL;
 
 /**
  * Set the button `image` with an `url`.
@@ -31,7 +31,7 @@
  *
  * @param url The url for the image.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
+- (void)btg_setImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
 
 /**
  * Set the button `image` with an `url` and a placeholder.
@@ -40,9 +40,9 @@
  *
  * @param url         The url for the image.
  * @param placeholder The image to be set initially, until the image request finishes.
- * @see sd_setImageWithURL:placeholderImage:options:
+ * @see btg_setImageWithURL:placeholderImage:options:
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
 
 /**
@@ -54,7 +54,7 @@
  * @param placeholder The image to be set initially, until the image request finishes.
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
 
@@ -68,7 +68,7 @@
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context;
@@ -85,7 +85,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -101,7 +101,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                  completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
 
@@ -119,7 +119,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
@@ -140,7 +140,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                   progress:(nullable LoadImageLoaderProgressBlock)progressBlock
@@ -163,7 +163,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)btg_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context
@@ -175,7 +175,7 @@
 /**
  * Get the current alternateImage URL.
  */
-@property (nonatomic, strong, readonly, nullable) NSURL *sd_currentAlternateImageURL;
+@property (nonatomic, strong, readonly, nullable) NSURL *btg_currentAlternateImageURL;
 
 /**
  * Set the button `alternateImage` with an `url`.
@@ -184,7 +184,7 @@
  *
  * @param url The url for the alternateImage.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
 
 /**
  * Set the button `alternateImage` with an `url` and a placeholder.
@@ -193,9 +193,9 @@
  *
  * @param url         The url for the alternateImage.
  * @param placeholder The alternateImage to be set initially, until the alternateImage request finishes.
- * @see sd_setAlternateImageWithURL:placeholderImage:options:
+ * @see btg_setAlternateImageWithURL:placeholderImage:options:
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
 
 /**
@@ -207,7 +207,7 @@
  * @param placeholder The alternateImage to be set initially, until the alternateImage request finishes.
  * @param options     The options to use when downloading the alternateImage. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
 
@@ -221,7 +221,7 @@
  * @param options     The options to use when downloading the alternateImage. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                             context:(nullable ImageLoaderContext *)context;
@@ -238,7 +238,7 @@
  *                       indicating if the alternateImage was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original alternateImage url.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                           completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -254,7 +254,7 @@
  *                       indicating if the alternateImage was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original alternateImage url.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                           completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
 
@@ -272,7 +272,7 @@
  *                       indicating if the alternateImage was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original alternateImage url.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                           completed:(nullable SDExternalCompletionBlock)completedBlock;
@@ -293,7 +293,7 @@
  *                       indicating if the alternateImage was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original alternateImage url.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                            progress:(nullable LoadImageLoaderProgressBlock)progressBlock
@@ -316,7 +316,7 @@
  *                       indicating if the alternateImage was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original alternateImage url.
  */
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)btg_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                             context:(nullable ImageLoaderContext *)context
@@ -328,12 +328,12 @@
 /**
  * Cancel the current image download
  */
-- (void)sd_cancelCurrentImageLoad;
+- (void)btg_cancelCurrentImageLoad;
 
 /**
  * Cancel the current alternateImage download
  */
-- (void)sd_cancelCurrentAlternateImageLoad;
+- (void)btg_cancelCurrentAlternateImageLoad;
 
 @end
 

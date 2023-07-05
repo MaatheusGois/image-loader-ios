@@ -13,8 +13,8 @@
 
 @implementation UIImage (ForceDecode)
 
-- (BOOL)sd_isDecoded {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_isDecoded));
+- (BOOL)btg_isDecoded {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(btg_isDecoded));
     if (value != nil) {
         return value.boolValue;
     } else {
@@ -35,22 +35,22 @@
     return NO;
 }
 
-- (void)setSd_isDecoded:(BOOL)sd_isDecoded {
-    objc_setAssociatedObject(self, @selector(sd_isDecoded), @(sd_isDecoded), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setBtg_isDecoded:(BOOL)btg_isDecoded {
+    objc_setAssociatedObject(self, @selector(btg_isDecoded), @(btg_isDecoded), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-+ (nullable UIImage *)sd_decodedImageWithImage:(nullable UIImage *)image {
++ (nullable UIImage *)btg_decodedImageWithImage:(nullable UIImage *)image {
     if (!image) {
         return nil;
     }
     return [LoadImageCoderHelper decodedImageWithImage:image];
 }
 
-+ (nullable UIImage *)sd_decodedAndScaledDownImageWithImage:(nullable UIImage *)image {
-    return [self sd_decodedAndScaledDownImageWithImage:image limitBytes:0];
++ (nullable UIImage *)btg_decodedAndScaledDownImageWithImage:(nullable UIImage *)image {
+    return [self btg_decodedAndScaledDownImageWithImage:image limitBytes:0];
 }
 
-+ (nullable UIImage *)sd_decodedAndScaledDownImageWithImage:(nullable UIImage *)image limitBytes:(NSUInteger)bytes {
++ (nullable UIImage *)btg_decodedAndScaledDownImageWithImage:(nullable UIImage *)image limitBytes:(NSUInteger)bytes {
     if (!image) {
         return nil;
     }

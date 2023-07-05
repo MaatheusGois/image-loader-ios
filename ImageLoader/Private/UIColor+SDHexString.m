@@ -10,7 +10,7 @@
 
 @implementation UIColor (SDHexString)
 
-- (NSString *)sd_hexString {
+- (NSString *)btg_hexString {
     CGFloat red, green, blue, alpha;
 #if SD_UIKIT
     if (![self getRed:&red green:&green blue:&blue alpha:&alpha]) {

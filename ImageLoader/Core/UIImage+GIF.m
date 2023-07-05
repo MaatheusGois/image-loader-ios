@@ -12,7 +12,7 @@
 
 @implementation UIImage (GIF)
 
-+ (nullable UIImage *)sd_imageWithGIFData:(nullable NSData *)data {
++ (nullable UIImage *)btg_imageWithGIFData:(nullable NSData *)data {
     if (!data) {
         return nil;
     }

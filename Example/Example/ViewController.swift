@@ -22,6 +22,6 @@ class ViewController: UIViewController {
     }
 
     private func loadImage() {
-        imageContentView.sd_setImage(with: .init(string: "https://picsum.photos/200/300"))
+        imageContentView.btg_setImage(with: .init(string: "https://picsum.photos/200/300"))
     }
 }
