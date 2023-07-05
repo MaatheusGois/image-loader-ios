@@ -28,9 +28,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     }
  
-    // Here we use the provided sd_setImageWithURL:placeholderImage: method to load the web image
+    // Here we use the provided _setImageWithURL:placeholderImage: method to load the web image
     // Ensure you use a placeholder image otherwise cells will be initialized with no image
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://example.com/image.jpg"]
+    [cell.imageView _setImageWithURL:[NSURL URLWithString:@"http://example.com/image.jpg"]
                       placeholderImage:[UIImage imageNamed:@"placeholder"]];
  
     cell.textLabel.text = @"My Text";
@@ -52,7 +52,7 @@
  *
  * @param url The url for the image.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
+- (void)_setImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
 
 /**
  * Set the imageView `image` with an `url` and a placeholder.
@@ -61,9 +61,9 @@
  *
  * @param url         The url for the image.
  * @param placeholder The image to be set initially, until the image request finishes.
- * @see sd_setImageWithURL:placeholderImage:options:
+ * @see _setImageWithURL:placeholderImage:options:
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
 
 /**
@@ -75,7 +75,7 @@
  * @param placeholder The image to be set initially, until the image request finishes.
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options NS_REFINED_FOR_SWIFT;
 
@@ -89,7 +89,7 @@
  * @param options     The options to use when downloading the image. @see ImageLoaderOptions for the possible values.
  * @param context     A context contains different options to perform specify changes or processes, see `ImageLoaderContextOption`. This hold the extra objects which `options` enum can not hold.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context;
@@ -106,7 +106,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
 
 /**
@@ -122,7 +122,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                  completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
 
@@ -140,7 +140,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                  completed:(nullable SDExternalCompletionBlock)completedBlock;
@@ -161,7 +161,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                   progress:(nullable LoadImageLoaderProgressBlock)progressBlock
@@ -184,7 +184,7 @@
  *                       indicating if the image was retrieved from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context

@@ -15,22 +15,22 @@ typedef NSMapTable<NSString *, id<ImageLoaderOperation>> SDOperationsDictionary;
 
 @implementation UIView (WebCacheOperation)
 
-- (SDOperationsDictionary *)sd_operationDictionary {
+- (SDOperationsDictionary *)_operationDictionary {
     @synchronized(self) {
-        SDOperationsDictionary *operations = objc_getAssociatedObject(self, @selector(sd_operationDictionary));
+        SDOperationsDictionary *operations = objc_getAssociatedObject(self, @selector(_operationDictionary));
         if (operations) {
             return operations;
         }
         operations = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsWeakMemory capacity:0];
-        objc_setAssociatedObject(self, @selector(sd_operationDictionary), operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, @selector(_operationDictionary), operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return operations;
     }
 }
 
-- (nullable id<ImageLoaderOperation>)sd_imageLoadOperationForKey:(nullable NSString *)key  {
+- (nullable id<ImageLoaderOperation>)_imageLoadOperationForKey:(nullable NSString *)key  {
     id<ImageLoaderOperation> operation;
     if (key) {
-        SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
+        SDOperationsDictionary *operationDictionary = [self _operationDictionary];
         @synchronized (self) {
             operation = [operationDictionary objectForKey:key];
         }
@@ -38,11 +38,11 @@ typedef NSMapTable<NSString *, id<ImageLoaderOperation>> SDOperationsDictionary;
     return operation;
 }
 
-- (void)sd_setImageLoadOperation:(nullable id<ImageLoaderOperation>)operation forKey:(nullable NSString *)key {
+- (void)_setImageLoadOperation:(nullable id<ImageLoaderOperation>)operation forKey:(nullable NSString *)key {
     if (key) {
-        [self sd_cancelImageLoadOperationWithKey:key];
+        [self _cancelImageLoadOperationWithKey:key];
         if (operation) {
-            SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
+            SDOperationsDictionary *operationDictionary = [self _operationDictionary];
             @synchronized (self) {
                 [operationDictionary setObject:operation forKey:key];
             }
@@ -50,10 +50,10 @@ typedef NSMapTable<NSString *, id<ImageLoaderOperation>> SDOperationsDictionary;
     }
 }
 
-- (void)sd_cancelImageLoadOperationWithKey:(nullable NSString *)key {
+- (void)_cancelImageLoadOperationWithKey:(nullable NSString *)key {
     if (key) {
         // Cancel in progress downloader from queue
-        SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
+        SDOperationsDictionary *operationDictionary = [self _operationDictionary];
         id<ImageLoaderOperation> operation;
         
         @synchronized (self) {
@@ -70,9 +70,9 @@ typedef NSMapTable<NSString *, id<ImageLoaderOperation>> SDOperationsDictionary;
     }
 }
 
-- (void)sd_removeImageLoadOperationWithKey:(nullable NSString *)key {
+- (void)_removeImageLoadOperationWithKey:(nullable NSString *)key {
     if (key) {
-        SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
+        SDOperationsDictionary *operationDictionary = [self _operationDictionary];
         @synchronized (self) {
             [operationDictionary removeObjectForKey:key];
         }

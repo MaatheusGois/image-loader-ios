@@ -21,6 +21,6 @@
  @param data The GIF data
  @return The created image
  */
-+ (nullable UIImage *)sd_imageWithGIFData:(nullable NSData *)data;
++ (nullable UIImage *)_imageWithGIFData:(nullable NSData *)data;
 
 @end

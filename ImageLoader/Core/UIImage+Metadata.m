@@ -15,26 +15,26 @@
 
 #if SD_UIKIT || SD_WATCH
 
-- (NSUInteger)sd_imageLoopCount {
+- (NSUInteger)_imageLoopCount {
     NSUInteger imageLoopCount = 0;
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_imageLoopCount));
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_imageLoopCount));
     if ([value isKindOfClass:[NSNumber class]]) {
         imageLoopCount = value.unsignedIntegerValue;
     }
     return imageLoopCount;
 }
 
-- (void)setSd_imageLoopCount:(NSUInteger)sd_imageLoopCount {
-    NSNumber *value = @(sd_imageLoopCount);
-    objc_setAssociatedObject(self, @selector(sd_imageLoopCount), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_imageLoopCount:(NSUInteger)_imageLoopCount {
+    NSNumber *value = @(_imageLoopCount);
+    objc_setAssociatedObject(self, @selector(_imageLoopCount), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSUInteger)sd_imageFrameCount {
+- (NSUInteger)_imageFrameCount {
     NSArray<UIImage *> *animatedImages = self.images;
     if (!animatedImages || animatedImages.count <= 1) {
         return 1;
     }
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_imageFrameCount));
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_imageFrameCount));
     if ([value isKindOfClass:[NSNumber class]]) {
         return [value unsignedIntegerValue];
     }
@@ -50,18 +50,18 @@
         }
         previousImage = image;
     }];
-    objc_setAssociatedObject(self, @selector(sd_imageFrameCount), @(frameCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(_imageFrameCount), @(frameCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     return frameCount;
 }
 
-- (BOOL)sd_isAnimated {
+- (BOOL)_isAnimated {
     return (self.images != nil);
 }
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-- (BOOL)sd_isVector {
+- (BOOL)_isVector {
     if (@available(iOS 13.0, tvOS 13.0, watchOS 6.0, *)) {
         // Xcode 11 supports symbol image, keep Xcode 10 compatible currently
         SEL SymbolSelector = NSSelectorFromString(@"isSymbolImage");
@@ -87,7 +87,7 @@
 
 #else
 
-- (NSUInteger)sd_imageLoopCount {
+- (NSUInteger)_imageLoopCount {
     NSUInteger imageLoopCount = 0;
     NSRect imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
     NSImageRep *imageRep = [self bestRepresentationForRect:imageRect context:nil hints:nil];
@@ -101,7 +101,7 @@
     return imageLoopCount;
 }
 
-- (void)setSd_imageLoopCount:(NSUInteger)sd_imageLoopCount {
+- (void)set_imageLoopCount:(NSUInteger)_imageLoopCount {
     NSRect imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
     NSImageRep *imageRep = [self bestRepresentationForRect:imageRect context:nil hints:nil];
     NSBitmapImageRep *bitmapImageRep;
@@ -109,11 +109,11 @@
         bitmapImageRep = (NSBitmapImageRep *)imageRep;
     }
     if (bitmapImageRep) {
-        [bitmapImageRep setProperty:NSImageLoopCount withValue:@(sd_imageLoopCount)];
+        [bitmapImageRep setProperty:NSImageLoopCount withValue:@(_imageLoopCount)];
     }
 }
 
-- (NSUInteger)sd_imageFrameCount {
+- (NSUInteger)_imageFrameCount {
     NSRect imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
     NSImageRep *imageRep = [self bestRepresentationForRect:imageRect context:nil hints:nil];
     NSBitmapImageRep *bitmapImageRep;
@@ -126,7 +126,7 @@
     return 1;
 }
 
-- (BOOL)sd_isAnimated {
+- (BOOL)_isAnimated {
     BOOL isAnimated = NO;
     NSRect imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
     NSImageRep *imageRep = [self bestRepresentationForRect:imageRect context:nil hints:nil];
@@ -141,7 +141,7 @@
     return isAnimated;
 }
 
-- (BOOL)sd_isVector {
+- (BOOL)_isVector {
     NSRect imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
     NSImageRep *imageRep = [self bestRepresentationForRect:imageRect context:nil hints:nil];
     if ([imageRep isKindOfClass:[NSPDFImageRep class]]) {
@@ -158,48 +158,48 @@
 
 #endif
 
-- (LoadImageFormat)sd_imageFormat {
+- (LoadImageFormat)_imageFormat {
     LoadImageFormat imageFormat = LoadImageFormatUndefined;
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_imageFormat));
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_imageFormat));
     if ([value isKindOfClass:[NSNumber class]]) {
         imageFormat = value.integerValue;
         return imageFormat;
     }
     // Check CGImage's UTType, may return nil for non-Image/IO based image
     CFStringRef uttype = CGImageGetUTType(self.CGImage);
-    imageFormat = [NSData sd_imageFormatFromUTType:uttype];
+    imageFormat = [NSData _imageFormatFromUTType:uttype];
     return imageFormat;
 }
 
-- (void)setSd_imageFormat:(LoadImageFormat)sd_imageFormat {
-    objc_setAssociatedObject(self, @selector(sd_imageFormat), @(sd_imageFormat), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_imageFormat:(LoadImageFormat)_imageFormat {
+    objc_setAssociatedObject(self, @selector(_imageFormat), @(_imageFormat), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setSd_isIncremental:(BOOL)sd_isIncremental {
-    objc_setAssociatedObject(self, @selector(sd_isIncremental), @(sd_isIncremental), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_isIncremental:(BOOL)_isIncremental {
+    objc_setAssociatedObject(self, @selector(_isIncremental), @(_isIncremental), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)sd_isIncremental {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_isIncremental));
+- (BOOL)_isIncremental {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_isIncremental));
     return value.boolValue;
 }
 
-- (void)setSd_isTransformed:(BOOL)sd_isTransformed {
-    objc_setAssociatedObject(self, @selector(sd_isTransformed), @(sd_isTransformed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_isTransformed:(BOOL)_isTransformed {
+    objc_setAssociatedObject(self, @selector(_isTransformed), @(_isTransformed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)sd_isTransformed {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_isTransformed));
+- (BOOL)_isTransformed {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_isTransformed));
     return value.boolValue;
 }
 
-- (void)setSd_decodeOptions:(LoadImageCoderOptions *)sd_decodeOptions {
-    objc_setAssociatedObject(self, @selector(sd_decodeOptions), sd_decodeOptions, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)set_decodeOptions:(LoadImageCoderOptions *)_decodeOptions {
+    objc_setAssociatedObject(self, @selector(_decodeOptions), _decodeOptions, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
--(BOOL)sd_isThumbnail {
+-(BOOL)_isThumbnail {
     CGSize thumbnailSize = CGSizeZero;
-    NSValue *thumbnailSizeValue = self.sd_decodeOptions[LoadImageCoderDecodeThumbnailPixelSize];
+    NSValue *thumbnailSizeValue = self._decodeOptions[LoadImageCoderDecodeThumbnailPixelSize];
     if (thumbnailSizeValue != nil) {
     #if SD_MAC
         thumbnailSize = thumbnailSizeValue.sizeValue;
@@ -210,8 +210,8 @@
     return thumbnailSize.width > 0 && thumbnailSize.height > 0;
 }
 
-- (LoadImageCoderOptions *)sd_decodeOptions {
-    LoadImageCoderOptions *value = objc_getAssociatedObject(self, @selector(sd_decodeOptions));
+- (LoadImageCoderOptions *)_decodeOptions {
+    LoadImageCoderOptions *value = objc_getAssociatedObject(self, @selector(_decodeOptions));
     if ([value isKindOfClass:NSDictionary.class]) {
         return value;
     }

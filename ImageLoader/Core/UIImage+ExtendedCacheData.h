@@ -19,6 +19,6 @@
  @note You can specify arbitrary object conforms to NSCoding (NSObject protocol here is used to support object using `NS_ROOT_CLASS`, which is not NSObject subclass). If you load image from disk cache, you should check the extended object class to avoid corrupted data.
  @warning This object don't need to implements NSSecureCoding (but it's recommended),  because we allows arbitrary class.
  */
-@property (nonatomic, strong, nullable) id<NSObject, NSCoding> sd_extendedObject;
+@property (nonatomic, strong, nullable) id<NSObject, NSCoding> _extendedObject;
 
 @end

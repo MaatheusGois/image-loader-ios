@@ -108,14 +108,14 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
 }
 
 - (NSString *)transformerKey {
-    return [NSString stringWithFormat:@"LoadImageRoundCornerTransformer(%f,%lu,%f,%@)", self.cornerRadius, (unsigned long)self.corners, self.borderWidth, self.borderColor.sd_hexString];
+    return [NSString stringWithFormat:@"LoadImageRoundCornerTransformer(%f,%lu,%f,%@)", self.cornerRadius, (unsigned long)self.corners, self.borderWidth, self.borderColor._hexString];
 }
 
 - (UIImage *)transformedImageWithImage:(UIImage *)image forKey:(NSString *)key {
     if (!image) {
         return nil;
     }
-    return [image sd_roundedCornerImageWithRadius:self.cornerRadius corners:self.corners borderWidth:self.borderWidth borderColor:self.borderColor];
+    return [image _roundedCornerImageWithRadius:self.cornerRadius corners:self.corners borderWidth:self.borderWidth borderColor:self.borderColor];
 }
 
 @end
@@ -146,7 +146,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_resizedImageWithSize:self.size scaleMode:self.scaleMode];
+    return [image _resizedImageWithSize:self.size scaleMode:self.scaleMode];
 }
 
 @end
@@ -175,7 +175,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_croppedImageWithRect:self.rect];
+    return [image _croppedImageWithRect:self.rect];
 }
 
 @end
@@ -205,7 +205,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_flippedImageWithHorizontal:self.horizontal vertical:self.vertical];
+    return [image _flippedImageWithHorizontal:self.horizontal vertical:self.vertical];
 }
 
 @end
@@ -235,7 +235,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_rotatedImageWithAngle:self.angle fitSize:self.fitSize];
+    return [image _rotatedImageWithAngle:self.angle fitSize:self.fitSize];
 }
 
 @end
@@ -258,14 +258,14 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
 }
 
 - (NSString *)transformerKey {
-    return [NSString stringWithFormat:@"LoadImageTintTransformer(%@)", self.tintColor.sd_hexString];
+    return [NSString stringWithFormat:@"LoadImageTintTransformer(%@)", self.tintColor._hexString];
 }
 
 - (UIImage *)transformedImageWithImage:(UIImage *)image forKey:(NSString *)key {
     if (!image) {
         return nil;
     }
-    return [image sd_tintedImageWithColor:self.tintColor];
+    return [image _tintedImageWithColor:self.tintColor];
 }
 
 @end
@@ -295,7 +295,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_blurredImageWithRadius:self.blurRadius];
+    return [image _blurredImageWithRadius:self.blurRadius];
 }
 
 @end
@@ -324,7 +324,7 @@ NSString * _Nullable SDThumbnailedKeyForKey(NSString * _Nullable key, CGSize thu
     if (!image) {
         return nil;
     }
-    return [image sd_filteredImageWithFilter:self.filter];
+    return [image _filteredImageWithFilter:self.filter];
 }
 
 @end

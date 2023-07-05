@@ -100,7 +100,7 @@ inline UIImage * _Nullable SDScaledImageForScaleFactor(CGFloat scale, UIImage * 
             return scaledImage;
         }
     }
-    if (image.sd_isAnimated) {
+    if (image._isAnimated) {
         UIImage *animatedImage;
 #if SD_UIKIT || SD_WATCH
         // `UIAnimatedImage` images share the same size and scale.
@@ -113,7 +113,7 @@ inline UIImage * _Nullable SDScaledImageForScaleFactor(CGFloat scale, UIImage * 
         }
         
         animatedImage = [UIImage animatedImageWithImages:scaledImages duration:image.duration];
-        animatedImage.sd_imageLoopCount = image.sd_imageLoopCount;
+        animatedImage._imageLoopCount = image._imageLoopCount;
 #else
         // Animated GIF for `NSImage` need to grab `NSBitmapImageRep`;
         NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);

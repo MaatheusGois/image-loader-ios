@@ -8,6 +8,6 @@
 
 #import "SDInternalMacros.h"
 
-void sd_executeCleanupBlock (__strong sd_cleanupBlock_t *block) {
+void _executeCleanupBlock (__strong _cleanupBlock_t *block) {
     (*block)();
 }

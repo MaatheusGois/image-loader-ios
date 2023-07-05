@@ -21,7 +21,7 @@
  *  @param key key for identifying the operations
  *  @return the image load operation
  */
-- (nullable id<ImageLoaderOperation>)sd_imageLoadOperationForKey:(nullable NSString *)key;
+- (nullable id<ImageLoaderOperation>)_imageLoadOperationForKey:(nullable NSString *)key;
 
 /**
  *  Set the image load operation (storage in a UIView based weak map table)
@@ -29,20 +29,20 @@
  *  @param operation the operation
  *  @param key       key for storing the operation
  */
-- (void)sd_setImageLoadOperation:(nullable id<ImageLoaderOperation>)operation forKey:(nullable NSString *)key;
+- (void)_setImageLoadOperation:(nullable id<ImageLoaderOperation>)operation forKey:(nullable NSString *)key;
 
 /**
  *  Cancel the operation for the current UIView and key
  *
  *  @param key key for identifying the operations
  */
-- (void)sd_cancelImageLoadOperationWithKey:(nullable NSString *)key;
+- (void)_cancelImageLoadOperationWithKey:(nullable NSString *)key;
 
 /**
  *  Just remove the operation corresponding to the current UIView and key without cancelling them
  *
  *  @param key key for identifying the operations
  */
-- (void)sd_removeImageLoadOperationWithKey:(nullable NSString *)key;
+- (void)_removeImageLoadOperationWithKey:(nullable NSString *)key;
 
 @end

@@ -161,7 +161,7 @@ static CGFloat LoadImageScaleFromPath(NSString *string) {
             _animatedCoder = animatedCoder;
         }
         NSData *data = [animatedCoder animatedImageData];
-        LoadImageFormat format = [NSData sd_imageFormatForImageData:data];
+        LoadImageFormat format = [NSData _imageFormatForImageData:data];
         _animatedImageFormat = format;
     }
     return self;
@@ -277,8 +277,8 @@ static CGFloat LoadImageScaleFromPath(NSString *string) {
 
 @implementation SDAnimatedImage (MemoryCacheCost)
 
-- (NSUInteger)sd_memoryCost {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(sd_memoryCost));
+- (NSUInteger)_memoryCost {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(_memoryCost));
     if (value != nil) {
         return value.unsignedIntegerValue;
     }
@@ -301,31 +301,31 @@ static CGFloat LoadImageScaleFromPath(NSString *string) {
 
 @implementation SDAnimatedImage (Metadata)
 
-- (BOOL)sd_isAnimated {
+- (BOOL)_isAnimated {
     return YES;
 }
 
-- (NSUInteger)sd_imageLoopCount {
+- (NSUInteger)_imageLoopCount {
     return self.animatedImageLoopCount;
 }
 
-- (void)setSd_imageLoopCount:(NSUInteger)sd_imageLoopCount {
+- (void)set_imageLoopCount:(NSUInteger)_imageLoopCount {
     return;
 }
 
-- (NSUInteger)sd_imageFrameCount {
+- (NSUInteger)_imageFrameCount {
     return self.animatedImageFrameCount;
 }
 
-- (LoadImageFormat)sd_imageFormat {
+- (LoadImageFormat)_imageFormat {
     return self.animatedImageFormat;
 }
 
-- (void)setSd_imageFormat:(LoadImageFormat)sd_imageFormat {
+- (void)set_imageFormat:(LoadImageFormat)_imageFormat {
     return;
 }
 
-- (BOOL)sd_isVector {
+- (BOOL)_isVector {
     return NO;
 }
 
@@ -333,47 +333,47 @@ static CGFloat LoadImageScaleFromPath(NSString *string) {
 
 @implementation SDAnimatedImage (MultiFormat)
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data {
-    return [self sd_imageWithData:data scale:1];
++ (nullable UIImage *)_imageWithData:(nullable NSData *)data {
+    return [self _imageWithData:data scale:1];
 }
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale {
-    return [self sd_imageWithData:data scale:scale firstFrameOnly:NO];
++ (nullable UIImage *)_imageWithData:(nullable NSData *)data scale:(CGFloat)scale {
+    return [self _imageWithData:data scale:scale firstFrameOnly:NO];
 }
 
-+ (nullable UIImage *)sd_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly {
++ (nullable UIImage *)_imageWithData:(nullable NSData *)data scale:(CGFloat)scale firstFrameOnly:(BOOL)firstFrameOnly {
     if (!data) {
         return nil;
     }
     return [[self alloc] initWithData:data scale:scale options:@{LoadImageCoderDecodeFirstFrameOnly : @(firstFrameOnly)}];
 }
 
-- (nullable NSData *)sd_imageData {
+- (nullable NSData *)_imageData {
     NSData *imageData = self.animatedImageData;
     if (imageData) {
         return imageData;
     } else {
-        return [self sd_imageDataAsFormat:self.animatedImageFormat];
+        return [self _imageDataAsFormat:self.animatedImageFormat];
     }
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat {
-    return [self sd_imageDataAsFormat:imageFormat compressionQuality:1];
+- (nullable NSData *)_imageDataAsFormat:(LoadImageFormat)imageFormat {
+    return [self _imageDataAsFormat:imageFormat compressionQuality:1];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality {
-    return [self sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:NO];
+- (nullable NSData *)_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality {
+    return [self _imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:NO];
 }
 
-- (nullable NSData *)sd_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
+- (nullable NSData *)_imageDataAsFormat:(LoadImageFormat)imageFormat compressionQuality:(double)compressionQuality firstFrameOnly:(BOOL)firstFrameOnly {
     if (firstFrameOnly) {
         // First frame, use super implementation
-        return [super sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
+        return [super _imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
     }
     NSUInteger frameCount = self.animatedImageFrameCount;
     if (frameCount <= 1) {
         // Static image, use super implementation
-        return [super sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
+        return [super _imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
     }
     // Keep animated image encoding, loop each frame.
     NSMutableArray<LoadImageFrame *> *frames = [NSMutableArray arrayWithCapacity:frameCount];
@@ -384,7 +384,7 @@ static CGFloat LoadImageScaleFromPath(NSString *string) {
         [frames addObject:frame];
     }
     UIImage *animatedImage = [LoadImageCoderHelper animatedImageWithFrames:frames];
-    NSData *imageData = [animatedImage sd_imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
+    NSData *imageData = [animatedImage _imageDataAsFormat:imageFormat compressionQuality:compressionQuality firstFrameOnly:firstFrameOnly];
     return imageData;
 }
 

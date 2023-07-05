@@ -29,7 +29,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  *
  * @note Note that because of the limitations of categories this property can get out of sync if you use setImage: directly.
  */
-@property (nonatomic, strong, readonly, nullable) NSURL *sd_imageURL;
+@property (nonatomic, strong, readonly, nullable) NSURL *_imageURL;
 
 /**
  * Get the current image operation key. Operation key is used to identify the different queries for one view instance (like UIButton).
@@ -37,7 +37,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  * If you cancel current image load, the key will be set to nil.
  * @note You can use method `UIView+WebCacheOperation` to investigate different queries' operation.
  */
-@property (nonatomic, strong, readonly, nullable) NSString *sd_latestOperationKey;
+@property (nonatomic, strong, readonly, nullable) NSString *_latestOperationKey;
 
 /**
  * The current image loading progress associated to the view. The unit count is the received size and excepted size of download.
@@ -46,7 +46,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  * @note The getter will create a progress instance if the value is nil. But by default, we don't create one. If you need to use Key-Value Observing, you must trigger the getter or set a custom progress instance before the loading start. The default value is nil.
  * @note Note that because of the limitations of categories this property can get out of sync if you update the progress directly.
  */
-@property (nonatomic, strong, null_resettable) NSProgress *sd_imageProgress;
+@property (nonatomic, strong, null_resettable) NSProgress *_imageProgress;
 
 /**
  * Set the imageView `image` with an `url` and optionally a placeholder image.
@@ -73,7 +73,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  *   The last parameter is the original image URL
  *  @return The returned operation for cancelling cache and download operation, typically type is `ImageLoaderCombinedOperation`
  */
-- (nullable id<ImageLoaderOperation>)sd_internalSetImageWithURL:(nullable NSURL *)url
+- (nullable id<ImageLoaderOperation>)_internalSetImageWithURL:(nullable NSURL *)url
                                               placeholderImage:(nullable UIImage *)placeholder
                                                        options:(ImageLoaderOptions)options
                                                        context:(nullable ImageLoaderContext *)context
@@ -84,7 +84,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
 /**
  * Cancel the current image load
  */
-- (void)sd_cancelCurrentImageLoad;
+- (void)_cancelCurrentImageLoad;
 
 #if SD_UIKIT || SD_MAC
 
@@ -94,7 +94,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  The image transition when image load finished. See `ImageLoaderTransition`.
  If you specify nil, do not do transition. Defaults to nil.
  */
-@property (nonatomic, strong, nullable) ImageLoaderTransition *sd_imageTransition;
+@property (nonatomic, strong, nullable) ImageLoaderTransition *_imageTransition;
 
 #pragma mark - Image Indicator
 
@@ -103,7 +103,7 @@ typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable ima
  The setter will remove the old indicator view and add new indicator view to current view's subview.
  @note Because this is UI related, you should access only from the main queue.
  */
-@property (nonatomic, strong, nullable) id<ImageLoaderIndicator> sd_imageIndicator;
+@property (nonatomic, strong, nullable) id<ImageLoaderIndicator> _imageIndicator;
 
 #endif
 

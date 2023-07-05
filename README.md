@@ -131,7 +131,7 @@ You can use those directly, or create similar components of your own, by using t
 ```objective-c
 #import <ImageLoader/ImageLoader.h>
 ...
-[imageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.domain.com/path/to/image.jpg"]
+[imageView _setImageWithURL:[NSURL URLWithString:@"http://www.domain.com/path/to/image.jpg"]
              placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 ```
 
@@ -140,7 +140,7 @@ You can use those directly, or create similar components of your own, by using t
 ```swift
 import ImageLoader
 
-imageView.sd_setImage(with: URL(string: "http://www.domain.com/path/to/image.jpg"), placeholderImage: UIImage(named: "placeholder.png"))
+imageView._setImage(with: URL(string: "http://www.domain.com/path/to/image.jpg"), placeholderImage: UIImage(named: "placeholder.png"))
 ```
 
 - For details about how to use the library and clear examples, see [The detailed How to use](https://github.com/ImageLoader/ImageLoader/blob/master/Docs/HowToUse.md)

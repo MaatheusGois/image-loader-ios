@@ -240,7 +240,7 @@ static NSString * _defaultDiskCacheDirectory;
     BOOL toDisk = cacheType == LoadImageCacheTypeDisk || cacheType == LoadImageCacheTypeAll;
     // if memory cache is enabled
     if (image && toMemory && self.config.shouldCacheImagesInMemory) {
-        NSUInteger cost = image.sd_memoryCost;
+        NSUInteger cost = image._memoryCost;
         [self.memoryCache setObject:image forKey:key cost:cost];
     }
     
@@ -259,10 +259,10 @@ static NSString * _defaultDiskCacheDirectory;
     if (!data && image) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             // Check image's associated image format, may return .undefined
-            LoadImageFormat format = image.sd_imageFormat;
+            LoadImageFormat format = image._imageFormat;
             if (format == LoadImageFormatUndefined) {
                 // If image is animated, use GIF (APNG may be better, but has bugs before macOS 10.14)
-                if (image.sd_imageFrameCount > 1) {
+                if (image._imageFrameCount > 1) {
                     format = LoadImageFormatGIF;
                 } else {
                     // If we do not have any data to detect image format, check whether it contains alpha channel to use PNG or JPEG format
@@ -298,7 +298,7 @@ static NSString * _defaultDiskCacheDirectory;
         return;
     }
     // Check extended data
-    id extendedObject = image.sd_extendedObject;
+    id extendedObject = image._extendedObject;
     if (![extendedObject conformsToProtocol:@protocol(NSCoding)]) {
         return;
     }
@@ -328,7 +328,7 @@ static NSString * _defaultDiskCacheDirectory;
     if (!image || !key) {
         return;
     }
-    NSUInteger cost = image.sd_memoryCost;
+    NSUInteger cost = image._memoryCost;
     [self.memoryCache setObject:image forKey:key cost:cost];
 }
 
@@ -444,7 +444,7 @@ static NSString * _defaultDiskCacheDirectory;
         shouldCacheToMomery = NO;
     }
     if (shouldCacheToMomery && diskImage && self.config.shouldCacheImagesInMemory) {
-        NSUInteger cost = diskImage.sd_memoryCost;
+        NSUInteger cost = diskImage._memoryCost;
         [self.memoryCache setObject:diskImage forKey:key cost:cost];
     }
 
@@ -461,7 +461,7 @@ static NSString * _defaultDiskCacheDirectory;
     if (image) {
         if (options & LoadImageCacheDecodeFirstFrameOnly) {
             // Ensure static image
-            if (image.sd_imageFrameCount > 1) {
+            if (image._imageFrameCount > 1) {
 #if SD_MAC
                 image = [[NSImage alloc] initWithCGImage:image.CGImage scale:image.scale orientation:kCGImagePropertyOrientationUp];
 #else
@@ -554,7 +554,7 @@ static NSString * _defaultDiskCacheDirectory;
             NSLog(@"NSKeyedUnarchiver unarchive failed with exception: %@", exception);
         }
     }
-    image.sd_extendedObject = extendedObject;
+    image._extendedObject = extendedObject;
 }
 
 - (nullable LoadImageCacheToken *)queryCacheOperationForKey:(NSString *)key done:(LoadImageCacheQueryCompletionBlock)doneBlock {
@@ -593,7 +593,7 @@ static NSString * _defaultDiskCacheDirectory;
     if (image) {
         if (options & LoadImageCacheDecodeFirstFrameOnly) {
             // Ensure static image
-            if (image.sd_imageFrameCount > 1) {
+            if (image._imageFrameCount > 1) {
 #if SD_MAC
                 image = [[NSImage alloc] initWithCGImage:image.CGImage scale:image.scale orientation:kCGImagePropertyOrientationUp];
 #else
@@ -676,7 +676,7 @@ static NSString * _defaultDiskCacheDirectory;
             if (!diskImage) {
                 diskImage = [self diskImageForKey:key data:diskData options:options context:context];
                 if (shouldCacheToMomery && diskImage && self.config.shouldCacheImagesInMemory) {
-                    NSUInteger cost = diskImage.sd_memoryCost;
+                    NSUInteger cost = diskImage._memoryCost;
                     [self.memoryCache setObject:diskImage forKey:key cost:cost];
                 }
             }

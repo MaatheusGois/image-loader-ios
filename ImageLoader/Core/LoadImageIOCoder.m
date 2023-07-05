@@ -149,7 +149,7 @@ static NSString * kSDCGImageDestinationRequestedFileSize = @"kCGImageDestination
     }
     
     // Check vector format
-    if ([NSData sd_imageFormatForImageData:data] == LoadImageFormatPDF) {
+    if ([NSData _imageFormatForImageData:data] == LoadImageFormatPDF) {
         // History before iOS 16, ImageIO can decode PDF with rasterization size, but can't ever :(
         // So, use CoreGraphics to decode PDF (copy code from ImageLoaderPDFCoder, may do refactor in the future)
         UIImage *image;
@@ -163,13 +163,13 @@ static NSString * kSDCGImageDestinationRequestedFileSize = @"kCGImageDestination
                 imageRep.currentPage = pageNumber;
                 image = [[NSImage alloc] initWithSize:imageRep.size];
                 [image addRepresentation:imageRep];
-                image.sd_imageFormat = LoadImageFormatPDF;
+                image._imageFormat = LoadImageFormatPDF;
                 return image;
             }
         }
 #endif
         image = [self.class createBitmapPDFWithData:data pageNumber:pageNumber targetSize:thumbnailSize preserveAspectRatio:preserveAspectRatio];
-        image.sd_imageFormat = LoadImageFormatPDF;
+        image._imageFormat = LoadImageFormatPDF;
         return image;
     }
     
@@ -209,12 +209,12 @@ static NSString * kSDCGImageDestinationRequestedFileSize = @"kCGImageDestination
     }
     
     CFStringRef uttype = CGImageSourceGetType(source);
-    LoadImageFormat imageFormat = [NSData sd_imageFormatFromUTType:uttype];
+    LoadImageFormat imageFormat = [NSData _imageFormatFromUTType:uttype];
     
     UIImage *image = [LoadImageIOAnimatedCoder createFrameAtIndex:0 source:source scale:scale preserveAspectRatio:preserveAspectRatio thumbnailSize:thumbnailSize lazyDecode:lazyDecode animatedImage:NO];
     CFRelease(source);
     
-    image.sd_imageFormat = imageFormat;
+    image._imageFormat = imageFormat;
     return image;
 }
 
@@ -309,7 +309,7 @@ static NSString * kSDCGImageDestinationRequestedFileSize = @"kCGImageDestination
         image = [LoadImageIOAnimatedCoder createFrameAtIndex:0 source:_imageSource scale:scale preserveAspectRatio:_preserveAspectRatio thumbnailSize:_thumbnailSize lazyDecode:_lazyDecode animatedImage:NO];
         if (image) {
             CFStringRef uttype = CGImageSourceGetType(_imageSource);
-            image.sd_imageFormat = [NSData sd_imageFormatFromUTType:uttype];
+            image._imageFormat = [NSData _imageFormatFromUTType:uttype];
         }
     }
     
@@ -341,7 +341,7 @@ static NSString * kSDCGImageDestinationRequestedFileSize = @"kCGImageDestination
     }
     
     NSMutableData *imageData = [NSMutableData data];
-    CFStringRef imageUTType = [NSData sd_UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData _UTTypeFromImageFormat:format];
     
     // Create an image destination.
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, 1, NULL);

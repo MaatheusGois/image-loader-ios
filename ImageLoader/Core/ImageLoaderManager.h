@@ -144,7 +144,7 @@ ImageLoaderManager *manager = [ImageLoaderManager sharedManager];
  * @note This method is called from a global queue in order to not to block the main thread.
  * @code
  ImageLoaderManager.sharedManager.cacheSerializer = [ImageLoaderCacheSerializer cacheSerializerWithBlock:^NSData * _Nullable(UIImage * _Nonnull image, NSData * _Nullable data, NSURL * _Nullable imageURL) {
-    LoadImageFormat format = [NSData sd_imageFormatForImageData:data];
+    LoadImageFormat format = [NSData _imageFormatForImageData:data];
     switch (format) {
         case LoadImageFormatWebP:
             return image.images ? data : nil;

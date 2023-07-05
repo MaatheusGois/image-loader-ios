@@ -40,7 +40,7 @@ static const LoadImageFormat LoadImageFormatRAW       = 10;
  *
  *  @return the image format as `LoadImageFormat` (enum)
  */
-+ (LoadImageFormat)sd_imageFormatForImageData:(nullable NSData *)data;
++ (LoadImageFormat)_imageFormatForImageData:(nullable NSData *)data;
 
 /**
  *  Convert LoadImageFormat to UTType
@@ -49,7 +49,7 @@ static const LoadImageFormat LoadImageFormatRAW       = 10;
  *  @return The UTType as CFStringRef
  *  @note For unknown format, `kSDUTTypeImage` abstract type will return
  */
-+ (nonnull CFStringRef)sd_UTTypeFromImageFormat:(LoadImageFormat)format CF_RETURNS_NOT_RETAINED NS_SWIFT_NAME(sd_UTType(from:));
++ (nonnull CFStringRef)_UTTypeFromImageFormat:(LoadImageFormat)format CF_RETURNS_NOT_RETAINED NS_SWIFT_NAME(_UTType(from:));
 
 /**
  *  Convert UTType to LoadImageFormat
@@ -58,6 +58,6 @@ static const LoadImageFormat LoadImageFormatRAW       = 10;
  *  @return The Format as LoadImageFormat
  *  @note For unknown type, `LoadImageFormatUndefined` will return
  */
-+ (LoadImageFormat)sd_imageFormatFromUTType:(nonnull CFStringRef)uttype;
++ (LoadImageFormat)_imageFormatFromUTType:(nonnull CFStringRef)uttype;
 
 @end

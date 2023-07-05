@@ -12,7 +12,7 @@
 
 @implementation NSBezierPath (SDRoundedCorners)
 
-+ (instancetype)sd_bezierPathWithRoundedRect:(NSRect)rect byRoundingCorners:(SDRectCorner)corners cornerRadius:(CGFloat)cornerRadius {
++ (instancetype)_bezierPathWithRoundedRect:(NSRect)rect byRoundingCorners:(SDRectCorner)corners cornerRadius:(CGFloat)cornerRadius {
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     CGFloat maxCorner = MIN(NSWidth(rect), NSHeight(rect)) / 2;

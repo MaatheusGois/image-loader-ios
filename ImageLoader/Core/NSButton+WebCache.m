@@ -21,46 +21,46 @@ static NSString * const SDAlternateImageOperationKey = @"NSButtonAlternateImageO
 
 #pragma mark - Image
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url {
-    [self sd_setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
+- (void)_setImageWithURL:(nullable NSURL *)url {
+    [self _setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:nil];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder {
+    [self _setImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:nil];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
+    [self _setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:options context:context progress:nil completed:nil];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
+    [self _setImageWithURL:url placeholderImage:placeholder options:options context:context progress:nil completed:nil];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:completedBlock];
+- (void)_setImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setImageWithURL:url placeholderImage:nil options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:completedBlock];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)_setImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setImageWithURL:url placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
-- (void)sd_setImageWithURL:(nullable NSURL *)url
+- (void)_setImageWithURL:(nullable NSURL *)url
           placeholderImage:(nullable UIImage *)placeholder
                    options:(ImageLoaderOptions)options
                    context:(nullable ImageLoaderContext *)context
                   progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                  completed:(nullable SDExternalCompletionBlock)completedBlock {
-    self.sd_currentImageURL = url;
-    [self sd_internalSetImageWithURL:url
+    self._currentImageURL = url;
+    [self _internalSetImageWithURL:url
                     placeholderImage:placeholder
                              options:options
                              context:context
@@ -75,45 +75,45 @@ static NSString * const SDAlternateImageOperationKey = @"NSButtonAlternateImageO
 
 #pragma mark - Alternate Image
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url {
-    [self sd_setAlternateImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url {
+    [self _setAlternateImageWithURL:url placeholderImage:nil options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:nil];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:nil];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:nil];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:options context:context progress:nil completed:nil];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options context:(nullable ImageLoaderContext *)context {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:options context:context progress:nil completed:nil];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setAlternateImageWithURL:url placeholderImage:nil options:0 progress:nil completed:completedBlock];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setAlternateImageWithURL:url placeholderImage:nil options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:completedBlock];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setAlternateImageWithURL:url placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url placeholderImage:(nullable UIImage *)placeholder options:(ImageLoaderOptions)options progress:(nullable LoadImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
+    [self _setAlternateImageWithURL:url placeholderImage:placeholder options:options context:nil progress:progressBlock completed:completedBlock];
 }
 
-- (void)sd_setAlternateImageWithURL:(nullable NSURL *)url
+- (void)_setAlternateImageWithURL:(nullable NSURL *)url
                    placeholderImage:(nullable UIImage *)placeholder
                             options:(ImageLoaderOptions)options
                             context:(nullable ImageLoaderContext *)context
                            progress:(nullable LoadImageLoaderProgressBlock)progressBlock
                           completed:(nullable SDExternalCompletionBlock)completedBlock {
-    self.sd_currentAlternateImageURL = url;
+    self._currentAlternateImageURL = url;
     
     ImageLoaderMutableContext *mutableContext;
     if (context) {
@@ -123,7 +123,7 @@ static NSString * const SDAlternateImageOperationKey = @"NSButtonAlternateImageO
     }
     mutableContext[ImageLoaderContextSetImageOperationKey] = SDAlternateImageOperationKey;
     @weakify(self);
-    [self sd_internalSetImageWithURL:url
+    [self _internalSetImageWithURL:url
                     placeholderImage:placeholder
                              options:options
                              context:mutableContext
@@ -141,30 +141,30 @@ static NSString * const SDAlternateImageOperationKey = @"NSButtonAlternateImageO
 
 #pragma mark - Cancel
 
-- (void)sd_cancelCurrentImageLoad {
-    [self sd_cancelImageLoadOperationWithKey:NSStringFromClass([self class])];
+- (void)_cancelCurrentImageLoad {
+    [self _cancelImageLoadOperationWithKey:NSStringFromClass([self class])];
 }
 
-- (void)sd_cancelCurrentAlternateImageLoad {
-    [self sd_cancelImageLoadOperationWithKey:SDAlternateImageOperationKey];
+- (void)_cancelCurrentAlternateImageLoad {
+    [self _cancelImageLoadOperationWithKey:SDAlternateImageOperationKey];
 }
 
 #pragma mark - Private
 
-- (NSURL *)sd_currentImageURL {
-    return objc_getAssociatedObject(self, @selector(sd_currentImageURL));
+- (NSURL *)_currentImageURL {
+    return objc_getAssociatedObject(self, @selector(_currentImageURL));
 }
 
-- (void)setSd_currentImageURL:(NSURL *)sd_currentImageURL {
-    objc_setAssociatedObject(self, @selector(sd_currentImageURL), sd_currentImageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_currentImageURL:(NSURL *)_currentImageURL {
+    objc_setAssociatedObject(self, @selector(_currentImageURL), _currentImageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSURL *)sd_currentAlternateImageURL {
-    return objc_getAssociatedObject(self, @selector(sd_currentAlternateImageURL));
+- (NSURL *)_currentAlternateImageURL {
+    return objc_getAssociatedObject(self, @selector(_currentAlternateImageURL));
 }
 
-- (void)setSd_currentAlternateImageURL:(NSURL *)sd_currentAlternateImageURL {
-    objc_setAssociatedObject(self, @selector(sd_currentAlternateImageURL), sd_currentAlternateImageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_currentAlternateImageURL:(NSURL *)_currentAlternateImageURL {
+    objc_setAssociatedObject(self, @selector(_currentAlternateImageURL), _currentAlternateImageURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
