@@ -2,7 +2,7 @@ This library provides an async image downloader with cache support. For convenie
 
 ## Features
 
-- [x] Categories for `UIImageView`, `UIButton`, `MKAnnotationView` adding web image and cache management
+- [x] Categories for `UIImageView`, `UIButton` adding web image and cache management
 - [x] An asynchronous image downloader
 - [x] An asynchronous memory + disk image caching with automatic cache expiration handling
 - [x] A background image decompression to avoid frame rate drop

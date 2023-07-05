@@ -84,7 +84,3 @@ FOUNDATION_EXPORT const unsigned char ImageLoaderVersionString[];
 #import <ImageLoader/SDAnimatedImageRep.h>
 #endif
 
-// MapKit
-#if __has_include(<ImageLoader/MKAnnotationView+WebCache.h>)
-#import <ImageLoader/MKAnnotationView+WebCache.h>
-#endif
