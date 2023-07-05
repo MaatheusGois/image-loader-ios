@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -12,9 +12,9 @@
 
 /// The options controls how we force pre-draw the image (to avoid lazy-decoding). Which need OS's framework compatibility
 typedef NS_ENUM(NSUInteger, SDImageCoderDecodeSolution) {
-    /// automatically choose the solution based on image format, hardware, OS version. This keep balance for compatibility and performance. Default after SDWebImage 5.13.0
+    /// automatically choose the solution based on image format, hardware, OS version. This keep balance for compatibility and performance. Default after ImageLoader 5.13.0
     SDImageCoderDecodeSolutionAutomatic,
-    /// always use CoreGraphics to draw on bitmap context and trigger decode. Best compatibility. Default before SDWebImage 5.13.0
+    /// always use CoreGraphics to draw on bitmap context and trigger decode. Best compatibility. Default before ImageLoader 5.13.0
     SDImageCoderDecodeSolutionCoreGraphics,
     /// available on iOS/tvOS 15+, use UIKit's new CGImageDecompressor/CMPhoto to decode. Best performance. If failed, will fallback to CoreGraphics as well
     SDImageCoderDecodeSolutionUIKit

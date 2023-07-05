@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-  s.name = 'SDWebImage'
-  s.version = '5.15.8'
+  s.name = 'ImageLoader'
+  s.version = '5.16.0'
 
   s.osx.deployment_target = '10.11'
   s.ios.deployment_target = '9.0'
@@ -9,9 +9,9 @@ Pod::Spec.new do |s|
 
   s.license = 'MIT'
   s.summary = 'Asynchronous image downloader with cache support with an UIImageView category.'
-  s.homepage = 'https://github.com/SDWebImage/SDWebImage'
-  s.author = { 'Olivier Poitrey' => 'rs@dailymotion.com' }
-  s.source = { :git => 'https://github.com/SDWebImage/SDWebImage.git', :tag => s.version.to_s }
+  s.homepage = 'https://github.com/maatheusgois/image-loader-ios'
+  s.author = { 'Matheus Gois' => 'maatheusgois@icloud.com' }
+  s.source = { :git => 'https://github.com/maatheusgois/image-loader-ios.git', :tag => s.version.to_s }
 
   s.description = 'This library provides a category for UIImageView with support for remote '      \
                   'images coming from the web. It provides an UIImageView category adding web '    \
@@ -32,16 +32,7 @@ Pod::Spec.new do |s|
   }
 
   s.subspec 'Core' do |core|
-    core.source_files = 'SDWebImage/Core/*.{h,m}', 'WebImage/SDWebImage.h', 'SDWebImage/Private/*.{h,m}'
-    core.private_header_files = 'SDWebImage/Private/*.h'
-  end
-
-  s.subspec 'MapKit' do |mk|
-    mk.osx.deployment_target = '10.11'
-    mk.ios.deployment_target = '9.0'
-    mk.tvos.deployment_target = '9.0'
-    mk.source_files = 'SDWebImageMapKit/MapKit/*.{h,m}'
-    mk.framework = 'MapKit'
-    mk.dependency 'SDWebImage/Core'
+    core.source_files = 'ImageLoader/Core/*.{h,m}', 'WebImage/ImageLoader.h', 'ImageLoader/Private/*.{h,m}'
+    core.private_header_files = 'ImageLoader/Private/*.h'
   end
 end

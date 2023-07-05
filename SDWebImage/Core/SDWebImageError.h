@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  * (c) Jamie Pinkham
  *
@@ -9,7 +9,7 @@
 
 #import "SDWebImageCompat.h"
 
-/// An error domain represent SDWebImage loading system with custom codes
+/// An error domain represent ImageLoader loading system with custom codes
 FOUNDATION_EXPORT NSErrorDomain const _Nonnull SDWebImageErrorDomain;
 
 /// The response instance for invalid download response (NSURLResponse *)
@@ -19,7 +19,7 @@ FOUNDATION_EXPORT NSErrorUserInfoKey const _Nonnull SDWebImageErrorDownloadStatu
 /// The HTTP MIME content type for invalid download response (NSString *)
 FOUNDATION_EXPORT NSErrorUserInfoKey const _Nonnull SDWebImageErrorDownloadContentTypeKey;
 
-/// SDWebImage error domain and codes
+/// ImageLoader error domain and codes
 typedef NS_ERROR_ENUM(SDWebImageErrorDomain, SDWebImageError) {
     SDWebImageErrorInvalidURL = 1000, // The URL is invalid, such as nil URL or corrupted URL
     SDWebImageErrorBadImageData = 1001, // The image data can not be decoded to image, or the image data is empty

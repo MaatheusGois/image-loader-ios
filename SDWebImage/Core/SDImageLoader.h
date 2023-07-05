@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -27,7 +27,7 @@ FOUNDATION_EXPORT SDWebImageContextOption _Nonnull const SDWebImageContextLoader
 
 /**
  This is the built-in decoding process for image download from network or local file.
- @note If you want to implement your custom loader with `requestImageWithURL:options:context:progress:completed:` API, but also want to keep compatible with SDWebImage's behavior, you'd better use this to produce image.
+ @note If you want to implement your custom loader with `requestImageWithURL:options:context:progress:completed:` API, but also want to keep compatible with ImageLoader's behavior, you'd better use this to produce image.
 
  @param imageData The image data from the network. Should not be nil
  @param imageURL The image URL from the input. Should not be nil
@@ -39,7 +39,7 @@ FOUNDATION_EXPORT UIImage * _Nullable SDImageLoaderDecodeImageData(NSData * _Non
 
 /**
  This is the built-in decoding process for image progressive download from network. It's used when `SDWebImageProgressiveLoad` option is set. (It's not required when your loader does not support progressive image loading)
- @note If you want to implement your custom loader with `requestImageWithURL:options:context:progress:completed:` API, but also want to keep compatible with SDWebImage's behavior, you'd better use this to produce image.
+ @note If you want to implement your custom loader with `requestImageWithURL:options:context:progress:completed:` API, but also want to keep compatible with ImageLoader's behavior, you'd better use this to produce image.
 
  @param imageData The image data from the network so far. Should not be nil
  @param imageURL The image URL from the input. Should not be nil

@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, SDWebImageDownloaderExecutionOrder) {
 
 /**
  * Gets/Sets a subclass of `SDWebImageDownloaderOperation` as the default
- * `NSOperation` to be used each time SDWebImage constructs a request
+ * `NSOperation` to be used each time ImageLoader constructs a request
  * operation to download an image.
  * Defaults to nil.
  * @note Passing `NSOperation<SDWebImageDownloaderOperation>` to set as default. Passing `nil` will revert to `SDWebImageDownloaderOperation`.

@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -72,7 +72,7 @@ void SDWebImageDownloaderOperationSetCompleted(id<SDWebImageDownloaderOperation>
 
 + (void)initialize {
     // Bind SDNetworkActivityIndicator if available (download it here: http://github.com/rs/SDNetworkActivityIndicator )
-    // To use it, just add #import "SDNetworkActivityIndicator.h" in addition to the SDWebImage import
+    // To use it, just add #import "SDNetworkActivityIndicator.h" in addition to the ImageLoader import
     if (NSClassFromString(@"SDNetworkActivityIndicator")) {
 
 #pragma clang diagnostic push

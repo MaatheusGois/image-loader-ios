@@ -1,5 +1,5 @@
 /*
- * This file is part of the SDWebImage package.
+ * This file is part of the ImageLoader package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -70,7 +70,7 @@ typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {
     
     /**
      * Even if the image is cached, respect the HTTP response cache control, and refresh the image from remote location if needed.
-     * The disk caching will be handled by NSURLCache instead of SDWebImage leading to slight performance degradation.
+     * The disk caching will be handled by NSURLCache instead of ImageLoader leading to slight performance degradation.
      * This option helps deal with images changing behind the same request URL, e.g. Facebook graph api profile pics.
      * If a cached image is refreshed, the completion block is called once with the cached image and again with the final image.
      *
@@ -259,7 +259,7 @@ FOUNDATION_EXPORT SDWebImageContextOption _Nonnull const SDWebImageContextImageT
 #pragma mark - Image Decoder Context Options
 
 /**
- A Dictionary (SDImageCoderOptions) value, which pass the extra decoding options to the SDImageCoder. Introduced in SDWebImage 5.14.0
+ A Dictionary (SDImageCoderOptions) value, which pass the extra decoding options to the SDImageCoder. Introduced in ImageLoader 5.14.0
  You can pass additional decoding related options to the decoder, extensible and control by you. And pay attention this dictionary may be retained by decoded image via `UIImage.sd_decodeOptions` 
  This context option replace the deprecated `SDImageCoderWebImageContext`, which may cause retain cycle (cache -> image -> options -> context -> cache)
  @note There are already individual options below like `.imageScaleFactor`, `.imagePreserveAspectRatio`, each of individual options will override the same filed for this dictionary.
@@ -310,7 +310,7 @@ FOUNDATION_EXPORT SDWebImageContextOption _Nonnull const SDWebImageContextImageS
 #pragma mark - Cache Context Options
 
 /**
- A Dictionary (SDImageCoderOptions) value, which pass the extra encode options to the SDImageCoder. Introduced in SDWebImage 5.15.0
+ A Dictionary (SDImageCoderOptions) value, which pass the extra encode options to the SDImageCoder. Introduced in ImageLoader 5.15.0
  You can pass encode options like `compressionQuality`, `maxFileSize`, `maxPixelSize` to control the encoding related thing, this is used inside `SDImageCache` during store logic.
  @note For developer who use custom cache protocol (not SDImageCache instance), they need to upgrade and use these options for encoding.
  */

@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SDWebImage",
+    name: "ImageLoader",
     platforms: [
         .macOS(.v10_11),
         .iOS(.v9),
@@ -14,8 +14,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "SDWebImage",
-            targets: ["SDWebImage"]),
+            name: "ImageLoader",
+            targets: ["ImageLoader"]),
         .library(
             name: "SDWebImageMapKit",
             targets: ["SDWebImageMapKit"])
@@ -28,9 +28,9 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "SDWebImage",
+            name: "ImageLoader",
             dependencies: [],
-            path: "SDWebImage",
+            path: "ImageLoader",
             sources: ["Core", "Private"],
             cSettings: [
                 .headerSearchPath("Core"),
@@ -39,7 +39,7 @@ let package = Package(
         ),
         .target(
             name: "SDWebImageMapKit",
-            dependencies: ["SDWebImage"],
+            dependencies: ["ImageLoader"],
             path: "SDWebImageMapKit",
             sources: ["MapKit"]
         )
