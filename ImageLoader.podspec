@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ImageLoader'
-  s.version = '5.16.0'
+  s.version = '1.0.0'
 
   s.osx.deployment_target = '10.11'
   s.ios.deployment_target = '11.0'
