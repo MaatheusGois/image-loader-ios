@@ -12,7 +12,7 @@ This library provides an async image downloader with cache support. For convenie
 - [x] [Full-stack solution for animated images](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#animated-image-50) which keep a balance between CPU && Memory
 - [x] [Customizable and composable transformations](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#transformer-50) can be applied to the images right after download
 - [x] [Customizable and multiple caches system](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#custom-cache-50)
-- [x] [Customizable and multiple loaders system](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#custom-loader-50) to expand the capabilities, like [Photos Library](https://github.com/ImageLoader/SDWebImagePhotosPlugin)
+- [x] [Customizable and multiple loaders system](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#custom-loader-50) to expand the capabilities, like [Photos Library](https://github.com/ImageLoader/ImageLoaderPhotosPlugin)
 - [x] [Image loading indicators](https://github.com/ImageLoader/ImageLoader/wiki/How-to-use#use-view-indicator-50)
 - [x] [Image loading transition animation](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#image-transition-430)
 - [x] A guarantee that the same URL won't be downloaded several times
@@ -24,8 +24,8 @@ This library provides an async image downloader with cache support. For convenie
 ## Supported Image Formats
 
 - Image formats supported by Apple system (JPEG, PNG, TIFF, BMP, ...), including [GIF](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#gif-coder)/[APNG](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#apng-coder) animated image
-- HEIC format from iOS 11/macOS 10.13, including animated HEIC from iOS 13/macOS 10.15 via [SDWebImageHEICCoder](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#heic-coder). For lower firmware, use coder plugin [SDWebImageHEIFCoder](https://github.com/ImageLoader/SDWebImageHEIFCoder)
-- WebP format from iOS 14/macOS 11.0 via [SDWebImageAWebPCoder](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#awebp-coder). For lower firmware, use coder plugin [SDWebImageWebPCoder](https://github.com/ImageLoader/SDWebImageWebPCoder)
+- HEIC format from iOS 11/macOS 10.13, including animated HEIC from iOS 13/macOS 10.15 via [ImageLoaderHEICCoder](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#heic-coder). For lower firmware, use coder plugin [ImageLoaderHEIFCoder](https://github.com/ImageLoader/ImageLoaderHEIFCoder)
+- WebP format from iOS 14/macOS 11.0 via [ImageLoaderAWebPCoder](https://github.com/ImageLoader/ImageLoader/wiki/Advanced-Usage#awebp-coder). For lower firmware, use coder plugin [ImageLoaderWebPCoder](https://github.com/ImageLoader/ImageLoaderWebPCoder)
 - Support extendable coder plugins for new image formats like BPG, AVIF. And vector format like PDF, SVG. See all the list in [Image coder plugin List](https://github.com/ImageLoader/ImageLoader/wiki/Coder-Plugin-List)
 
 ## Additional modules and Ecosystem
@@ -36,35 +36,35 @@ As such, we have moved/built new modules to [ImageLoader org](https://github.com
 #### SwiftUI
 [SwiftUI](https://developer.apple.com/xcode/swiftui/) is an innovative UI framework written in Swift to build user interfaces across all Apple platforms.
 
-We support SwiftUI by building a brand new framework called [SDWebImageSwiftUI](https://github.com/ImageLoader/SDWebImageSwiftUI), which is built on top of ImageLoader core functions (caching, loading and animation).
+We support SwiftUI by building a brand new framework called [ImageLoaderSwiftUI](https://github.com/ImageLoader/ImageLoaderSwiftUI), which is built on top of ImageLoader core functions (caching, loading and animation).
 
 The new framework introduce two View structs `WebImage` and `AnimatedImage` for SwiftUI world, `ImageIndicator` modifier for any View, `ImageManager` observable object for data source. Supports iOS 13+/macOS 10.15+/tvOS 13+/watchOS 6+ and Swift 5.1. Have a nice try and provide feedback!
 
 #### Coders for additional image formats
-- [SDWebImageWebPCoder](https://github.com/ImageLoader/SDWebImageWebPCoder) - coder for WebP format. iOS 8+/macOS 10.10+. Based on [libwebp](https://chromium.googlesource.com/webm/libwebp)
-- [SDWebImageHEIFCoder](https://github.com/ImageLoader/SDWebImageHEIFCoder) - coder for HEIF format, iOS 8+/macOS 10.10+ support. Based on [libheif](https://github.com/strukturag/libheif)
-- [SDWebImageBPGCoder](https://github.com/ImageLoader/SDWebImageBPGCoder) - coder for BPG format. Based on [libbpg](https://github.com/mirrorer/libbpg)
-- [SDWebImageFLIFCoder](https://github.com/ImageLoader/SDWebImageFLIFCoder) - coder for FLIF format. Based on [libflif](https://github.com/FLIF-hub/FLIF)
-- [SDWebImageAVIFCoder](https://github.com/ImageLoader/SDWebImageAVIFCoder) - coder for AVIF (AV1-based) format. Based on [libavif](https://github.com/AOMediaCodec/libavif)
-- [SDWebImagePDFCoder](https://github.com/ImageLoader/SDWebImagePDFCoder) - coder for PDF vector format. Using built-in frameworks
-- [SDWebImageSVGCoder](https://github.com/ImageLoader/SDWebImageSVGCoder) - coder for SVG vector format. Using built-in frameworks
-- [SDWebImageSVGNativeCoder](https://github.com/ImageLoader/SDWebImageSVGNativeCoder) - coder for SVG-Native vector format. Based on [svg-native](https://github.com/adobe/svg-native-viewer)
-- [SDWebImageLottieCoder](https://github.com/ImageLoader/SDWebImageLottieCoder) - coder for Lottie animation format. Based on [rlottie](https://github.com/Samsung/rlottie)
+- [ImageLoaderWebPCoder](https://github.com/ImageLoader/ImageLoaderWebPCoder) - coder for WebP format. iOS 8+/macOS 10.10+. Based on [libwebp](https://chromium.googlesource.com/webm/libwebp)
+- [ImageLoaderHEIFCoder](https://github.com/ImageLoader/ImageLoaderHEIFCoder) - coder for HEIF format, iOS 8+/macOS 10.10+ support. Based on [libheif](https://github.com/strukturag/libheif)
+- [ImageLoaderBPGCoder](https://github.com/ImageLoader/ImageLoaderBPGCoder) - coder for BPG format. Based on [libbpg](https://github.com/mirrorer/libbpg)
+- [ImageLoaderFLIFCoder](https://github.com/ImageLoader/ImageLoaderFLIFCoder) - coder for FLIF format. Based on [libflif](https://github.com/FLIF-hub/FLIF)
+- [ImageLoaderAVIFCoder](https://github.com/ImageLoader/ImageLoaderAVIFCoder) - coder for AVIF (AV1-based) format. Based on [libavif](https://github.com/AOMediaCodec/libavif)
+- [ImageLoaderPDFCoder](https://github.com/ImageLoader/ImageLoaderPDFCoder) - coder for PDF vector format. Using built-in frameworks
+- [ImageLoaderSVGCoder](https://github.com/ImageLoader/ImageLoaderSVGCoder) - coder for SVG vector format. Using built-in frameworks
+- [ImageLoaderSVGNativeCoder](https://github.com/ImageLoader/ImageLoaderSVGNativeCoder) - coder for SVG-Native vector format. Based on [svg-native](https://github.com/adobe/svg-native-viewer)
+- [ImageLoaderLottieCoder](https://github.com/ImageLoader/ImageLoaderLottieCoder) - coder for Lottie animation format. Based on [rlottie](https://github.com/Samsung/rlottie)
 - and more from community!
 
 #### Custom Caches
-- [SDWebImageYYPlugin](https://github.com/ImageLoader/SDWebImageYYPlugin) - plugin to support caching images with [YYCache](https://github.com/ibireme/YYCache)
-- [SDWebImagePINPlugin](https://github.com/ImageLoader/SDWebImagePINPlugin) - plugin to support caching images with [PINCache](https://github.com/pinterest/PINCache)
+- [ImageLoaderYYPlugin](https://github.com/ImageLoader/ImageLoaderYYPlugin) - plugin to support caching images with [YYCache](https://github.com/ibireme/YYCache)
+- [ImageLoaderPINPlugin](https://github.com/ImageLoader/ImageLoaderPINPlugin) - plugin to support caching images with [PINCache](https://github.com/pinterest/PINCache)
 
 #### Custom Loaders
-- [SDWebImagePhotosPlugin](https://github.com/ImageLoader/SDWebImagePhotosPlugin) - plugin to support loading images from Photos (using `Photos.framework`) 
-- [SDWebImageLinkPlugin](https://github.com/ImageLoader/SDWebImageLinkPlugin) - plugin to support loading images from rich link url, as well as `LPLinkView` (using `LinkPresentation.framework`) 
+- [ImageLoaderPhotosPlugin](https://github.com/ImageLoader/ImageLoaderPhotosPlugin) - plugin to support loading images from Photos (using `Photos.framework`) 
+- [ImageLoaderLinkPlugin](https://github.com/ImageLoader/ImageLoaderLinkPlugin) - plugin to support loading images from rich link url, as well as `LPLinkView` (using `LinkPresentation.framework`) 
 
 #### Integration with 3rd party libraries
-- [SDWebImageLottiePlugin](https://github.com/ImageLoader/SDWebImageLottiePlugin) - plugin to support [Lottie-iOS](https://github.com/airbnb/lottie-ios), vector animation rending with remote JSON files
-- [SDWebImageSVGKitPlugin](https://github.com/ImageLoader/SDWebImageSVGKitPlugin) - plugin to support [SVGKit](https://github.com/SVGKit/SVGKit), SVG rendering using Core Animation, iOS 8+/macOS 10.10+ support
-- [SDWebImageFLPlugin](https://github.com/ImageLoader/SDWebImageFLPlugin) - plugin to support [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage) as the engine for animated GIFs
-- [SDWebImageYYPlugin](https://github.com/ImageLoader/SDWebImageYYPlugin) - plugin to integrate [YYImage](https://github.com/ibireme/YYImage) & [YYCache](https://github.com/ibireme/YYCache) for image rendering & caching
+- [ImageLoaderLottiePlugin](https://github.com/ImageLoader/ImageLoaderLottiePlugin) - plugin to support [Lottie-iOS](https://github.com/airbnb/lottie-ios), vector animation rending with remote JSON files
+- [ImageLoaderSVGKitPlugin](https://github.com/ImageLoader/ImageLoaderSVGKitPlugin) - plugin to support [SVGKit](https://github.com/SVGKit/SVGKit), SVG rendering using Core Animation, iOS 8+/macOS 10.10+ support
+- [ImageLoaderFLPlugin](https://github.com/ImageLoader/ImageLoaderFLPlugin) - plugin to support [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage) as the engine for animated GIFs
+- [ImageLoaderYYPlugin](https://github.com/ImageLoader/ImageLoaderYYPlugin) - plugin to integrate [YYImage](https://github.com/ibireme/YYImage) & [YYCache](https://github.com/ibireme/YYCache) for image rendering & caching
 
 #### Community driven popular libraries
 - [FirebaseUI](https://github.com/firebase/FirebaseUI-iOS) - Firebase Storage binding for query images, based on ImageLoader loader system
@@ -174,7 +174,7 @@ imageView.image = animatedImage
 ```
 
 #### FLAnimatedImage integration has its own dedicated repo
-In order to clean up things and make our core project do less things, we decided that the `FLAnimatedImage` integration does not belong here. From 5.0, this will still be available, but under a dedicated repo [SDWebImageFLPlugin](https://github.com/ImageLoader/SDWebImageFLPlugin).
+In order to clean up things and make our core project do less things, we decided that the `FLAnimatedImage` integration does not belong here. From 5.0, this will still be available, but under a dedicated repo [ImageLoaderFLPlugin](https://github.com/ImageLoader/ImageLoaderFLPlugin).
 
 ## Installation
 
@@ -233,13 +233,13 @@ pod 'ImageLoader/MapKit'
 
 To install with carthage, follow the instruction on [Carthage](https://github.com/Carthage/Carthage)
 
-Carthage users can point to this repository and use whichever generated framework they'd like: ImageLoader, SDWebImageMapKit or both.
+Carthage users can point to this repository and use whichever generated framework they'd like: ImageLoader, ImageLoaderMapKit or both.
 
 Make the following entry in your Cartfile: `github "ImageLoader/ImageLoader"`
 Then run `carthage update`
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
-> NOTE: At this time, Carthage does not provide a way to build only specific repository subcomponents (or equivalent of CocoaPods's subspecs). All components and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `SDWebImageMapKit`, feel free to delete that framework from the Carthage Build directory after `carthage update` completes.
+> NOTE: At this time, Carthage does not provide a way to build only specific repository subcomponents (or equivalent of CocoaPods's subspecs). All components and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ImageLoaderMapKit`, feel free to delete that framework from the Carthage Build directory after `carthage update` completes.
 
 ### Installation with Swift Package Manager (Xcode 11+)
 
@@ -313,27 +313,27 @@ To learn about ImageLoader's architecture design for contribution, read [The Cor
 
 #### High Level Diagram
 <p align="center" >
-    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageHighLevelDiagram.jpeg" title="ImageLoader high level diagram">
+    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderHighLevelDiagram.jpeg" title="ImageLoader high level diagram">
 </p>
 
 #### Overall Class Diagram
 <p align="center" >
-    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageClassDiagram.png" title="ImageLoader overall class diagram">
+    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderClassDiagram.png" title="ImageLoader overall class diagram">
 </p>
 
 #### Top Level API Diagram
 <p align="center" >
-    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageTopLevelClassDiagram.png" title="ImageLoader top level API diagram">
+    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderTopLevelClassDiagram.png" title="ImageLoader top level API diagram">
 </p>
 
 #### Main Sequence Diagram
 <p align="center" >
-    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageSequenceDiagram.png" title="ImageLoader sequence diagram">
+    <img src="https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderSequenceDiagram.png" title="ImageLoader sequence diagram">
 </p>
 
 #### More detailed diagrams
-- [Manager API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageManagerClassDiagram.png)
-- [Coders API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageCodersClassDiagram.png)
-- [Loader API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageLoaderClassDiagram.png)
-- [Cache API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/SDWebImageCacheClassDiagram.png)
+- [Manager API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderManagerClassDiagram.png)
+- [Coders API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderCodersClassDiagram.png)
+- [Loader API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderLoaderClassDiagram.png)
+- [Cache API Diagram](https://raw.githubusercontent.com/ImageLoader/ImageLoader/master/Docs/Diagrams/ImageLoaderCacheClassDiagram.png)
 
