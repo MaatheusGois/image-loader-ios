@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  * (c) Jamie Pinkham
  *
@@ -10,7 +10,7 @@
 #import <TargetConditionals.h>
 
 #ifdef __OBJC_GC__
-    #error ImageLoader does not support Objective-C Garbage Collection
+    #error SDWebImage does not support Objective-C Garbage Collection
 #endif
 
 // Seems like TARGET_OS_MAC is always defined (on all platforms).

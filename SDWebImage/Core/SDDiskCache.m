@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -52,7 +52,7 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
     NSString *filePath = [self cachePathForKey:key];
     BOOL exists = [self.fileManager fileExistsAtPath:filePath];
     
-    // fallback because of https://github.com/rs/ImageLoader/pull/976 that added the extension to the disk file name
+    // fallback because of https://github.com/rs/SDWebImage/pull/976 that added the extension to the disk file name
     // checking the key with and without the extension
     if (!exists) {
         exists = [self.fileManager fileExistsAtPath:filePath.stringByDeletingPathExtension];
@@ -69,7 +69,7 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
         return data;
     }
     
-    // fallback because of https://github.com/rs/ImageLoader/pull/976 that added the extension to the disk file name
+    // fallback because of https://github.com/rs/SDWebImage/pull/976 that added the extension to the disk file name
     // checking the key with and without the extension
     data = [NSData dataWithContentsOfFile:filePath.stringByDeletingPathExtension options:self.config.diskCacheReadingOptions error:nil];
     if (data) {

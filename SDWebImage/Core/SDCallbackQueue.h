@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, SDCallbackPolicy) {
 };
 
 /// SDCallbackQueue is a wrapper used to control how the completionBlock should perform on queues, used by our `Cache`/`Manager`/`Loader`.
-/// Useful when you call ImageLoader in non-main queue and want to avoid it callback into main queue, which may cause issue.
+/// Useful when you call SDWebImage in non-main queue and want to avoid it callback into main queue, which may cause issue.
 @interface SDCallbackQueue : NSObject
 
 /// The shared main queue. This is the default value, has the same effect when passing `nil` to `SDWebImageContextCallbackQueue`

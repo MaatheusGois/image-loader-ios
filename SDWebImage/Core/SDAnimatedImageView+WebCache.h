@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -13,7 +13,7 @@
 #import "SDWebImageManager.h"
 
 /**
- Integrates ImageLoader async downloading and caching of remote images with SDAnimatedImageView.
+ Integrates SDWebImage async downloading and caching of remote images with SDAnimatedImageView.
  */
 @interface SDAnimatedImageView (WebCache)
 

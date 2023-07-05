@@ -1,5 +1,5 @@
 /*
-* This file is part of the ImageLoader package.
+* This file is part of the SDWebImage package.
 * (c) Olivier Poitrey <rs@dailymotion.com>
 *
 * For the full copyright and license information, please view the LICENSE
@@ -312,7 +312,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
             }
         }
     } else if (animatedImage) {
-        // iOS 15+, CGImageRef now retains CGImageSourceRef internally. To workaround its thread-safe issue, we have to strip CGImageSourceRef, using Force-Decode (or have to use SPI `CGImageSetImageSource`), See: https://github.com/ImageLoader/ImageLoader/issues/3273
+        // iOS 15+, CGImageRef now retains CGImageSourceRef internally. To workaround its thread-safe issue, we have to strip CGImageSourceRef, using Force-Decode (or have to use SPI `CGImageSetImageSource`), See: https://github.com/SDWebImage/SDWebImage/issues/3273
         if (@available(iOS 15, tvOS 15, *)) {
             // User pass `lazyDecode == YES`, but we still have to strip the CGImageSourceRef
             // CGImageRef newImageRef = CGImageCreateCopy(imageRef); // This one does not strip the CGImageProperty
@@ -323,7 +323,7 @@ static inline CGSize SDCalculateScaleDownPixelSize(NSUInteger limitBytes, CGSize
             }
 #if SD_CHECK_CGIMAGE_RETAIN_SOURCE
             // Assert here to check CGImageRef should not retain the CGImageSourceRef and has possible thread-safe issue (this is behavior on iOS 15+)
-            // If assert hit, fire issue to https://github.com/ImageLoader/ImageLoader/issues and we update the condition for this behavior check
+            // If assert hit, fire issue to https://github.com/SDWebImage/SDWebImage/issues and we update the condition for this behavior check
             static dispatch_once_t onceToken;
             dispatch_once(&onceToken, ^{
                 SDCGImageGetImageSource = dlsym(RTLD_DEFAULT, "CGImageGetImageSource");

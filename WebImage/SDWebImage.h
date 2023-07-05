@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  * (c) Florent Vilmart
  *
@@ -7,84 +7,84 @@
  * file that was distributed with this source code.
  */
 
-#import <ImageLoader/SDWebImageCompat.h>
+#import <SDWebImage/SDWebImageCompat.h>
 
-//! Project version number for ImageLoader.
+//! Project version number for SDWebImage.
 FOUNDATION_EXPORT double SDWebImageVersionNumber;
 
-//! Project version string for ImageLoader.
+//! Project version string for SDWebImage.
 FOUNDATION_EXPORT const unsigned char SDWebImageVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <ImageLoader/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <SDWebImage/PublicHeader.h>
 
-#import <ImageLoader/SDWebImageManager.h>
-#import <ImageLoader/SDCallbackQueue.h>
-#import <ImageLoader/SDWebImageCacheKeyFilter.h>
-#import <ImageLoader/SDWebImageCacheSerializer.h>
-#import <ImageLoader/SDImageCacheConfig.h>
-#import <ImageLoader/SDImageCache.h>
-#import <ImageLoader/SDMemoryCache.h>
-#import <ImageLoader/SDDiskCache.h>
-#import <ImageLoader/SDImageCacheDefine.h>
-#import <ImageLoader/SDImageCachesManager.h>
-#import <ImageLoader/UIView+WebCache.h>
-#import <ImageLoader/UIImageView+WebCache.h>
-#import <ImageLoader/UIImageView+HighlightedWebCache.h>
-#import <ImageLoader/SDWebImageDownloaderConfig.h>
-#import <ImageLoader/SDWebImageDownloaderOperation.h>
-#import <ImageLoader/SDWebImageDownloaderRequestModifier.h>
-#import <ImageLoader/SDWebImageDownloaderResponseModifier.h>
-#import <ImageLoader/SDWebImageDownloaderDecryptor.h>
-#import <ImageLoader/SDImageLoader.h>
-#import <ImageLoader/SDImageLoadersManager.h>
-#import <ImageLoader/UIButton+WebCache.h>
-#import <ImageLoader/SDWebImagePrefetcher.h>
-#import <ImageLoader/UIView+WebCacheOperation.h>
-#import <ImageLoader/UIImage+Metadata.h>
-#import <ImageLoader/UIImage+MultiFormat.h>
-#import <ImageLoader/UIImage+MemoryCacheCost.h>
-#import <ImageLoader/UIImage+ExtendedCacheData.h>
-#import <ImageLoader/SDWebImageOperation.h>
-#import <ImageLoader/SDWebImageDownloader.h>
-#import <ImageLoader/SDWebImageTransition.h>
-#import <ImageLoader/SDWebImageIndicator.h>
-#import <ImageLoader/SDImageTransformer.h>
-#import <ImageLoader/UIImage+Transform.h>
-#import <ImageLoader/SDAnimatedImage.h>
-#import <ImageLoader/SDAnimatedImageView.h>
-#import <ImageLoader/SDAnimatedImageView+WebCache.h>
-#import <ImageLoader/SDAnimatedImagePlayer.h>
-#import <ImageLoader/SDImageCodersManager.h>
-#import <ImageLoader/SDImageCoder.h>
-#import <ImageLoader/SDImageAPNGCoder.h>
-#import <ImageLoader/SDImageGIFCoder.h>
-#import <ImageLoader/SDImageIOCoder.h>
-#import <ImageLoader/SDImageFrame.h>
-#import <ImageLoader/SDImageCoderHelper.h>
-#import <ImageLoader/SDImageGraphics.h>
-#import <ImageLoader/SDGraphicsImageRenderer.h>
-#import <ImageLoader/UIImage+GIF.h>
-#import <ImageLoader/UIImage+ForceDecode.h>
-#import <ImageLoader/NSData+ImageContentType.h>
-#import <ImageLoader/SDWebImageDefine.h>
-#import <ImageLoader/SDWebImageError.h>
-#import <ImageLoader/SDWebImageOptionsProcessor.h>
-#import <ImageLoader/SDImageIOAnimatedCoder.h>
-#import <ImageLoader/SDImageHEICCoder.h>
-#import <ImageLoader/SDImageAWebPCoder.h>
+#import <SDWebImage/SDWebImageManager.h>
+#import <SDWebImage/SDCallbackQueue.h>
+#import <SDWebImage/SDWebImageCacheKeyFilter.h>
+#import <SDWebImage/SDWebImageCacheSerializer.h>
+#import <SDWebImage/SDImageCacheConfig.h>
+#import <SDWebImage/SDImageCache.h>
+#import <SDWebImage/SDMemoryCache.h>
+#import <SDWebImage/SDDiskCache.h>
+#import <SDWebImage/SDImageCacheDefine.h>
+#import <SDWebImage/SDImageCachesManager.h>
+#import <SDWebImage/UIView+WebCache.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIImageView+HighlightedWebCache.h>
+#import <SDWebImage/SDWebImageDownloaderConfig.h>
+#import <SDWebImage/SDWebImageDownloaderOperation.h>
+#import <SDWebImage/SDWebImageDownloaderRequestModifier.h>
+#import <SDWebImage/SDWebImageDownloaderResponseModifier.h>
+#import <SDWebImage/SDWebImageDownloaderDecryptor.h>
+#import <SDWebImage/SDImageLoader.h>
+#import <SDWebImage/SDImageLoadersManager.h>
+#import <SDWebImage/UIButton+WebCache.h>
+#import <SDWebImage/SDWebImagePrefetcher.h>
+#import <SDWebImage/UIView+WebCacheOperation.h>
+#import <SDWebImage/UIImage+Metadata.h>
+#import <SDWebImage/UIImage+MultiFormat.h>
+#import <SDWebImage/UIImage+MemoryCacheCost.h>
+#import <SDWebImage/UIImage+ExtendedCacheData.h>
+#import <SDWebImage/SDWebImageOperation.h>
+#import <SDWebImage/SDWebImageDownloader.h>
+#import <SDWebImage/SDWebImageTransition.h>
+#import <SDWebImage/SDWebImageIndicator.h>
+#import <SDWebImage/SDImageTransformer.h>
+#import <SDWebImage/UIImage+Transform.h>
+#import <SDWebImage/SDAnimatedImage.h>
+#import <SDWebImage/SDAnimatedImageView.h>
+#import <SDWebImage/SDAnimatedImageView+WebCache.h>
+#import <SDWebImage/SDAnimatedImagePlayer.h>
+#import <SDWebImage/SDImageCodersManager.h>
+#import <SDWebImage/SDImageCoder.h>
+#import <SDWebImage/SDImageAPNGCoder.h>
+#import <SDWebImage/SDImageGIFCoder.h>
+#import <SDWebImage/SDImageIOCoder.h>
+#import <SDWebImage/SDImageFrame.h>
+#import <SDWebImage/SDImageCoderHelper.h>
+#import <SDWebImage/SDImageGraphics.h>
+#import <SDWebImage/SDGraphicsImageRenderer.h>
+#import <SDWebImage/UIImage+GIF.h>
+#import <SDWebImage/UIImage+ForceDecode.h>
+#import <SDWebImage/NSData+ImageContentType.h>
+#import <SDWebImage/SDWebImageDefine.h>
+#import <SDWebImage/SDWebImageError.h>
+#import <SDWebImage/SDWebImageOptionsProcessor.h>
+#import <SDWebImage/SDImageIOAnimatedCoder.h>
+#import <SDWebImage/SDImageHEICCoder.h>
+#import <SDWebImage/SDImageAWebPCoder.h>
 
 // Mac
-#if __has_include(<ImageLoader/NSImage+Compatibility.h>)
-#import <ImageLoader/NSImage+Compatibility.h>
+#if __has_include(<SDWebImage/NSImage+Compatibility.h>)
+#import <SDWebImage/NSImage+Compatibility.h>
 #endif
-#if __has_include(<ImageLoader/NSButton+WebCache.h>)
-#import <ImageLoader/NSButton+WebCache.h>
+#if __has_include(<SDWebImage/NSButton+WebCache.h>)
+#import <SDWebImage/NSButton+WebCache.h>
 #endif
-#if __has_include(<ImageLoader/SDAnimatedImageRep.h>)
-#import <ImageLoader/SDAnimatedImageRep.h>
+#if __has_include(<SDWebImage/SDAnimatedImageRep.h>)
+#import <SDWebImage/SDAnimatedImageRep.h>
 #endif
 
 // MapKit
-#if __has_include(<ImageLoader/MKAnnotationView+WebCache.h>)
-#import <ImageLoader/MKAnnotationView+WebCache.h>
+#if __has_include(<SDWebImage/MKAnnotationView+WebCache.h>)
+#import <SDWebImage/MKAnnotationView+WebCache.h>
 #endif

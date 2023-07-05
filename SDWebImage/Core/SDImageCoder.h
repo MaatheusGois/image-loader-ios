@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -172,7 +172,7 @@ FOUNDATION_EXPORT SDImageCoderOption _Nonnull const SDImageCoderWebImageContext 
 
 /**
  Returns YES if this coder can encode some image. Otherwise, it should be passed to another coder.
- For custom coder which introduce new image format, you'd better define a new `SDImageFormat` using like this. If you're creating public coder plugin for new image format, also update `https://github.com/rs/ImageLoader/wiki/Coder-Plugin-List` to avoid same value been defined twice.
+ For custom coder which introduce new image format, you'd better define a new `SDImageFormat` using like this. If you're creating public coder plugin for new image format, also update `https://github.com/rs/SDWebImage/wiki/Coder-Plugin-List` to avoid same value been defined twice.
  * @code
  static const SDImageFormat SDImageFormatHEIF = 10;
  * @endcode

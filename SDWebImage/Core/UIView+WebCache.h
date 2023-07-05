@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -20,7 +20,7 @@ FOUNDATION_EXPORT const int64_t SDWebImageProgressUnitCountUnknown; /* 1LL */
 typedef void(^SDSetImageBlock)(UIImage * _Nullable image, NSData * _Nullable imageData, SDImageCacheType cacheType, NSURL * _Nullable imageURL);
 
 /**
- Integrates ImageLoader async downloading and caching of remote images with UIView subclass.
+ Integrates SDWebImage async downloading and caching of remote images with UIView subclass.
  */
 @interface UIView (WebCache)
 

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ImageLoader
+import SDWebImage
 
 class ViewController: UIViewController {
 

@@ -1,5 +1,5 @@
 /*
- * This file is part of the ImageLoader package.
+ * This file is part of the SDWebImage package.
  * (c) Olivier Poitrey <rs@dailymotion.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -45,7 +45,7 @@ typedef void(^SDImageCacheContainsCompletionBlock)(SDImageCacheType containsCach
 
 /**
  This is the built-in decoding process for image query from cache.
- @note If you want to implement your custom loader with `queryImageForKey:options:context:completion:` API, but also want to keep compatible with ImageLoader's behavior, you'd better use this to produce image.
+ @note If you want to implement your custom loader with `queryImageForKey:options:context:completion:` API, but also want to keep compatible with SDWebImage's behavior, you'd better use this to produce image.
  
  @param imageData The image data from the cache. Should not be nil
  @param cacheKey The image cache key from the input. Should not be nil
